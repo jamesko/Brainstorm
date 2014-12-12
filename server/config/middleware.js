@@ -1,6 +1,5 @@
 var morgan = require('morgan');
 var bodyParser = require('body-parser');
-var cookieParser = require('cookie-parser')
 
 module.exports = function(app, express) {
   var commentRouter = express.Router();
@@ -9,7 +8,6 @@ module.exports = function(app, express) {
   var userRouter = express.Router();
   var interestRouter = express.Router();
 
-  app.use(cookieParser())
   app.use(morgan('dev'));
   // Returns middleware that only parses urlencoded bodies
   // and parses extended syntax with qs module
