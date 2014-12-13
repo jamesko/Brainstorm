@@ -6,6 +6,7 @@ module.exports = {
     console.log("attempting to post...")
     var idea = {};
 
+
     idea.name = req.body.name;
     idea.room = req.params.room_id;
     idea.ownerName = req.user.socialData.name;
