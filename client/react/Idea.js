@@ -27,8 +27,16 @@ app.Idea = React.createClass({
   render: function() {
     var ideaContent;
     var editForm;
-    console.log(this.props)
+    var userName = document.cookie.split("user=")[1].split('%20').join(' ');
 
+// curl -H "Content-Type: application/json" -d '{"name":"xyz","ownerName":"Fat Pat","room":"548a38cebcf20d5101e0e13c"}' http://localhost:3000/ideas/548a38cebcf20d510
+// curl --data "name=thisisanidea&ownerName=Jeofrey&room=548a38cebcf20d5101e0e13c" http://localhost:8000/
+    if (this.props.ownerName !== userName) {
+
+
+
+
+    }
     // if editing render edit form otherwise render "Edit Idea" button
     if (this.state.editing) {
       editForm = <app.IdeaForm editing="true" name={this.props.name} key={this.props._id} _id={this.props._id} />
@@ -39,7 +47,7 @@ app.Idea = React.createClass({
       ideaContent = (
         <div className="idea">
 
-          <form className="pure-form pure-g data-name='meow'">
+          <form className="pure-form pure-g">
             <div className="pure-u-1-1 pure-u-sm-2-3">
               <h2 ref="body">{this.props.ownerName}: {this.props.name}</h2>
               {editForm}
