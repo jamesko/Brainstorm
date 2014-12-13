@@ -7,6 +7,7 @@ module.exports = {
 
     idea.name = req.body.name;
     idea.room = req.params.room_id;
+    idea.ownerName = req.user.socialData.name;
     idea.owner = req.user._id;
 
     // create promise for Idea.create method

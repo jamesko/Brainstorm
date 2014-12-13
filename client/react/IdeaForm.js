@@ -1,6 +1,5 @@
 app.IdeaForm = React.createClass({
   handleSubmit: function(e) {
-    // var userName = document.cookie.split("user=")[1].split("%20").join(' ')
     e.preventDefault();
     // get the value out of the input with ref="name"
     var name = this.refs.name.getDOMNode();

@@ -1,5 +1,4 @@
 app.Idea = React.createClass({
-
   getInitialState: function() {
     // set initial editing state to false
     return {
@@ -28,18 +27,21 @@ app.Idea = React.createClass({
   render: function() {
     var ideaContent;
     var editForm;
+    console.log(this.props)
+
     // if editing render edit form otherwise render "Edit Idea" button
     if (this.state.editing) {
       editForm = <app.IdeaForm editing="true" name={this.props.name} key={this.props._id} _id={this.props._id} />
     }
 
+
     if (this.state.displaying) {
       ideaContent = (
         <div className="idea">
 
-          <form className="pure-form pure-g">
+          <form className="pure-form pure-g data-name='meow'">
             <div className="pure-u-1-1 pure-u-sm-2-3">
-              <h2 ref="body">{this.props.name}</h2>
+              <h2 ref="body">{this.props.ownerName}: {this.props.name}</h2>
               {editForm}
             </div>
 
