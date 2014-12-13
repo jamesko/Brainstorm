@@ -3,7 +3,8 @@ app.Idea = React.createClass({
     // set initial editing state to false
     return {
       displaying: true,
-      editing: false
+      editing: false,
+      currentUser: app.UserStore.get()
     };
   },
 
