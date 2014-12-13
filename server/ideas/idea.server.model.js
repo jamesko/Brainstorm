@@ -14,6 +14,9 @@ var IdeaSchema = new Schema({
   owner: {
     type: Schema.ObjectId,
     ref: 'User'
+  },
+  ownerName: {
+    type: String,
   }
 });
 

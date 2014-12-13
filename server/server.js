@@ -6,6 +6,8 @@ var app = express();
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
 
+
+
 io.on('connection', function(client) {
   client.on('join', function(room) {
     client.join(room);

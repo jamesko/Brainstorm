@@ -18,7 +18,7 @@ app.Ideas = React.createClass({
     var ideas = [];
     // create all idea components
     this.state.ideas.forEach(function(idea) {
-      ideas.push(<app.Idea name={idea.name} key={idea._id} _id={idea._id} />);
+      ideas.push(<app.Idea name={idea.name} ownerName={idea.ownerName} owner={idea.owner} room={idea.room} key={idea._id} _id={idea._id} />);
     });
     return (
       <div ref="body">

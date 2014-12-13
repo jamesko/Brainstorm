@@ -18,6 +18,8 @@ app.IdeaStore = _.extend({}, EventEmitter.prototype, {
     })
     .done(function (ideas) {
       this._ideas = ideas;
+      console.log(this._ideas)
+      // console.log(ideas)
       // broadcast that _ideas has changed
       this.emitChange();
     }.bind(this))

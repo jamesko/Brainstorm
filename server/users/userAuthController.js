@@ -3,8 +3,13 @@
 var User = require('../db.js').User;
 var passport = require('passport');
 var session = require('express-session');
+var cookieParser = require('cookie-parser')
+
+
+
 
 module.exports = function(app) {
+  app.use(cookieParser())
   app.use(session({
     secret: 'hackReactorStudentsAreAwesome',
     resave: false,
@@ -32,13 +37,18 @@ module.exports = function(app) {
 
   app.get('/auth', passport.authenticate('github'));
   app.get('/auth/callback',
-    passport.authenticate('github', { successRedirect: '/', failureRedirect: '/' }));
+  passport.authenticate('github', { failureRedirect: '/' }),
+    function(req, res) {
+      console.log('req.session.passport.user: ', req.user);
+       res.cookie('user', req.user.socialData.name);
+      res.redirect('/');
+    });
 
 
   var GitHubStrategy = require('passport-github').Strategy;
   passport.use(new GitHubStrategy({
-      clientID: '4e0e24f94e07e2e2d1c9',
-      clientSecret: 'c5a5d8a6c39396e0292e21267e4b8fc7aebf3bfe',
+      clientID: '19e10f18979367efa3df',
+      clientSecret: '38d0670cabad59d8d87948060e832d666828d88d',
       callbackURL: 'http://localhost:3000/auth/callback'
     },
     function(accessToken, refreshToken, profile, done) {
