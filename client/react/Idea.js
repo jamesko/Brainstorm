@@ -28,7 +28,6 @@ app.Idea = React.createClass({
   render: function() {
     var ideaContent;
     var editForm;
-    var userName = document.cookie.split("user=")[1].split('%20').join(' ');
 
     // if editing render edit form otherwise render "Edit Idea" button
     if (this.state.editing) {
@@ -36,7 +35,7 @@ app.Idea = React.createClass({
     }
 
     //if displaying and the idea is the user's original idea, allow them to edit/delete
-    if (this.state.displaying && (userName === this.props.ownerName)) {
+    if (this.state.displaying && (this.state.currentUser._id === this.props.owner)) {
       ideaContent = (
         <div className="idea">
 
@@ -62,8 +61,8 @@ app.Idea = React.createClass({
 
         </div>
       );
-    } //otherwise if the idea wasn't the user's, allow them to comment but not edit/delete it
-    else if (this.state.displaying && (userName !== this.props.ownerName)) {
+    } //otherwise if the idea wasn't the user's, allow them to comment but not edit/delete
+    else if (this.state.displaying && (this.state.currentUser._id !== this.props.ownerName)) {
       ideaContent = (
         <div className="idea">
 
