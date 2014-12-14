@@ -85,7 +85,7 @@ module.exports = {
     var ideaOwner = String(req.body.owner)
 
     //if user was not the originator of hte idea, throw an error
-    if (user === ideaOwner) {
+    if (user !== ideaOwner) {
       console.log('user not authorized to delete this resource. sending back 401 Unauthorized')
       res.status(401)
     }
