@@ -7,6 +7,7 @@ app.IdeaForm = React.createClass({
     // if editing send info to edit method in IdeaActions
     if (this.props.editing) {
       var idea = {id: this.props._id};
+      idea.owner = this.props.owner;
       idea.name = name.value.trim();
       app.IdeaActions.edit(idea);
     } else { // else an idea is being created

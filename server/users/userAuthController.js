@@ -3,13 +3,11 @@
 var User = require('../db.js').User;
 var passport = require('passport');
 var session = require('express-session');
-var cookieParser = require('cookie-parser')
 
 
 
 
 module.exports = function(app) {
-  app.use(cookieParser())
   app.use(session({
     secret: 'hackReactorStudentsAreAwesome',
     resave: false,
@@ -40,7 +38,6 @@ module.exports = function(app) {
   passport.authenticate('github', { failureRedirect: '/' }),
     function(req, res) {
       console.log('req.session.passport.user: ', req.user);
-       res.cookie('user', req.user.socialData.name);
       res.redirect('/');
     });
 

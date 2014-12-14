@@ -29,9 +29,10 @@ app.Idea = React.createClass({
     var ideaContent;
     var editForm;
 
+
     // if editing render edit form otherwise render "Edit Idea" button
     if (this.state.editing) {
-      editForm = <app.IdeaForm editing="true" name={this.props.name} key={this.props._id} _id={this.props._id} />
+      editForm = <app.IdeaForm editing="true" owner={this.props.owner} name={this.props.name} key={this.props._id} _id={this.props._id} />
     }
 
     //if displaying and the idea is the user's original idea, allow them to edit/delete
