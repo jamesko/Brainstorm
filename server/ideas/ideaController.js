@@ -47,6 +47,16 @@ module.exports = {
   },
 
   updateIdea: function(req, res, next) {
+    //we convert the request objects into strings just to be safe(req.user._id was coming back as an object for some reason)
+    var user = String(req.user._id)
+    var ideaOwner = String(req.body.owner)
+
+    //if user was not the originator of hte idea, throw an error
+    if (user === ideaOwner) {
+      console.log('user not authorized to update this resource. sending back 401 Unauthorized')
+      res.status(401)
+    }
+
     // create promise for Idea.findById
     var findIdeaById = Q.nbind(Idea.findById, Idea);
 
@@ -70,6 +80,17 @@ module.exports = {
   },
 
   deleteIdea: function(req, res, next) {
+    //we convert the request objects into strings just to be safe(req.user._id was coming back as an object for some reason)
+    var user = String(req.user._id)
+    var ideaOwner = String(req.body.owner)
+
+    //if user was not the originator of hte idea, throw an error
+    if (user === ideaOwner) {
+      console.log('user not authorized to delete this resource. sending back 401 Unauthorized')
+      res.status(401)
+    }
+
+
     // create promise for Idea.remove method
     var removeIdea = Q.nbind(Idea.remove, Idea);
     // delete idea based on id passed in

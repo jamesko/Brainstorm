@@ -97,7 +97,8 @@ app.IdeaStore = _.extend({}, EventEmitter.prototype, {
   delete: function(idea) {
     $.ajax({
       type: 'DELETE',
-      url: '/ideas/' + idea.id
+      url: '/ideas/' + idea.id,
+      data: idea
     })
     .done(function(oldId) {
       // find deleted idea by oldId in _ideas and remove
