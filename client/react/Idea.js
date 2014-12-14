@@ -28,62 +28,90 @@ app.Idea = React.createClass({
   render: function() {
     var ideaContent;
     var editForm;
-
+    var currentUser = this.state.currentUser
+    var ideaOwner = this.props.owner
 
     // if editing render edit form otherwise render "Edit Idea" button
     if (this.state.editing) {
       editForm = <app.IdeaForm editing="true" owner={this.props.owner} name={this.props.name} key={this.props._id} _id={this.props._id} />
     }
 
-    //if displaying and the idea is the user's original idea, allow them to edit/delete
-    if (this.state.displaying && (this.state.currentUser._id === this.props.owner)) {
-      ideaContent = (
-        <div className="idea">
+    //if displaying form
+    if (this.state.displaying && currentUser) {
+      // if there is a current user and their id is the same as the ideaOwner id, allow them to edit their own idea
+      if (currentUser._id === ideaOwner) {
+        ideaContent = (
+          <div className="idea">
 
-          <form className="pure-form pure-g">
-            <div className="pure-u-1-1 pure-u-sm-2-3">
-              <h2 ref="body">{this.props.ownerName}: {this.props.name}</h2>
-              {editForm}
-            </div>
+            <form className="pure-form pure-g">
+              <div className="pure-u-1-1 pure-u-sm-2-3">
+                <h2 ref="body">{this.props.ownerName}: {this.props.name}</h2>
+                {editForm}
+              </div>
 
-            <div className="auth-check pure-u-1-1 pure-u-sm-1-3 watch">
-              <app.Interest idea_id={this.props._id} />
-            </div>
-            <div className="pure-u-1-1 auth-check">
-              <button className="button-small pure-button pure-button-primary" onClick={this.edit}>{ this.state.editing ? 'Cancel' : 'Edit Idea'}</button>
-              <button className="button-small pure-button pure-button-primary" onClick={this.delete}>Delete Idea</button>
-            </div>
+              <div className="auth-check pure-u-1-1 pure-u-sm-1-3 watch">
+                <app.Interest idea_id={this.props._id} />
+              </div>
+              <div className="pure-u-1-1 auth-check">
+                <button className="button-small pure-button pure-button-primary" onClick={this.edit}>{ this.state.editing ? 'Cancel' : 'Edit Idea'}</button>
+                <button className="button-small pure-button pure-button-primary" onClick={this.delete}>Delete Idea</button>
+              </div>
 
-            <div className="pure-u-1-1 auth-check comments">
-              <app.Comments idea_id={this.props._id} />
-            </div>
+              <div className="pure-u-1-1 auth-check comments">
+                <app.Comments idea_id={this.props._id} />
+              </div>
 
-          </form>
+            </form>
 
-        </div>
-      );
-    } //otherwise if the idea wasn't the user's, allow them to comment but not edit/delete
-    else if (this.state.displaying && (this.state.currentUser._id !== this.props.ownerName)) {
-      ideaContent = (
-        <div className="idea">
+          </div>
+        );
+      }
+      //othersise if they arent a current user of were'nt the originator of an idea, dont let them edit/delete it. just like or comment it
+      else {
+        ideaContent = (
+          <div className="idea">
 
-          <form className="pure-form pure-g">
-            <div className="pure-u-1-1 pure-u-sm-2-3">
-              <h2 ref="body">{this.props.ownerName}: {this.props.name}</h2>
-              {editForm}
-            </div>
+            <form className="pure-form pure-g">
+              <div className="pure-u-1-1 pure-u-sm-2-3">
+                <h2 ref="body">{this.props.ownerName}: {this.props.name}</h2>
+                {editForm}
+              </div>
 
-            <div className="auth-check pure-u-1-1 pure-u-sm-1-3 watch">
-              <app.Interest idea_id={this.props._id} />
-            </div>
-            <div className="pure-u-1-1 auth-check comments">
-              <app.Comments idea_id={this.props._id} />
-            </div>
-          </form>
+              <div className="auth-check pure-u-1-1 pure-u-sm-1-3 watch">
+                <app.Interest idea_id={this.props._id} />
+              </div>
+              <div className="pure-u-1-1 auth-check comments">
+                <app.Comments idea_id={this.props._id} />
+              </div>
+            </form>
 
-        </div>
-      );
+          </div>
+        );
+      }
     }
+
+    // } //otherwise if the idea wasn't the user's, allow them to comment but not edit/delete
+    // else if (this.state.displaying && (this.state.currentUser._id !== this.props.ownerName)) {
+    //   ideaContent = (
+    //     <div className="idea">
+
+    //       <form className="pure-form pure-g">
+    //         <div className="pure-u-1-1 pure-u-sm-2-3">
+    //           <h2 ref="body">{this.props.ownerName}: {this.props.name}</h2>
+    //           {editForm}
+    //         </div>
+
+    //         <div className="auth-check pure-u-1-1 pure-u-sm-1-3 watch">
+    //           <app.Interest idea_id={this.props._id} />
+    //         </div>
+    //         <div className="pure-u-1-1 auth-check comments">
+    //           <app.Comments idea_id={this.props._id} />
+    //         </div>
+    //       </form>
+
+    //     </div>
+    //   );
+    // }
 
 
     return (
