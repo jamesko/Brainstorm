@@ -90,30 +90,6 @@ app.Idea = React.createClass({
       }
     }
 
-    // } //otherwise if the idea wasn't the user's, allow them to comment but not edit/delete
-    // else if (this.state.displaying && (this.state.currentUser._id !== this.props.ownerName)) {
-    //   ideaContent = (
-    //     <div className="idea">
-
-    //       <form className="pure-form pure-g">
-    //         <div className="pure-u-1-1 pure-u-sm-2-3">
-    //           <h2 ref="body">{this.props.ownerName}: {this.props.name}</h2>
-    //           {editForm}
-    //         </div>
-
-    //         <div className="auth-check pure-u-1-1 pure-u-sm-1-3 watch">
-    //           <app.Interest idea_id={this.props._id} />
-    //         </div>
-    //         <div className="pure-u-1-1 auth-check comments">
-    //           <app.Comments idea_id={this.props._id} />
-    //         </div>
-    //       </form>
-
-    //     </div>
-    //   );
-    // }
-
-
     return (
       <div>
         {ideaContent}
