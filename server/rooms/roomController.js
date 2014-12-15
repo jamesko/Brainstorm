@@ -6,6 +6,9 @@ module.exports = {
     var room = {};
 
     room.name = req.body.name;
+    room.ownerName = req.user.socialData.name;
+    room.owner = req.user._id;
+
 
     var createRoom = Q.nbind(Room.create, Room);
 
