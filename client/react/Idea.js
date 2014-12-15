@@ -4,7 +4,8 @@ app.Idea = React.createClass({
     return {
       displaying: true,
       editing: false,
-      filtered: false
+      filtered: false,
+      currentUser: app.UserStore.get()
     };
   },
 
@@ -30,19 +31,18 @@ app.Idea = React.createClass({
   render: function() {
     var ideaContent;
     var editForm;
-    console.log('IDEA PROPS',this.props)
 
     // if editing render edit form otherwise render "Edit Idea" button
     if (this.state.editing) {
       editForm = <app.IdeaForm editing="true" name={this.props.name} key={this.props._id} _id={this.props._id} />
     }
 
-
-    if (this.state.displaying) {
+    //if displaying and the idea is the user's original idea, allow them to edit/delete
+    if (this.state.displaying && (this.state.currentUser._id === this.props.owner)) {
       ideaContent = (
         <div className="idea">
 
-          <form className="pure-form pure-g data-name='meow'">
+          <form className="pure-form pure-g">
             <div className="pure-u-1-1 pure-u-sm-2-3">
               <h2 ref="body">{this.props.ownerName}: {this.props.name}</h2>
               {editForm}
@@ -64,7 +64,29 @@ app.Idea = React.createClass({
 
         </div>
       );
+    } //otherwise if the idea wasn't the user's, allow them to comment but not edit/delete
+    else if (this.state.displaying && (this.state.currentUser._id !== this.props.ownerName)) {
+      ideaContent = (
+        <div className="idea">
+
+          <form className="pure-form pure-g">
+            <div className="pure-u-1-1 pure-u-sm-2-3">
+              <h2 ref="body">{this.props.ownerName}: {this.props.name}</h2>
+              {editForm}
+            </div>
+
+            <div className="auth-check pure-u-1-1 pure-u-sm-1-3 watch">
+              <app.Interest idea_id={this.props._id} />
+            </div>
+            <div className="pure-u-1-1 auth-check comments">
+              <app.Comments idea_id={this.props._id} />
+            </div>
+          </form>
+
+        </div>
+      );
     }
+
 
     return (
       <div>
@@ -87,3 +109,8 @@ app.Idea = React.createClass({
     }
   }
 });
+
+
+//COMMAND TO POST IDEA ON BEHALF OF FAKE USER (DEVEVELOPMENT PURPOSES ONLY)
+// curl -H "Content-Type: application/json" -d '{"name":"theyll never catch me in this fox hole!","ownerName":"Saddam Hussein","room_id":"548a38cebcf20d5101e0e13c"}' http://localhost:3000/ideas/548a38cebcf20d510
+

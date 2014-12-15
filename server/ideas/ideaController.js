@@ -3,7 +3,9 @@ var Q = require('q');
 
 module.exports = {
   newIdea: function (req, res, next) {
+    console.log("attempting to post...")
     var idea = {};
+
 
     idea.name = req.body.name;
     idea.room = req.params.room_id;
@@ -22,6 +24,7 @@ module.exports = {
         }
       })
       .fail(function (error) {
+        console.log("this is an error")
         next(error);
       });
   },
