@@ -13,11 +13,11 @@ app.Idea = React.createClass({
     // add a change listener on the IdeaStore
     // this is needed when the edit comes back and emits a change
     // that will force the component to re-render
-    app.IdeaStore.addChangeListener(function() {
-      if(this.isMounted()) {
-        this.setState({editing: false});
-      }
-    }.bind(this));
+    // app.IdeaStore.addChangeListener(function() {
+    //   if(this.isMounted()) {
+    //     this.setState({editing: false});
+    //   }
+    // }.bind(this));
 
 
   },
@@ -36,11 +36,16 @@ app.Idea = React.createClass({
 
     // if editing render edit form otherwise render "Edit Idea" button
     if (this.state.editing) {
+
+      app.Ideas.pauseUpdates = true;
+
       editForm = <app.IdeaForm editing="true" owner={this.props.owner} name={this.props.name} key={this.props._id} _id={this.props._id} />
+
     }
 
     //if displaying form
     if (this.state.displaying && currentUser) {
+        app.Ideas.pauseUpdates = false;
       // if there is a current user and their id is the same as the ideaOwner id, allow them to edit their own idea
       if (currentUser._id === ideaOwner) {
         ideaContent = (

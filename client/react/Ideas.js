@@ -5,10 +5,14 @@ app.Ideas = React.createClass({
     };
   },
 
+  pauseUpdates: false,
+
   componentDidMount: function () {
     app.IdeaStore.addChangeListener(function() {
       if(this.isMounted()) {
-        this.setState({ ideas: app.IdeaStore.getAll() });
+        if(!app.Ideas.pauseUpdates){
+          this.setState({ ideas: app.IdeaStore.getAll() });
+        }
       }
     }.bind(this));
     // get all ideas from db
