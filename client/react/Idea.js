@@ -4,6 +4,7 @@ app.Idea = React.createClass({
     return {
       displaying: true,
       editing: false,
+      filtered: false,
       currentUser: app.UserStore.get()
     };
   },
@@ -17,6 +18,8 @@ app.Idea = React.createClass({
         this.setState({editing: false});
       }
     }.bind(this));
+
+
   },
 
   show: function () {
