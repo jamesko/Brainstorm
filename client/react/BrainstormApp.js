@@ -2,7 +2,9 @@ app.BrainstormApp = React.createClass({
   getInitialState: function() {
     return {
       indexView: true,
-      currentUser: app.UserStore.get()
+      currentUser: app.UserStore.get(),
+      filterText: '',
+      filterNames: ''
     };
   },
 
@@ -34,6 +36,13 @@ app.BrainstormApp = React.createClass({
     }.bind(this));
   },
 
+  handleUserInput: function(filterText, filterNames) {
+      this.setState({
+          filterText: filterText,
+          filterNames: filterNames
+      });
+  },
+
   render: function(){
     var currentView;
     if(this.state.indexView) { //thisIsHomePage
@@ -48,7 +57,15 @@ app.BrainstormApp = React.createClass({
         <div>
           <app.RoomTitle room_id={this.state.props}/>
           <app.CreateIdea room_id={this.state.props}/>
-          <app.Ideas room_id={this.state.props}/>
+          <app.SearchBar
+              filterText={this.state.filterText}
+              filterNames={this.state.filterNames}
+              onUserInput={this.handleUserInput}
+          />
+          <app.Ideas room_id={this.state.props}
+            filterText={this.state.filterText}
+            filterNames={this.state.filterNames}
+          />
         </div>
       );
     }

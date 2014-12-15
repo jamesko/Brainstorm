@@ -3,7 +3,8 @@ app.Idea = React.createClass({
     // set initial editing state to false
     return {
       displaying: true,
-      editing: false
+      editing: false,
+      filtered: false
     };
   },
 
@@ -16,6 +17,8 @@ app.Idea = React.createClass({
         this.setState({editing: false});
       }
     }.bind(this));
+
+
   },
 
   show: function () {
@@ -27,7 +30,7 @@ app.Idea = React.createClass({
   render: function() {
     var ideaContent;
     var editForm;
-    console.log(this.props)
+    console.log('IDEA PROPS',this.props)
 
     // if editing render edit form otherwise render "Edit Idea" button
     if (this.state.editing) {
