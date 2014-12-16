@@ -6,7 +6,6 @@ module.exports = {
     console.log("attempting to post...")
     var idea = {};
 
-
     idea.name = req.body.name;
     idea.room = req.params.room_id;
     idea.ownerName = req.user.socialData.name;
@@ -80,6 +79,7 @@ module.exports = {
   },
 
   deleteIdea: function(req, res, next) {
+    console.log("trying to delete idea")
     //we convert the request objects into strings just to be safe(req.user._id was coming back as an object for some reason)
     var user = String(req.user._id)
     var ideaOwner = String(req.body.owner)
@@ -89,7 +89,6 @@ module.exports = {
       console.log('user not authorized to delete this resource. sending back 401 Unauthorized')
       res.status(401)
     }
-
 
     // create promise for Idea.remove method
     var removeIdea = Q.nbind(Idea.remove, Idea);

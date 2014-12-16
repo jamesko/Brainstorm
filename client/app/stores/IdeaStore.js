@@ -101,6 +101,7 @@ app.IdeaStore = _.extend({}, EventEmitter.prototype, {
       data: idea
     })
     .done(function(oldId) {
+      console.log("idea deleted")
       // find deleted idea by oldId in _ideas and remove
       this._ideas.forEach(function(idea, index) {
         if(idea._id === oldId._id) {
