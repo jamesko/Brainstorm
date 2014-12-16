@@ -11,6 +11,7 @@ app.RoomStore = _.extend({}, EventEmitter.prototype, {
       url: '/rooms'
     })
     .done(function(rooms) {
+      console.log(rooms)
       this._rooms = rooms;
       this.emitChange();
     }.bind(this))
@@ -31,6 +32,7 @@ app.RoomStore = _.extend({}, EventEmitter.prototype, {
       data: {name: name}
     })
     .done(function(room) {
+      console.log(room)
       this._rooms.push(room);
 
       // broadcast that _rooms has changed
@@ -44,6 +46,57 @@ app.RoomStore = _.extend({}, EventEmitter.prototype, {
     }.bind(this))
     .fail(function(error) {
       console.log(error);
+    });
+  },
+
+  edit: function(room) {
+    // console.log("i shouldnt be in edit")
+    $.ajax({
+      type: 'PUT',
+      url: '/rooms/' + room.id,
+      data: room
+    })
+    .done(function(roomEdit) {
+      // look through the rooms until finding a match
+      // for id and then update the name property
+      this._rooms.forEach(function(room) {
+        if(room._id === roomEdit._id) {
+          room.name = roomEdit.name;
+          // broadcast that _rooms has changed
+          socket.emit('room-change', this._rooms);
+          return this.emitChange();
+        }
+      }.bind(this));
+    }.bind(this))
+    .fail(function(error) {
+      console.error(error);
+    });
+  },
+
+  delete: function(room) {
+    console.log('in delete')
+      console.log(room)
+
+    $.ajax({
+      type: 'DELETE',
+      url: '/rooms/' + room.id,
+      data: room
+    })
+    .done(function(oldId) {
+      console.log("done with deletion")
+      // find deleted room by oldId in _rooms and remove
+      this._rooms.forEach(function(room, index) {
+        if(room._id === oldId._id) {
+          this._rooms.splice(index, 1);
+
+          // broadcast that _rooms has changed
+          socket.emit('room-change', this._rooms);
+          return this.emitChange();
+        }
+      }.bind(this));
+    }.bind(this))
+    .fail(function(error) {
+      console.error(error);
     });
   },
 
@@ -70,6 +123,16 @@ app.AppDispatcher.register(function(payload) {
 
       if (name !== '') {
         app.RoomStore.create(name);
+      }
+      break;
+    case app.RoomConstants.ROOM_EDIT:
+      if(action.room.name !== '') {
+        app.RoomStore.edit(action.room);
+      }
+      break;
+    case app.RoomConstants.ROOM_DELETE:
+      if(action.room.id !== '') {
+        app.RoomStore.delete(action.room);
       }
       break;
 
