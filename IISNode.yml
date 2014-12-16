@@ -1,7 +1,7 @@
 # For security reasons, logging, dev errors, and debugging 
 # should be disabled in production deployments:
 
-loggingEnabled: true
+loggingEnabled: false
 debuggingEnabled: false
 devErrorsEnabled: false
 node_env: production
