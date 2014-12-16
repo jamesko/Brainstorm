@@ -1,5 +1,6 @@
 node_modules/
 client/lib/
+client/app/react/.module-cache
 production/
 npm-debug.log
 .DS_Store
