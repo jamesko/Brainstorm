@@ -2,7 +2,8 @@ var mongoose = require('mongoose');
 var db = {};
 
 //mongoose.connect('mongodb://localhost/brainstormer');
-mongoose.connect('process.env.CUSTOMCONNSTR_MONGOLAB_URI');
+var connectionString = process.env.CUSTOMCONNSTR_MONGOLAB_URI;
+mongoose.connect(connectionString);
 
 var userModel = require('./users/user.server.model.js');
 var commentModel = require('./comments/comment.server.model.js');
@@ -16,3 +17,5 @@ db.Room = mongoose.model('Room');
 db.Interest = mongoose.model('Interest');
 
 module.exports = db;
+
+mongodb://MongoLab-i:8Lu9GZSXvdiVCqOTDGRZL7CHOS4XN.FzDpCqHCeTKhc-@ds052827.mongolab.com:52827/MongoLab-i
