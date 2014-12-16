@@ -1,6 +1,6 @@
 {
   "name": "Brainstorm",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "Brainstorming app",
   "main": "index.js",
   "scripts": {
@@ -8,17 +8,17 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/HRR2-Brainstorm/Brainstorm"
+    "url": "https://github.com/Kitchencooks/Brainstorm"
   },
   "keywords": [
     "Brainstorm"
   ],
-  "author": "Brett, Dmitri, Gunnari, Jason",
+  "author": "Brett, Dmitri, Gunnari, Jason, Pat, Rory, Julie",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/HRR2-Brainstorm/Brainstorm/issues"
+    "url": "https://github.com/Kitchencooks/Brainstorm/issues"
   },
-  "homepage": "https://github.com/HRR2-Brainstorm/Brainstorm",
+  "homepage": "https://github.com/Kitchencooks/Brainstorm",
   "devDependencies": {
     "browser-sync": "^1.7.2",
     "chai": "^1.10.0",
