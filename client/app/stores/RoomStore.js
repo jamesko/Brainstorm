@@ -50,6 +50,7 @@ app.RoomStore = _.extend({}, EventEmitter.prototype, {
   },
 
   edit: function(room) {
+    // console.log("i shouldnt be in edit")
     $.ajax({
       type: 'PUT',
       url: '/rooms/' + room.id,
@@ -61,9 +62,8 @@ app.RoomStore = _.extend({}, EventEmitter.prototype, {
       this._rooms.forEach(function(room) {
         if(room._id === roomEdit._id) {
           room.name = roomEdit.name;
-
           // broadcast that _rooms has changed
-          socket.emit('room-change', this._rooms, this._room());
+          socket.emit('room-change', this._rooms);
           return this.emitChange();
         }
       }.bind(this));
@@ -74,19 +74,23 @@ app.RoomStore = _.extend({}, EventEmitter.prototype, {
   },
 
   delete: function(room) {
+    console.log('in delete')
+      console.log(room)
+
     $.ajax({
       type: 'DELETE',
       url: '/rooms/' + room.id,
       data: room
     })
     .done(function(oldId) {
+      console.log("done with deletion")
       // find deleted room by oldId in _rooms and remove
       this._rooms.forEach(function(room, index) {
         if(room._id === oldId._id) {
           this._rooms.splice(index, 1);
 
           // broadcast that _rooms has changed
-          socket.emit('room-change', this._rooms, this._room());
+          socket.emit('room-change', this._rooms);
           return this.emitChange();
         }
       }.bind(this));
@@ -121,7 +125,7 @@ app.AppDispatcher.register(function(payload) {
         app.RoomStore.create(name);
       }
       break;
-    case app.IdeaConstants.ROOM_EDIT:
+    case app.RoomConstants.ROOM_EDIT:
       if(action.room.name !== '') {
         app.RoomStore.edit(action.room);
       }

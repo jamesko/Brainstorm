@@ -54,7 +54,6 @@ app.Room = React.createClass({
     if (this.state.displaying && currentUser) {
       // if there is a current user and their id is the same as the roomOwner id, allow them to edit their own idea
       if (currentUser._id === roomOwner) {
-        console.log(this.props.name)
         roomContent = (
           <div className="room pure-u-1">
             <a href="#" onClick={this.gotoRoom}>{this.props.name}</a>
@@ -71,7 +70,6 @@ app.Room = React.createClass({
       }
       //othersise if they arent a current user of were'nt the originator of an idea, dont let them edit/delete it. just like or comment it
       else {
-        console.log("not user so rendering normal likn")
         roomContent = (
           <div className="room pure-u-1">
             <a href="#" onClick={this.gotoRoom}>{this.props.name}</a>
@@ -95,7 +93,6 @@ app.Room = React.createClass({
   },
 
   delete: function(e) {
-    console.log("trying to delete")
     e.preventDefault();
     if (this.isMounted()) {
       app.RoomActions.delete({ id: this.props._id, owner: this.props.owner });

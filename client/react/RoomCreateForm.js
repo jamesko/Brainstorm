@@ -11,20 +11,20 @@ app.RoomCreateForm = React.createClass({
   handleSubmit: function(e) {
     e.preventDefault();
 
-    var roomName = this.refs.name.getDOMNode();
+    var name = this.refs.name.getDOMNode();
 
-    roomName.value = '';
+
 
     // if editing send info to edit method in IdeaActions
     if (this.props.editing) {
-      // console.log(name.value);
+      // console.log('wtf')
       // debugger
       var room = {id: this.props._id};
       room.owner = this.props.owner;
-      // room.name = name.value.trim();
+      room.name = name.value.trim();
       app.RoomActions.edit(room);
     } else { // else an idea is being created
-      app.RoomActions.create(roomName.value.trim());
+      app.RoomActions.create(name.value.trim());
     }
     // clear the value in the input
     name.value = '';
