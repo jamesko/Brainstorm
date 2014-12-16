@@ -46,7 +46,7 @@ module.exports = function(app) {
   passport.use(new GitHubStrategy({
       clientID: 'c89845e3280771d24f9d',
       clientSecret: 'f85688ce214114d86cef84c232575c413ef51685',
-      callbackURL: 'http://brainstorming.azurewebsites.net/auth/callback'
+      callbackURL: 'http://agile-reaches-5003.herokuapp.com/auth/callback'
     },
     function(accessToken, refreshToken, profile, done) {
       User.findOne({username: profile.username}, function(err, user) {
