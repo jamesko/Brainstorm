@@ -115,7 +115,7 @@ app.Idea = React.createClass({
   delete: function(e) {
     e.preventDefault();
     if (this.isMounted()) {
-      app.RoomActions.delete({ id: this.props._id, owner: this.props.owner });
+      app.IdeaActions.delete({ id: this.props._id, owner: this.props.owner });
     }
   }
 });

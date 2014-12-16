@@ -74,16 +74,12 @@ app.RoomStore = _.extend({}, EventEmitter.prototype, {
   },
 
   delete: function(room) {
-    console.log('in delete')
-      console.log(room)
-
     $.ajax({
       type: 'DELETE',
       url: '/rooms/' + room.id,
       data: room
     })
     .done(function(oldId) {
-      console.log("done with deletion")
       // find deleted room by oldId in _rooms and remove
       this._rooms.forEach(function(room, index) {
         if(room._id === oldId._id) {
