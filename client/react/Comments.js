@@ -29,14 +29,16 @@ app.Comments = React.createClass({
     var comments;
     var commentForm;
     var showCommentsButton;
+
     //display comments if we are displaying, otherwise show buttons
     if (this.state.displaying){
       commentForm = <app.CommentForm idea_id={this.props.idea_id} />
       comments = [];
       //render a comment component for each comment
       this.state.comments.forEach(function (comment) {
+        console.log(comment)
         comments.push(
-          <app.Comment name={comment.name} key={comment._id} _id={comment._id} idea_id={comment.idea_id} />
+          <app.Comment ownerName={comment.ownerName} name={comment.name} key={comment._id} _id={comment._id} idea_id={comment.idea_id} />
         );
       });
     }

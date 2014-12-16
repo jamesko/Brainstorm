@@ -54,12 +54,13 @@ app.CommentStore = _.extend({}, EventEmitter.prototype, {
     }.bind(this));
   },
 
-  create: function (idea_id, name) {
+  create: function (idea_id, name, ownerName) {
     $.ajax({
       type: 'POST',
       url: '/comments/' + idea_id,
       data: {
-        name: name
+        name: name,
+        ownerName: ownerName
       }
     })
     .done(function (comment) {
@@ -74,12 +75,13 @@ app.CommentStore = _.extend({}, EventEmitter.prototype, {
     });
   },
 
-  edit: function (_id, name) {
+  edit: function (_id, name, ownerName) {
     $.ajax({
       type: 'PUT',
       url: '/comments/' + _id,
       data: {
-        name: name
+        name: name,
+        ownerName: ownerName
       }
     })
     .done(function (commentEdit) {
@@ -87,6 +89,7 @@ app.CommentStore = _.extend({}, EventEmitter.prototype, {
       this._comments.forEach(function (comment) {
         if (comment._id === commentEdit._id) {
           comment.name = commentEdit.name;
+          comment.ownerName = commentEdit.ownerName;
         }
       }.bind(this));
 
@@ -140,6 +143,7 @@ app.AppDispatcher.register(function (payload) {
   var _id;
   var idea_id;
   var name;
+  var ownerName;
 
   switch (action.actionType) {
     case app.CommentConstants.COMMENT_GET:
@@ -149,18 +153,20 @@ app.AppDispatcher.register(function (payload) {
     case app.CommentConstants.COMMENT_CREATE:
       idea_id = action.idea_id;
       name = action.name.trim();
+      ownerName = action.ownerName;
 
       if (name !== '') {
-        app.CommentStore.create(idea_id, name);
+        app.CommentStore.create(idea_id, name, ownerName);
       }
       break;
 
     case app.CommentConstants.COMMENT_EDIT:
       _id = action._id;
       name = action.name.trim();
+      ownerName = action.ownerName;
 
       if (name !== '') {
-        app.CommentStore.edit(_id, name);
+        app.CommentStore.edit(_id, name, ownerName);
       }
       break;
 

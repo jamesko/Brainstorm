@@ -10,6 +10,7 @@ module.exports = {
     comment.name = req.body.name;
     comment.idea = req.params.idea_id;
     comment.owner = req.user._id;
+    comment.ownerName = req.user.socialData.name;
     // comment.idea = req.body.ideaId;
     // comment.owner = req.body.userId;
 
@@ -61,7 +62,8 @@ module.exports = {
     editComment({
       _id: req.params.comment_id
     },{
-      name: req.body.name
+      name: req.body.name,
+      ownerName: req.body.ownerName
     }).then(function (comment) {
         if (comment) {
           res.json(comment);

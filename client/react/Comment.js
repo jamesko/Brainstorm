@@ -2,7 +2,8 @@ app.Comment = React.createClass({
   getInitialState: function() {
     // set initial editing state to false
     return {
-      editing: false
+      editing: false,
+      currentUser: app.UserStore.get()
     };
   },
 
@@ -20,7 +21,7 @@ app.Comment = React.createClass({
 
     return (
       <div>
-        <h3 ref="body">{this.props.name}</h3>
+        <h5 ref="body">{this.props.ownerName}: {this.props.name}</h5>
         <form className="pure-form formEditComment" >
           {editForm}
           <button className="pure-button" onClick={this.edit}>{ this.state.editing ? 'Cancel' : 'Edit Comment'}</button>
