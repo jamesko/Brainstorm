@@ -11,6 +11,7 @@ app.RoomStore = _.extend({}, EventEmitter.prototype, {
       url: '/rooms'
     })
     .done(function(rooms) {
+      console.log(rooms)
       this._rooms = rooms;
       this.emitChange();
     }.bind(this))
@@ -48,52 +49,52 @@ app.RoomStore = _.extend({}, EventEmitter.prototype, {
     });
   },
 
-  // edit: function(idea) {
-  //   $.ajax({
-  //     type: 'PUT',
-  //     url: '/ideas/' + idea.id,
-  //     data: idea
-  //   })
-  //   .done(function(ideaEdit) {
-  //     // look through the ideas until finding a match
-  //     // for id and then update the name property
-  //     this._ideas.forEach(function(idea) {
-  //       if(idea._id === ideaEdit._id) {
-  //         idea.name = ideaEdit.name;
+  edit: function(room) {
+    $.ajax({
+      type: 'PUT',
+      url: '/rooms/' + room.id,
+      data: room
+    })
+    .done(function(roomEdit) {
+      // look through the rooms until finding a match
+      // for id and then update the name property
+      this._rooms.forEach(function(room) {
+        if(room._id === roomEdit._id) {
+          room.name = roomEdit.name;
 
-  //         // broadcast that _ideas has changed
-  //         socket.emit('idea-change', this._ideas, this._room());
-  //         return this.emitChange();
-  //       }
-  //     }.bind(this));
-  //   }.bind(this))
-  //   .fail(function(error) {
-  //     console.error(error);
-  //   });
-  // },
+          // broadcast that _rooms has changed
+          socket.emit('room-change', this._rooms, this._room());
+          return this.emitChange();
+        }
+      }.bind(this));
+    }.bind(this))
+    .fail(function(error) {
+      console.error(error);
+    });
+  },
 
-  // delete: function(idea) {
-  //   $.ajax({
-  //     type: 'DELETE',
-  //     url: '/rooms/' + idea.id,
-  //     data: idea
-  //   })
-  //   .done(function(oldId) {
-  //     // find deleted idea by oldId in _ideas and remove
-  //     this._ideas.forEach(function(idea, index) {
-  //       if(idea._id === oldId._id) {
-  //         this._ideas.splice(index, 1);
+  delete: function(room) {
+    $.ajax({
+      type: 'DELETE',
+      url: '/rooms/' + room.id,
+      data: room
+    })
+    .done(function(oldId) {
+      // find deleted room by oldId in _rooms and remove
+      this._rooms.forEach(function(room, index) {
+        if(room._id === oldId._id) {
+          this._rooms.splice(index, 1);
 
-  //         // broadcast that _ideas has changed
-  //         socket.emit('idea-change', this._ideas, this._room());
-  //         return this.emitChange();
-  //       }
-  //     }.bind(this));
-  //   }.bind(this))
-  //   .fail(function(error) {
-  //     console.error(error);
-  //   });
-  // },
+          // broadcast that _rooms has changed
+          socket.emit('room-change', this._rooms, this._room());
+          return this.emitChange();
+        }
+      }.bind(this));
+    }.bind(this))
+    .fail(function(error) {
+      console.error(error);
+    });
+  },
 
   emitChange: function() {
     this.emit(CHANGE_EVENT);
@@ -118,6 +119,16 @@ app.AppDispatcher.register(function(payload) {
 
       if (name !== '') {
         app.RoomStore.create(name);
+      }
+      break;
+    case app.IdeaConstants.ROOM_EDIT:
+      if(action.room.name !== '') {
+        app.RoomStore.edit(action.room);
+      }
+      break;
+    case app.RoomConstants.ROOM_DELETE:
+      if(action.room.id !== '') {
+        app.RoomStore.delete(action.room);
       }
       break;
 
