@@ -44,9 +44,9 @@ module.exports = function(app) {
 
   var GitHubStrategy = require('passport-github').Strategy;
   passport.use(new GitHubStrategy({
-      clientID: '19e10f18979367efa3df',
-      clientSecret: '38d0670cabad59d8d87948060e832d666828d88d',
-      callbackURL: 'http://localhost:3000/auth/callback'
+      clientID: 'c89845e3280771d24f9d',
+      clientSecret: 'f85688ce214114d86cef84c232575c413ef51685',
+      callbackURL: 'http://brainstorming2.azurewebsites.net/auth/callback'
     },
     function(accessToken, refreshToken, profile, done) {
       User.findOne({username: profile.username}, function(err, user) {
