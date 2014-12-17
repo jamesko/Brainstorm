@@ -1,7 +1,8 @@
 var mongoose = require('mongoose');
 var db = {};
 
-mongoose.connect('mongodb://localhost/brainstormer');
+var connection = process.env.CUSTOMCONNSTR_MONGOLAB_URI;
+mongoose.connect(connection);
 var userModel = require('./users/user.server.model.js');
 var commentModel = require('./comments/comment.server.model.js');
 var ideaModel = require('./ideas/idea.server.model.js');
