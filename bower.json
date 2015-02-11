@@ -1,7 +1,7 @@
 {
   "name": "Brainstorm",
   "version": "1.0.0",
-  "homepage": "https://github.com/Kitchencooks/Brainstorm",
+  "homepage": "https://github.com/EJJ-Brainstorm/Brainstorm",
   "authors": [
     "Brett",
     "Dmitri",
@@ -9,7 +9,10 @@
     "Jason",
     "Pat",
     "Rory",
-    "Julie"
+    "Julie",
+    "James",
+    "Jared",
+    "Eric"
   ],
   "description": "Brainstorming app",
   "keywords": [
