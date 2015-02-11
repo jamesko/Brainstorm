@@ -3,9 +3,7 @@
 var User = require('../db.js').User;
 var passport = require('passport');
 var session = require('express-session');
-
-
-
+var config = require('../config/config');
 
 module.exports = function(app) {
   app.use(session({
@@ -44,9 +42,9 @@ module.exports = function(app) {
 
   var GitHubStrategy = require('passport-github').Strategy;
   passport.use(new GitHubStrategy({
-      clientID: 'c89845e3280771d24f9d',
-      clientSecret: 'f85688ce214114d86cef84c232575c413ef51685',
-      callbackURL: 'http://brainstorming.azurewebsites.net/auth/callback'
+      clientID: config.clientID,
+      clientSecret: config.clientSecret,
+      callbackURL: config.callbackURL
     },
     function(accessToken, refreshToken, profile, done) {
       User.findOne({username: profile.username}, function(err, user) {
