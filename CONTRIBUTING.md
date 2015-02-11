@@ -3,20 +3,26 @@
 ## General Workflow
 
 1. Fork the repo
-1. Cut a namespaced feature branch from master
-  - bug/...
-  - feat/...
-  - test/...
-  - doc/...
-  - refactor/...
-1. Make commits to your feature branch. Try to keep the number of commits to a minimum.  Follow the existing pattern for commmit naming.
+1. Cut a namespaced feature branch with initials from master
+  - GW_bug/...
+  - TJ_feat/...
+  - AL_test/...
+  - BO_doc/...
+  - JK_refactor/...
+1. Make commits to your feature branch. Prefix each commit like so:
+  - (feat) Add a new feature
+  - (fix) Fix inconsistent tests [Fixes #0]
+  - (refactor) ...
+  - (cleanup) ...
+  - (test) ...
+  - (doc) ...
 1. When you've finished with your fix or feature, Rebase upstream changes into your branch. submit a [pull request][]
    directly to master. Include a description of your changes.
 1. Your pull request will be reviewed by another maintainer. The point of code
    reviews is to help keep the codebase clean and of high quality and, equally
    as important, to help you grow as a programmer. If your code reviewer
    requests you make a change you don't understand, ask them why.
-1. Fix any issues raised by your code reviewer, and push your fixes as a single
+1. Fix any issues raised by your code reviwer, and push your fixes as a single
    new commit.
 1. Once the pull request has been reviewed, it will be merged by another member of the team. Do not merge your own commits.
 
@@ -64,8 +70,9 @@ changes.
 
 #### Commit Message Guidelines
 
-- Commit messages should be written in the present tense; e.g. "Fix continuous
-  integration script.".
+- Commit message starts with a capital letter
+- Commit message in present tense
+- Commit message does not in a '.'
 - The first line of your commit message should be a brief summary of what the
   commit changes. Aim for about 70 characters max. Remember: This is a summary,
   not a detailed description of everything that changed.
@@ -81,7 +88,11 @@ changes to the master branch into yours by running this command
 from your branch:
 
 ```bash
-git pull --rebase upstream master
+git fetch upstream master
+```
+
+```bash
+git rebase upstream/master
 ```
 
 This will start the rebase process. You must commit all of your changes
@@ -147,7 +158,7 @@ Thanks for contributing!
 
 This is just to help you organize your process
 
-- [ ] Did I cut my work branch off of master (don't cut new branches from existing feature branches)?
+- [ ] Did I cut my work branch off of master (don't cut new branches from existing feature brances)?
 - [ ] Did I follow the correct naming convention for my branch?
 - [ ] Is my branch focused on a single main change?
  - [ ] Do all of my changes directly relate to this change?

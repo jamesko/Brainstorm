@@ -8,17 +8,17 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/Kitchencooks/Brainstorm"
+    "url": "https://github.com/EJJ-Brainstorm/Brainstorm"
   },
   "keywords": [
     "Brainstorm"
   ],
-  "author": "Brett, Dmitri, Gunnari, Jason, Pat, Rory, Julie",
+  "author": "Brett, Dmitri, Gunnari, Jason, Pat, Rory, Julie, Eric, Jared, James",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/Kitchencooks/Brainstorm/issues"
+    "url": "https://github.com/EJJ-Brainstorm/Brainstorm/issues"
   },
-  "homepage": "https://github.com/Kitchencooks/Brainstorm",
+  "homepage": "https://github.com/EJJ-Brainstorm/Brainstorm",
   "devDependencies": {
     "browser-sync": "^1.7.2",
     "chai": "^1.10.0",

@@ -1,7 +1,10 @@
 node_modules/
-client/app/react/.module-cache
+client/lib/
+client/app/react/
 production/
 npm-debug.log
 .DS_Store
 .floo
 .flooignore
+server/config/config.js
+.idea
