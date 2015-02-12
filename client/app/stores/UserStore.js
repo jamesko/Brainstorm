@@ -27,6 +27,7 @@ app.UserStore = _.extend({}, EventEmitter.prototype, {
     .done(function(user) {
       this._user = user;
       this.emitChange();
+      window.location.href = "/";
     }.bind(this))
     .fail(function(err) {
       console.log(err);
