@@ -4,7 +4,8 @@ var User = require('../db.js').User;
 var passport = require('passport');
 var session = require('express-session');
 
-var configQuery = process.env ? "productionConfig" : "config";
+var configQuery = process.env.NODE_ENV ==='production' ? "productionConfig" : "config";
+
 var config = require('../config/'+ configQuery);
 
 module.exports = function(app) {
@@ -41,7 +42,7 @@ module.exports = function(app) {
       res.redirect('/');
     });
 
-  if (process.env) {
+  if (process.env.NODE_ENV ==='production') {
     var strategyConfiguration = {
       clientID: config.clientIDpro,
       clientSecret: config.clientSecretpro,
