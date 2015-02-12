@@ -44,6 +44,10 @@ gulp.task('karma', shell.task([
   'karma start'
 ]));
 
+gulp.task('bower', shell.task([
+  'bower install'
+]));
+
 gulp.task('karma-auto', function (done) {
   karma.start({
     configFile: __dirname + '/karma.conf.js',
@@ -83,3 +87,7 @@ gulp.task('production', ['usemin'], function () {
 });
 
 gulp.task('default', ['jsx-auto','start']);
+
+gulp.task('heroku:production', ['bower', 'jsx'], function() {
+  nodemon({script: 'index.js', ignore: 'node_modules/**/*.js'});
+})
