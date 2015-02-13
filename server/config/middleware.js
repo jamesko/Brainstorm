@@ -7,6 +7,7 @@ module.exports = function(app, express) {
   var roomRouter = express.Router();
   var userRouter = express.Router();
   var interestRouter = express.Router();
+  var brainswarmRouter = express.Router();
 
   app.use(morgan('dev'));
   // Returns middleware that only parses urlencoded bodies
@@ -24,10 +25,12 @@ module.exports = function(app, express) {
   app.use('/rooms', roomRouter);
   app.use('/users', userRouter);
   app.use('/interest', interestRouter);
+  app.use('/brainswarms', brainswarmRouter);
 
   require('../comments/commentRoutes.js')(commentRouter);
   require('../ideas/ideaRoutes.js')(ideaRouter);
   require('../rooms/roomRoutes.js')(roomRouter);
   require('../users/userRoutes.js')(userRouter);
   require('../interests/interestRoutes.js')(interestRouter);
+  require('../brainswarms/brainswarmRoutes.js')(brainswarmRouter);
 };

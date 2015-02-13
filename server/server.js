@@ -9,6 +9,7 @@ var io = require('socket.io')(server);
 
 
 io.on('connection', function(client) {
+  console.log('i joined')
   client.on('join', function(room) {
     client.join(room);
   });
@@ -27,6 +28,10 @@ io.on('connection', function(client) {
 
   client.on('room-change', function(currentRooms) {
     client.broadcast.emit('room-change', currentRooms);
+  });
+  // Not sure if we should broadcast this in a room
+  client.on('brainswarm-change', function(currentBrainswarms) {
+    client.broadcast.emit('brainswarm-change', currentBrainswarms);
   });
 });
 
