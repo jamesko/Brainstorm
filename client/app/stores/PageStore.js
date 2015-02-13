@@ -91,5 +91,6 @@ page('/rooms/:roomId', function(ctx){
 });
 
 page('/brainswarms/:brainswarmId', function(ctx) {
+  console.log('this is ctx', ctx);
   app.PageStore.brainswarms(ctx.params.brainswarmId)
 });
