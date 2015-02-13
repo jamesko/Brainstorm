@@ -12,10 +12,12 @@ var commentModel = require('./comments/comment.server.model.js');
 var ideaModel = require('./ideas/idea.server.model.js');
 var roomModel = require('./rooms/room.server.model.js');
 var interestModel = require('./interests/interest.server.model.js');
+var brainswarmModel = require('./brainswarms/brainswarm.server.model.js');
 db.User = mongoose.model('User');
 db.Comment = mongoose.model('Comment');
 db.Idea = mongoose.model('Idea');
 db.Room = mongoose.model('Room');
 db.Interest = mongoose.model('Interest');
+db.Brainswarm = mongoose.model('Brainswarm');
 
 module.exports = db;
