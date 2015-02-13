@@ -10,6 +10,10 @@ app.PageStore = _.extend({}, EventEmitter.prototype, {
     //rooms route needs the roomId to route to
     rooms: function (roomId) {
       return '/rooms/'+roomId;
+    },
+
+    brainswarms: function (brainswarmId) {
+      return '/brainswarms/'+brainswarmId
     }
 
   },
@@ -22,6 +26,10 @@ app.PageStore = _.extend({}, EventEmitter.prototype, {
   //dispatch event to render rooms
   rooms: function (roomId) {
     this.emitChange('room', roomId);
+  },
+
+  brainswarms: function (brainswarmId) {
+    this.emitChange('brainswarm', brainswarmId)
   },
 
   emitChange: function(){
@@ -80,4 +88,8 @@ page('/welcome', function(){
 //on rooms route: call rooms route and pass it room id
 page('/rooms/:roomId', function(ctx){
   app.PageStore.rooms(ctx.params.roomId);
+});
+
+page('/brainswarms/:brainswarmId', function(ctx) {
+  app.PageStore.brainswarms(ctx.params.brainswarmId)
 });

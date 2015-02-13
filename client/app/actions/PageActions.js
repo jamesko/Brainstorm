@@ -10,5 +10,14 @@ app.PageActions = {
       actionType: app.PageConstants.GETROOMDATA,
       room_id: room_id
     });
+  },
+  getBrainswarmData: function(brainswarm_id) {
+    app.AppDispatcher.handleViewAction({
+      actionType: app.PageConstants.GETBRAINWARMDATA,
+      brainswarm_id: brainswarm_id
+    });
   }
+
 };
+
+// getBrainswarmData to direct people to a brainswarm

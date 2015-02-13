@@ -17,3 +17,5 @@ if (document.location.hash.substr(3, 5) === 'rooms'){
 
   });
 }
+
+// possibly add a brainswarm in here for when user opens app on a brainswarm url

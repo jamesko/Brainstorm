@@ -63,6 +63,7 @@ app.Idea = React.createClass({
               <div className="pure-u-1-1 auth-check">
                 <button className="button-small pure-button pure-button-primary" onClick={this.edit}>{ this.state.editing ? 'Cancel' : 'Edit Idea'}</button>
                 <button className="button-small pure-button pure-button-primary" onClick={this.delete}>Delete Idea</button>
+                <button className="button-small pure-button pure-button-primary" onClick={this.brainswarm}>Brainswarm</button>
               </div>
 
               <div className="pure-u-1-1 auth-check comments">
@@ -117,6 +118,28 @@ app.Idea = React.createClass({
     if (this.isMounted()) {
       app.IdeaActions.delete({ id: this.props._id, owner: this.props.owner });
     }
+  },
+  brainswarm: function(e) {
+    e.preventDefault();
+    var brainswarmName = this.props.name + "_brainswarm";
+    var name = this.props.name;
+    console.log('this is name: ', name);
+    app.BrainswarmActions.create(this.props._id, brainswarmName);
+    // CREATE THE BRAINSWARM
+    // 1. make a brainswarm action
+    // 2. within the brainswarm store
+    //  -within the store, make a post request to server to create brainswarm
+    //
+    // NOT NAVIGATE TO THE BRAINSWARM
+    console.log(e);
+    console.log(this.isMounted());
+    console.log(this.props._id);
+    // Put page navigation
+    // app.PageActions.navigate({
+    //   dest: 'brainswarms',
+    //   props: brainswarm.id
+    // });
+
   }
 });
 
