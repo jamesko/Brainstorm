@@ -25,7 +25,7 @@ gulp.task('start', ['serve'], function() {
     notify: true,
     injectChanges: true,
     files: paths.scripts.concat(paths.html, paths.styles),
-    proxy: 'localhost:3000'
+    proxy: 'localhost:8000'
   });
 });
 
@@ -86,7 +86,7 @@ gulp.task('production', ['usemin'], function () {
   nodemon({script: 'productionIndex.js', ignore: 'node_modules/**/*.js'});
 });
 
-gulp.task('default', ['jsx-auto','start']);
+gulp.task('default', ['jsx', 'start']);
 
 gulp.task('heroku:production', ['bower', 'jsx'], function() {
   nodemon({script: 'index.js', ignore: 'node_modules/**/*.js'});
