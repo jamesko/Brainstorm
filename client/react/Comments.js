@@ -43,10 +43,10 @@ app.Comments = React.createClass({
       });
     }
 
-    showCommentsButton = <button className="pure-button" onClick={this.show}>{this.state.displaying? 'Hide' : 'Show'} Comments</button>
+    showCommentsButton = <button className="fa fa-comments-o" onClick={this.show}>{this.state.displaying? 'Hide' : ''}</button>
 
     return (
-      <div ref="body">
+      <div ref="body" style={{display:"inline"}}>
         { showCommentsButton }
         { comments }
         { commentForm }

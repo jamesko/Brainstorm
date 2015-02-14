@@ -29,7 +29,7 @@ app.Ideas = React.createClass({
     });
     return (
 
-      <div ref="body">
+      <div className = "stickyNotes" ref="body">
         { ideas }
       </div>
     );
