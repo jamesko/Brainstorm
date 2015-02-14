@@ -31,8 +31,8 @@ app.Idea = React.createClass({
   render: function() {
     var ideaContent;
     var editForm;
-    var currentUser = this.state.currentUser
-    var ideaOwner = this.props.owner
+    var currentUser = this.state.currentUser;
+    var ideaOwner = this.props.owner;
 
     // if editing render edit form otherwise render "Edit Idea" button
     if (this.state.editing) {
@@ -121,10 +121,18 @@ app.Idea = React.createClass({
   },
   brainswarm: function(e) {
     e.preventDefault();
+
     var brainswarmName = this.props.name + "_brainswarm";
     var name = this.props.name;
-    console.log('this is name: ', name);
-    app.BrainswarmActions.create(this.props._id, brainswarmName);
+    var brainswarm = app.BrainswarmStore.findBrainswarm(this.props._id);
+    if (brainswarm){
+      // get a specific brainstorm
+      // REFACTOR TO USE AN ACTION
+      console.log("going to previous brainswarm");
+      app.BrainswarmStore.visitBrainswarm(brainswarm._id);
+    } else {
+      app.BrainswarmActions.create(this.props._id, brainswarmName);
+    }
     // CREATE THE BRAINSWARM
     // 1. make a brainswarm action
     // 2. within the brainswarm store

@@ -77,7 +77,8 @@ app.BrainstormApp = React.createClass({
     } else { // brainswarm
      currentView = (
       <div>
-        <h1> brainswarm!! we made it! </h1>
+        <app.Brainswarm _id={this.state.props}/>
+
       </div>
      );
     }

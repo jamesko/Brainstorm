@@ -4,15 +4,14 @@ var Q = require('q');
 module.exports = {
 
   newBrainswarm: function(req, res, next) {
-    console.log("brainswarm post");
+
     var brainswarm = {};
 
     //console.log('this is req: ',req);
     brainswarm.name = req.body.name;
     // need to send idea in ajax request within brainswarm store
     brainswarm.idea = req.params.idea_id;
-   // console.log(req);
-    console.log(brainswarm);
+
     // Possibly take out user information.
     brainswarm.ownerName = req.user.socialData.name;
     brainswarm.owner = req.user._id;
