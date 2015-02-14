@@ -1,5 +1,5 @@
 
-function createMap(brainswarmId){
+function createMap(brainswarmId, brainswarm){
 
   document.onload = (function(d3, saveAs, Blob, undefined){
     "use strict";
@@ -119,14 +119,8 @@ function createMap(brainswarmId){
         });
         var data = window.JSON.stringify({"nodes": thisGraph.nodes, "edges": saveEdges});
         console.log("passed in brainswarmId", brainswarmId);
-        $.ajax({
-          type: 'PUT',
-          url: '/brainswarms/' + brainswarmId,
-          data: {map: data},
-          success: function(data) {
-            console.log("worked")
-          }
-        });
+        app.BrainswarmActions.edit(brainswarmId, data);
+
         //var blob = new Blob([window.JSON.stringify({"nodes": thisGraph.nodes, "edges": saveEdges})], {type: "text/plain;charset=utf-8"});
         //console.log(blob);
         //saveAs(blob, "mydag.json");
@@ -598,17 +592,45 @@ function createMap(brainswarmId){
         yLoc = 100;
 
     // initial node data
-    var nodes = [{title: "new concept", id: 0, x: xLoc, y: yLoc},
-                 {title: "new concept", id: 1, x: xLoc, y: yLoc + 200}];
-    var edges = [{source: nodes[1], target: nodes[0]}];
 
 
+    //var brainswarmName = currentBrainswarm.name;
+    //// somehow get the idea data
+    //// with react -check to see if brainswarm has been made.
+    //  // if brainswarm not made display just default
+    //  // if made then either make ajax call to get map or flux to get map.
+    //    // iterate through map to create nodes
+    // brainswarmName.slice(0, brainswarmName.length -11)
+    // if (brainswarm) then map
+    // else var nodes = .... var edges = ...
+    // var nodes = [{title: brainswarm.name.slice(0, brainswarmName.length -11), id: 0, x: xLoc, y: yLoc}];
+    var ideaName = brainswarm.name.slice(0, brainswarm.name.length -11);
+    console.log("idea name 608", ideaName);
+    console.log("the map", brainswarm.map);
+    var nodes;
+    var edges;
+    if (brainswarm.map){
+      nodes = JSON.parse(brainswarm.map).nodes;
+      edges = JSON.parse(brainswarm.map).edges;
+      for (var i =  0; i < edges.length; i++){
+        var source = edges[i].source;
+        var target = edges[i].target;
+        edges[i].source = nodes[source];
+        edges[i].target = nodes[target];
+      }
+    } else {
+      nodes = [{title: ideaName, id: 0, x: xLoc, y: yLoc}];
+      edges = [{source: nodes[0], target: nodes[0]}];
+    }
+      console.log('this is node', nodes);
+      console.log('this is edge', edges);
+    //{title: "new concept", id: 1, x: xLoc, y: yLoc + 200}
     /** MAIN SVG **/
     var svg = d3.select("#graph").append("svg")
           .attr("width", width)
           .attr("height", height);
     var graph = new GraphCreator(svg, nodes, edges);
-        graph.setIdCt(2);
+        graph.setIdCt(1);
     graph.updateGraph();
   })(window.d3, window.saveAs, window.Blob);
 
@@ -618,6 +640,17 @@ function createMap(brainswarmId){
 
 
 app.Brainswarm = React.createClass({
+
+  getInitialState: function(){
+    // var currentBrainswarm = app.BrainswarmActions.getBrainswarm(this.props._id);
+    var currentBrainswarm = app.BrainswarmStore.getBrainswarm(this.props._id);
+    console.log('this is brainswarm: ', currentBrainswarm);
+
+    return {
+      currentBrainswarm: app.BrainswarmStore.getBrainswarm(this.props._id)
+    }
+
+  },
 
   render: function(){
     return (
@@ -637,9 +670,14 @@ app.Brainswarm = React.createClass({
     );
   },
 
-  componentDidMount: function(){
 
-    createMap(this.props._id);
+
+  componentDidMount: function(){
+    console.log('this is props',this.props);
+    // pass in this.state.currentBrainswarm
+    console.log("states", this.state.currentBrainswarm);
+    createMap(this.props._id, this.state.currentBrainswarm);
+
   }
 
 });

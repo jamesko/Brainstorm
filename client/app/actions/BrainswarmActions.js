@@ -7,10 +7,25 @@ app.BrainswarmActions = {
     });
   },
 
-  edit: function(brainswarm) {
+  edit: function(brainswarmId, map) {
     app.AppDispatcher.handleViewAction({
       actionType: app.BrainswarmConstants.BRAINSWARM_EDIT,
-      brainswarm: brainswarm
+      brainswarmId: brainswarmId,
+      map: map
     });
+  },
+
+  getBrainswarm: function(brainswarmId) {
+    app.AppDispatcher.handleViewAction({
+      actionType: app.BrainswarmConstants.BRAINSWARM_GET,
+      brainswarmId: brainswarmId
+    })
+  },
+
+  visit: function(brainswarmId) {
+    app.AppDispatcher.handleViewAction({
+      actionType: app.BrainswarmConstants.BRAINSWARM_VISIT,
+      brainswarmId: brainswarmId
+    })
   }
 };
