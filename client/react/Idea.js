@@ -51,36 +51,35 @@ app.Idea = React.createClass({
       var editableOption = (<span></span>);
       if (currentUser._id === ideaOwner) {
         editableOption = (
-              <div className="auth-check">
-                <button className="" onClick={this.edit}>{ this.state.editing ? 'Cancel' : 'Edit Idea'}</button>
-                <button className="" onClick={this.delete}>Delete Idea</button>
-        <button className="" onClick={this.brainswarm}>Brainswarm</button>
+              <div className="auth-check" style={{display:"inline"}}>
+                <button className="fa fa-pencil-square-o" onClick={this.edit}> { this.state.editing ? 'Cancel' : ''} </button>
+                <button className="fa fa-trash-o" onClick={this.delete}></button>                
               </div>
           )
       }      
     ideaContent = (
       <div className="idea">
-        <form className="">
-          <div className="">
-            <h2 ref="body">{this.props.ownerName}: {this.props.name}</h2>
-            {editForm}
-          </div>
-          <div className="auth-check watch">
-            <app.Interest idea_id={this.props._id} />
-          </div>
-          {editableOption}
-          <div className="auth-check comments">
-            <app.Comments idea_id={this.props._id} />
-          </div>
-        </form>
+        <a href="#">
+          <form>
+            <div>
+              <h2 ref="body">{this.props.name}</h2>
+              <span>{this.props.ownerName}</span>
+              <div className="auth-check watch" style={{display:"inline"}}>
+                <app.Interest idea_id={this.props._id} />
+              </div>
+              {editForm}
+            </div>            
+            {editableOption}
+            <button className="brainSwarm" style={{display:"inline"}} onClick={this.brainswarm}>Brainswarm</button>
+            <div className="auth-check comments" style={{display:"inline"}}>
+              <app.Comments idea_id={this.props._id} />
+            </div>
+          </form>
+        </a>
       </div>
     )}
 
-    return (
-      <div className="stickyNote">
-        {ideaContent}
-      </div>
-    );
+    return (ideaContent);
   },
 
   edit: function(e) {
