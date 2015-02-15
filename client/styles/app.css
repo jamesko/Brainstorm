@@ -323,3 +323,17 @@ path.link.selected {
   border: none;
   background: none;
 }
+
+.roomTitle a{
+  text-align: right;
+  padding: 0px;
+  background: none;
+}
+
+.roomTitle h1 {
+  display: inline;
+}
+
+.roomTitle .gray{
+  color: #a9a9a9;
+}
