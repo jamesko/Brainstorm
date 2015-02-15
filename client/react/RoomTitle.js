@@ -24,11 +24,21 @@ app.RoomTitle = React.createClass({
   render: function() {
     var title;
     if (this.state.room){
-      title = (<h1>{ this.state.room.name }</h1>)
+      title = (
+        <div>               
+            <h1>{ this.state.room.name }</h1>
+            <div style={{display:"inline", float:"right"}}>
+              <a href="http://hangouts.google.com/start" target = "_blank">Start Google Hangout Click Here</a>
+              <div className = "gray">
+                post hangout in comments of idea you want to discuss
+              </div>
+            </div>            
+        </div>
+      )        
     }
 
     return (
-      <div className="room">
+      <div className="room roomTitle">
         {title}
       </div>
     );
