@@ -76,6 +76,7 @@ page({
   //prefix urls with #!
   hashbang: true,
 
+  popstate: true,
   //prevent page dispatching
   dispatch: false
 });
@@ -91,6 +92,6 @@ page('/rooms/:roomId', function(ctx){
 });
 
 page('/brainswarms/:brainswarmId', function(ctx) {
-  console.log('this is ctx', ctx);
+ // console.log('this is ctx', ctx);
   app.PageStore.brainswarms(ctx.params.brainswarmId)
 });

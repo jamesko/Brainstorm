@@ -116,9 +116,9 @@ app.Idea = React.createClass({
     //  -within the store, make a post request to server to create brainswarm
     //
     // NOT NAVIGATE TO THE BRAINSWARM
-    console.log(e);
-    console.log(this.isMounted());
-    console.log(this.props._id);
+    //console.log(e);
+    //console.log(this.isMounted());
+    //console.log(this.props._id);
     // Put page navigation
     // app.PageActions.navigate({
     //   dest: 'brainswarms',

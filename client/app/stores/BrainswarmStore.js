@@ -6,7 +6,7 @@ app.BrainswarmStore = _.extend({}, EventEmitter.prototype, {
   },
 
   getBrainswarm: function(brainswarmId) {
-   console.log("try to get brainswarm");
+  // console.log("try to get brainswarm");
    var brainswarms = this._brainswarms;
    for (var i =0; i< brainswarms.length; i++){
       if (brainswarms[i]._id === brainswarmId){
@@ -17,24 +17,24 @@ app.BrainswarmStore = _.extend({}, EventEmitter.prototype, {
 
   findBrainswarm: function(idea_id) {
     var brainswarms = this._brainswarms;
-    console.log("get here for brainswarms", brainswarms);
+   // console.log("get here for brainswarms", brainswarms);
     for (var i =0; i< brainswarms.length; i++){
        if (brainswarms[i].idea === idea_id){
-          console.log("these should be equal", brainswarms[i].idea, idea_id)
+      //    console.log("these should be equal", brainswarms[i].idea, idea_id)
          return brainswarms[i];
        }
     }
   },
 
   create: function(idea_id, name) {
-    console.log('this is create name', name);
+  //  console.log('this is create name', name);
     $.ajax({
       type: 'POST',
       url: '/brainswarms/' + idea_id,
       data: {name: name}
     })
     .done(function(brainswarm) {
-      console.log("made brainswarm",brainswarm)
+      //console.log("made brainswarm",brainswarm)
        this._brainswarms.push(brainswarm);
 
       // broadcast that _rooms has changed
