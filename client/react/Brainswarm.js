@@ -118,7 +118,6 @@ function createMap(brainswarmId, brainswarm){
           saveEdges.push({source: val.source.id, target: val.target.id});
         });
         var data = window.JSON.stringify({"nodes": thisGraph.nodes, "edges": saveEdges});
-        console.log("passed in brainswarmId", brainswarmId);
         app.BrainswarmActions.edit(brainswarmId, data);
 
         //var blob = new Blob([window.JSON.stringify({"nodes": thisGraph.nodes, "edges": saveEdges})], {type: "text/plain;charset=utf-8"});
@@ -604,6 +603,7 @@ function createMap(brainswarmId, brainswarm){
     // if (brainswarm) then map
     // else var nodes = .... var edges = ...
     // var nodes = [{title: brainswarm.name.slice(0, brainswarmName.length -11), id: 0, x: xLoc, y: yLoc}];
+    console.log('THIS IS BNAME',brainswarm.name);
     var ideaName = brainswarm.name.slice(0, brainswarm.name.length -11);
     console.log("idea name 608", ideaName);
     console.log("the map", brainswarm.map);
@@ -622,8 +622,8 @@ function createMap(brainswarmId, brainswarm){
       nodes = [{title: ideaName, id: 0, x: xLoc, y: yLoc}];
       edges = [{source: nodes[0], target: nodes[0]}];
     }
-      console.log('this is node', nodes);
-      console.log('this is edge', edges);
+      //console.log('this is node', nodes);
+      //console.log('this is edge', edges);
     //{title: "new concept", id: 1, x: xLoc, y: yLoc + 200}
     /** MAIN SVG **/
     var svg = d3.select("#graph").append("svg")
