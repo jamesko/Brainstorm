@@ -1,4 +1,7 @@
-app.PageNav = React.createClass({
+var React = require("react");
+var User = require("./User");
+
+var PageNav = React.createClass({
 
   handleWelcome:function(){
     //dispatch a navigate to welcome on click
@@ -14,10 +17,12 @@ app.PageNav = React.createClass({
           <button className="pure-button" ref="welcome" onClick={this.handleWelcome}>Home</button>
         </div>
         <div className="login pure-u-1-2">
-          <app.User />
+          <User />
         </div>
       </header>
     );
   }
 
 });
+
+module.exports = PageNav;

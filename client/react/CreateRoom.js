@@ -1,9 +1,14 @@
-app.CreateRoom = React.createClass({
+var React = require("react");
+var RoomCreateForm = require("./RoomCreateForm");
+
+var CreateRoom = React.createClass({
   render: function(){
     return (
       <div>
-        <app.RoomCreateForm />
+        <RoomCreateForm />
       </div>
     );
   }
 });
+
+module.exports = CreateRoom;

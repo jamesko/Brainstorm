@@ -1,4 +1,7 @@
-app.Ideas = React.createClass({
+var React = require("react");
+var Idea = require("./Idea")
+
+var Ideas = React.createClass({
   getInitialState: function () {
     return {
       ideas: app.IdeaStore.getAll()
@@ -8,9 +11,10 @@ app.Ideas = React.createClass({
   pauseUpdates: false,
 
   componentDidMount: function () {
+    var that = this;
     app.IdeaStore.addChangeListener(function() {
       if(this.isMounted()) {
-        if(!app.Ideas.pauseUpdates){
+        if(!that.pauseUpdates){
           this.setState({ ideas: app.IdeaStore.getAll() });
         }
       }
@@ -25,7 +29,7 @@ app.Ideas = React.createClass({
     this.state.ideas.forEach(function(idea) {
       if (idea.name.toLowerCase().indexOf(that.props.filterText.toLowerCase()) !== -1)
         if (idea.ownerName.toLowerCase().indexOf(that.props.filterNames.toLowerCase()) !== -1)
-          ideas.push(<app.Idea name={idea.name} ownerName={idea.ownerName} owner={idea.owner} room={idea.room} key={idea._id} _id={idea._id} />);
+          ideas.push(<Idea name={idea.name} ownerName={idea.ownerName} owner={idea.owner} room={idea.room} key={idea._id} _id={idea._id} />);
     });
     return (
 
@@ -34,4 +38,6 @@ app.Ideas = React.createClass({
       </div>
     );
   }
-})
+});
+
+module.exports = Ideas;

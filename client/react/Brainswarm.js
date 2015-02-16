@@ -185,7 +185,7 @@ function createMap(brainswarmId, brainswarm){
       nodeRadius: 50
     };
 
-    /* PROTOTYPE FUNCTIONS */
+    // PROTOTYPE FUNCTIONS
 
     GraphCreator.prototype.dragmove = function(d) {
       var thisGraph = this;
@@ -211,7 +211,7 @@ function createMap(brainswarmId, brainswarm){
       }
     };
 
-    /* select all text in element: taken from http://stackoverflow.com/questions/6139107/programatically-select-text-in-a-contenteditable-html-element */
+    // select all text in element: taken from http://stackoverflow.com/questions/6139107/programatically-select-text-in-a-contenteditable-html-element
     GraphCreator.prototype.selectElementContents = function(el) {
       var range = document.createRange();
       range.selectNodeContents(el);
@@ -221,7 +221,7 @@ function createMap(brainswarmId, brainswarm){
     };
 
 
-    /* insert svg line breaks: taken from http://stackoverflow.com/questions/13241475/how-do-i-include-newlines-in-labels-in-d3-charts */
+    // insert svg line breaks: taken from http://stackoverflow.com/questions/13241475/how-do-i-include-newlines-in-labels-in-d3-charts
     GraphCreator.prototype.insertTitleLinebreaks = function (gEl, title) {
       var words = title.split(/\s+/g),
           nwords = words.length;
@@ -315,7 +315,7 @@ function createMap(brainswarmId, brainswarm){
       }
     };
 
-    /* place editable text on node in place of svg text */
+    // place editable text on node in place of svg text
     GraphCreator.prototype.changeTextOfNode = function(d3node, d){
       var thisGraph= this,
           consts = thisGraph.consts,
@@ -574,7 +574,7 @@ function createMap(brainswarmId, brainswarm){
 
 
 
-    /**** MAIN ****/
+    // MAIN
 
     // warn the user when leaving
     window.onbeforeunload = function(){
@@ -625,7 +625,7 @@ function createMap(brainswarmId, brainswarm){
       //console.log('this is node', nodes);
       //console.log('this is edge', edges);
     //{title: "new concept", id: 1, x: xLoc, y: yLoc + 200}
-    /** MAIN SVG **/
+    // MAIN SVG
     var svg = d3.select("#graph").append("svg")
           .attr("width", width)
           .attr("height", height);
@@ -637,9 +637,9 @@ function createMap(brainswarmId, brainswarm){
 
 }
 
+var React = require("react");
 
-
-app.Brainswarm = React.createClass({
+var Brainswarm = React.createClass({
 
   getInitialState: function(){
     // var currentBrainswarm = app.BrainswarmActions.getBrainswarm(this.props._id);
@@ -681,3 +681,5 @@ app.Brainswarm = React.createClass({
   }
 
 });
+
+module.exports = Brainswarm;

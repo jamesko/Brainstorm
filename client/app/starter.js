@@ -1,5 +1,8 @@
+var React = require("react");
+var BrainstormApp = require("../react/BrainstormApp.js");
+
 React.render(
-  React.createElement(app.BrainstormApp, null),
+  <BrainstormApp />,
   document.getElementById('main')
 );
 

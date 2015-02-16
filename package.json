@@ -4,8 +4,20 @@
   "description": "Brainstorming app",
   "main": "index.js",
   "scripts": {
-    "test": "node index.js& ./node_modules/.bin/mocha --bail --reporter nyan specs/server/ServerSpec.js; pkill -n node;",
-    "start" : "node index.js"
+    "start": "watchify -d client/app/starter.js -o client/app/bundle.js -v",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "NODE_ENV=production browserify client/app/starter.js | uglifyjs -cm > client/app/bundle.js"
+  },
+  "browserify": {
+    "transform": [
+      [
+        "reactify",
+        {
+          "es6": true
+        }
+      ],
+      "envify"
+    ]
   },
   "repository": {
     "type": "git",
@@ -38,16 +50,14 @@
   },
   "dependencies": {
     "body-parser": "^1.10.0",
+    "browser-sync": "^1.7.2",
+    "browserify": "^8.1.3",
+    "d3": "^3.5.5",
+    "envify": "^3.2.0",
+    "events": "^1.0.2",
     "express": "^4.10.4",
     "express-session": "^1.9.3",
-    "mongodb": "^1.4.23",
-    "mongoose": "^3.8.20",
-    "morgan": "^1.5.0",
-    "passport": "^0.2.1",
-    "passport-github": "^0.1.5",
-    "q": "^1.1.2",
-    "socket.io": "^1.2.1",
-    "socket.io-client": "^1.2.1",
+    "flux": "^2.0.1",
     "gulp": "^3.8.10",
     "gulp-minify-css": "^0.3.11",
     "gulp-minify-html": "^0.1.7",
@@ -57,6 +67,20 @@
     "gulp-uglify": "^1.0.2",
     "gulp-usemin": "^0.3.8",
     "gulp-watch": "^3.0.0",
-    "browser-sync": "^1.7.2"
+    "jquery": "^2.1.3",
+    "mongodb": "^1.4.23",
+    "mongoose": "^3.8.20",
+    "morgan": "^1.5.0",
+    "page": "^1.6.1",
+    "passport": "^0.2.1",
+    "passport-github": "^0.1.5",
+    "q": "^1.1.2",
+    "react": "^0.12.2",
+    "reactify": "^1.0.0",
+    "socket.io": "^1.2.1",
+    "socket.io-client": "^1.3.4",
+    "underscore": "^1.7.0",
+    "watchify": "^2.3.0",
+    "wolfy87-eventemitter": "^4.2.11"
   }
 }
