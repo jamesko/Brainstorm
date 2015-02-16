@@ -1,4 +1,6 @@
-app.RoomTitle = React.createClass({
+var React = require("react");
+
+var RoomTitle = React.createClass({
   getInitialState: function() {
     return {
       room:
@@ -25,16 +27,16 @@ app.RoomTitle = React.createClass({
     var title;
     if (this.state.room){
       title = (
-        <div>               
+        <div>
             <h1>{ this.state.room.name }</h1>
             <div style={{display:"inline", float:"right"}}>
               <a href="http://hangouts.google.com/start" target = "_blank">Start Google Hangout Click Here</a>
               <div className = "gray">
                 post hangout in comments of idea you want to discuss
               </div>
-            </div>            
+            </div>
         </div>
-      )        
+      )
     }
 
     return (
@@ -43,4 +45,6 @@ app.RoomTitle = React.createClass({
       </div>
     );
   }
-})
+});
+
+module.exports = RoomTitle;

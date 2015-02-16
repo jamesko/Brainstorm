@@ -1,4 +1,7 @@
-app.Comment = React.createClass({
+var React = require("react");
+var CommentForm = require("./CommentForm");
+
+var Comment = React.createClass({
   getInitialState: function() {
     // set initial editing state to false
     return {
@@ -16,7 +19,7 @@ app.Comment = React.createClass({
     var editForm;
     // if editing render edit form otherwise render "Edit Idea" button
     if (this.state.editing) {
-      editForm = <app.CommentForm editing={this.state.editing} name={this.props.name} key={this.props._id} _id={this.props._id} />
+      editForm = <CommentForm editing={this.state.editing} name={this.props.name} key={this.props._id} _id={this.props._id} />
     }
 
     return (
@@ -45,3 +48,5 @@ app.Comment = React.createClass({
     }
   }
 });
+
+module.exports = Comment;

@@ -1,4 +1,14 @@
-app.BrainstormApp = React.createClass({
+var React = require("react");
+var CreateRoom = require("./CreateRoom");
+var Rooms = require("./Rooms");
+var RoomTitle = require("./RoomTitle");
+var CreateIdea = require("./IdeaForm");
+var SearchBar = require("./SearchBar");
+var Ideas = require("./Ideas");
+var Brainswarm = require("./Brainswarm");
+var PageNav = require("./PageNav");
+
+var BrainstormApp = React.createClass({
   getInitialState: function() {
     return {
       indexView: true,
@@ -54,21 +64,21 @@ app.BrainstormApp = React.createClass({
     if(this.state.indexView) { //thisIsHomePage
       currentView = (
         <div>
-          <app.CreateRoom />
-          <app.Rooms />
+          <CreateRoom />
+          <Rooms />
         </div>
       );
     } else if (this.state.roomView) { // must be a room
       currentView = (
         <div>
-          <app.RoomTitle room_id={this.state.props}/>
-          <app.CreateIdea room_id={this.state.props}/>
-          <app.SearchBar
+          <RoomTitle room_id={this.state.props}/>
+          <CreateIdea room_id={this.state.props}/>
+          <SearchBar
               filterText={this.state.filterText}
               filterNames={this.state.filterNames}
               onUserInput={this.handleUserInput}
           />
-          <app.Ideas room_id={this.state.props}
+          <Ideas room_id={this.state.props}
             filterText={this.state.filterText}
             filterNames={this.state.filterNames}
           />
@@ -77,7 +87,7 @@ app.BrainstormApp = React.createClass({
     } else { // brainswarm
      currentView = (
       <div>
-        <app.Brainswarm _id={this.state.props}/>
+        <Brainswarm _id={this.state.props}/>
 
       </div>
      );
@@ -85,9 +95,11 @@ app.BrainstormApp = React.createClass({
 
     return (
       <div className={'user-' + !!this.state.currentUser} >
-        <app.PageNav />
+        <PageNav />
         { currentView }
       </div>
     );
   }
 });
+
+module.exports = BrainstormApp;

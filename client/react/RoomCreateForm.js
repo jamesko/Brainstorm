@@ -1,4 +1,6 @@
-app.RoomCreateForm = React.createClass({
+var React = require("react");
+
+var RoomCreateForm = React.createClass({
   // handleSubmit: function(e) {
   //   e.preventDefault();
 
@@ -40,3 +42,5 @@ app.RoomCreateForm = React.createClass({
     );
   }
 });
+
+module.exports = RoomCreateForm;

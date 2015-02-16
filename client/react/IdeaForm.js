@@ -1,4 +1,6 @@
- app.IdeaForm = React.createClass({
+var React = require("react");
+
+var IdeaForm = React.createClass({
   handleSubmit: function(e) {
     e.preventDefault();
     // get the value out of the input with ref="name"
@@ -29,3 +31,5 @@
     );
   }
 });
+
+module.exports = IdeaForm;

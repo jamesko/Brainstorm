@@ -1,4 +1,6 @@
-app.UserAuth = React.createClass({
+var React = require("react");
+
+var UserAuth = React.createClass({
   getInitialState: function() {
     return { currentUser: app.UserStore.get() };
   },
@@ -29,3 +31,5 @@ app.UserAuth = React.createClass({
   }
 
 });
+
+module.exports = UserAuth;

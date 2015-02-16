@@ -1,4 +1,6 @@
-app.CommentForm = React.createClass({
+var React = require("react");
+
+var CommentForm = React.createClass({
 
   handleSubmit: function (e) {
     e.preventDefault();

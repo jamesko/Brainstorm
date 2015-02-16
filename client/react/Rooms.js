@@ -1,4 +1,7 @@
-app.Rooms = React.createClass({
+var React = require("react");
+var Room = require("./Room")
+
+var Rooms = React.createClass({
   getInitialState: function() {
     return {
       rooms: app.RoomStore.getAll()
@@ -17,7 +20,7 @@ app.Rooms = React.createClass({
   render: function() {
     var rooms = [];
     this.state.rooms.forEach(function(room) {
-      rooms.push(<app.Room name={room.name} ownerName={room.ownerName} owner={room.owner} key={room._id} _id={room._id} />);
+      rooms.push(<Room name={room.name} ownerName={room.ownerName} owner={room.owner} key={room._id} _id={room._id} />);
     });
     return (
       <div className="rooms">
@@ -25,4 +28,6 @@ app.Rooms = React.createClass({
       </div>
     );
   }
-})
+});
+
+module.exports = Rooms;

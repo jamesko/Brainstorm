@@ -1,4 +1,7 @@
-app.Room = React.createClass({
+var React = require("react");
+var RoomCreateForm = require("./RoomCreateForm")
+
+var Room = React.createClass({
   getInitialState: function() {
     // set initial editing state to false
     return {
@@ -47,7 +50,7 @@ app.Room = React.createClass({
     // console.log(roomOwner);
     // if editing render edit form otherwise render "Edit Idea" button
     if (this.state.editing) {
-      editForm = <app.RoomCreateForm editing="true" owner={this.props.owner} name={this.props.name} key={this.props._id} _id={this.props._id} />
+      editForm = <RoomCreateForm editing="true" owner={this.props.owner} name={this.props.name} key={this.props._id} _id={this.props._id} />
     }
 
     //if displaying form
@@ -99,3 +102,5 @@ app.Room = React.createClass({
     }
   }
 });
+
+module.exports = Room;

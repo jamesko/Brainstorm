@@ -1,4 +1,6 @@
-app.Interest = React.createClass({
+var React = require("react");
+
+var Interest = React.createClass({
   _liked: false,
 
   checkLiked: function (interests) {
@@ -51,3 +53,5 @@ app.Interest = React.createClass({
   }
 
 });
+
+module.exports = Interest;

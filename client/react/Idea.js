@@ -1,4 +1,10 @@
-app.Idea = React.createClass({
+var React = require("react");
+var IdeaForm = require("./IdeaForm");
+var Ideas = require("./Ideas");
+var Interest = require("./Interest");
+var Comments = require("./Comments");
+
+var Idea = React.createClass({
   getInitialState: function() {
     // set initial editing state to false
     return {
@@ -37,15 +43,15 @@ app.Idea = React.createClass({
     // if editing render edit form otherwise render "Edit Idea" button
     if (this.state.editing) {
 
-      app.Ideas.pauseUpdates = true;
+      Ideas.pauseUpdates = true;
 
-      editForm = <app.IdeaForm editing="true" owner={this.props.owner} name={this.props.name} key={this.props._id} _id={this.props._id} />
+      editForm = <IdeaForm editing="true" owner={this.props.owner} name={this.props.name} key={this.props._id} _id={this.props._id} />
 
     }
 
     //if displaying form
     if (this.state.displaying && currentUser) {
-        app.Ideas.pauseUpdates = false;
+        Ideas.pauseUpdates = false;
       // if there is a current user and their id is the same as the ideaOwner id, allow them to edit their own idea
       // othersise if they arent a current user of were'nt the originator of an idea, dont let them edit/delete it. just like or comment it
       var editableOption = (<span></span>);
@@ -53,11 +59,11 @@ app.Idea = React.createClass({
         editableOption = (
               <div className="auth-check" style={{display:"inline"}}>
                 <button className="fa fa-pencil-square-o" onClick={this.edit}> { this.state.editing ? 'Cancel' : ''} </button>
-                <button className="fa fa-trash-o" onClick={this.delete}></button>                
+                <button className="fa fa-trash-o" onClick={this.delete}></button>
               </div>
           )
       }
-      
+
     ideaContent = (
       <div className="idea">
         <a href="#">
@@ -66,14 +72,14 @@ app.Idea = React.createClass({
               <h2 ref="body">{this.props.name}</h2>
               <span>{this.props.ownerName}</span>
               <div className="auth-check watch" style={{display:"inline"}}>
-                <app.Interest idea_id={this.props._id} />
+                <Interest idea_id={this.props._id} />
               </div>
               {editForm}
-            </div>            
+            </div>
             {editableOption}
             <button className="brainSwarm" style={{display:"inline"}} onClick={this.brainswarm}>Brainswarm</button>
             <div className="auth-check comments" style={{display:"inline"}}>
-              <app.Comments idea_id={this.props._id} />
+              <Comments idea_id={this.props._id} />
             </div>
           </form>
         </a>
@@ -128,6 +134,7 @@ app.Idea = React.createClass({
   }
 });
 
+module.exports = Idea;
 
 //COMMAND TO POST IDEA ON BEHALF OF FAKE USER (DEVEVELOPMENT PURPOSES ONLY)
 // curl -H "Content-Type: application/json" -d '{"name":"theyll never catch me in this fox hole!","ownerName":"Saddam Hussein","room_id":"548a38cebcf20d5101e0e13c"}' http://localhost:3000/ideas/548a38cebcf20d510
