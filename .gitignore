@@ -8,3 +8,4 @@ npm-debug.log
 .flooignore
 server/config/config.js
 .idea
+client/app/bundle.js
