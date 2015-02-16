@@ -86,7 +86,7 @@ gulp.task('production', ['usemin'], function () {
   nodemon({script: 'productionIndex.js', ignore: 'node_modules/**/*.js'});
 });
 
-gulp.task('default', ['jsx', 'start']);
+gulp.task('default', ['start']);
 
 gulp.task('heroku:production', ['bower', 'jsx'], function() {
   nodemon({script: 'index.js', ignore: 'node_modules/**/*.js'});
