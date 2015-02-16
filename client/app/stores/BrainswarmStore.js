@@ -1,4 +1,11 @@
-app.BrainswarmStore = _.extend({}, EventEmitter.prototype, {
+var AppDispatcher = require("../dispatcher/AppDispatcher");
+var BrainswarmConstants = require("../constants/BrainswarmConstants");
+var PageActions = require("../actions/PageActions");
+var socket = io.connect();
+
+var CHANGE_EVENT = 'change';
+
+var BrainswarmStore = _.extend({}, EventEmitter.prototype, {
   _brainswarms: [],
 
   getAll: function() {
@@ -41,7 +48,7 @@ app.BrainswarmStore = _.extend({}, EventEmitter.prototype, {
       socket.emit('room-change', this._brainswarms);
       this.emitChange();
 
-      app.PageActions.navigate({
+      PageActions.navigate({
         dest: 'brainswarms',
         props: brainswarm._id
       });
@@ -90,7 +97,7 @@ app.BrainswarmStore = _.extend({}, EventEmitter.prototype, {
   },
 
   visitBrainswarm: function(brainswarmId){
-    app.PageActions.navigate({
+    PageActions.navigate({
       dest: 'brainswarms',
       props: brainswarmId
     });
@@ -110,34 +117,39 @@ app.BrainswarmStore = _.extend({}, EventEmitter.prototype, {
   }
 });
 
-app.AppDispatcher.register(function(payload) {
+AppDispatcher.register(function(payload) {
   var action = payload.action;
   var name;
 
   switch(action.actionType) {
-    case app.BrainswarmConstants.BRAINSWARM_CREATE:
+    case BrainswarmConstants.BRAINSWARM_CREATE:
       name = action.name.trim();
 
       if (name !== '') {
-        app.BrainswarmStore.create(action.idea_id, name);
+        BrainswarmStore.create(action.idea_id, name);
       }
-      break;
-
-    case app.BrainswarmConstants.BRAINSWARM_EDIT:
-        app.BrainswarmStore.edit(action.brainswarmId, action.map);
 
       break;
 
-    case app.BrainswarmConstants.BRAINSWARM_GET:
-      app.BrainswarmStore.getBrainswarm(action.brainswarmId);
+    case BrainswarmConstants.BRAINSWARM_EDIT:
+        BrainswarmStore.edit(action.brainswarmId, action.map);
+
+      break;
+
+    case BrainswarmConstants.BRAINSWARM_GET:
+      BrainswarmStore.getBrainswarm(action.brainswarmId);
+
      break;
 
-    case app.BrainswarmConstants.BRAINSWARM_VISIT:
-      app.BrainswarmStore.visitBrainswarm(action.brainswarmId);
+    case BrainswarmConstants.BRAINSWARM_VISIT:
+      BrainswarmStore.visitBrainswarm(action.brainswarmId);
+
      break;
 
     default:
       return true;
   }
 });
+
+module.exports = BrainswarmStore;
 

@@ -1,6 +1,8 @@
-app.BrainswarmConstants = {
+var BrainswarmConstants = {
   BRAINSWARM_CREATE: 'BRAINSWARM_CREATE',
   BRAINSWARM_EDIT: 'BRAINSWARM_EDIT',
   BRAINSWARM_GET: 'BRAINSWARM_GET',
   BRAINSWARM_VISIT: 'BRAINSWARM_VISIT'
 };
+
+module.exports = BrainswarmConstants;

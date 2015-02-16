@@ -1,8 +1,16 @@
-app.InterestStore = _.extend({}, EventEmitter.prototype, {
+var AppDispatcher = require("../dispatcher/AppDispatcher");
+var InterestConstants = require("../constants/InterestConstants");
+var PageConstants = require("../constants/PageConstants");
+var PageStore = require("./PageStore");
+var socket = io.connect();
+
+var CHANGE_EVENT = 'change';
+
+var InterestStore = _.extend({}, EventEmitter.prototype, {
   _interests: [],
 
   _room: function() {
-    return app.PageStore.currentRoute.props;
+    return PageStore.currentRoute.props;
   },
 
   getAll: function (idea_id) {
@@ -84,31 +92,31 @@ app.InterestStore = _.extend({}, EventEmitter.prototype, {
   }
 });
 
-app.AppDispatcher.register(function(payload) {
+AppDispatcher.register(function(payload) {
   var action = payload.action;
   var idea_id = action.idea_id;
   var _id;
 
   switch(action.actionType) {
-    case app.InterestConstants.INTEREST_GET:
-      app.InterestStore.all();
+    case InterestConstants.INTEREST_GET:
+      InterestStore.all();
       break;
 
-    case app.InterestConstants.INTEREST_CREATE:
+    case InterestConstants.INTEREST_CREATE:
       idea_id = action.idea_id;
 
-      app.InterestStore.create(idea_id);
+      InterestStore.create(idea_id);
       break;
 
-    case app.InterestConstants.INTEREST_DELETE:
+    case InterestConstants.INTEREST_DELETE:
       _id = action._id;
 
-      app.InterestStore.delete(_id);
+      InterestStore.delete(_id);
       break;
 
-    case app.PageConstants.GETROOMDATA:
+    case PageConstants.GETROOMDATA:
       if (action.room_id){
-        app.InterestStore.get(action.room_id);
+        InterestStore.get(action.room_id);
       }
       break;
 
@@ -116,3 +124,5 @@ app.AppDispatcher.register(function(payload) {
       return true;
   }
 });
+
+module.exports = InterestStore;

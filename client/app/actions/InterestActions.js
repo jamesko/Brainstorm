@@ -1,19 +1,24 @@
-app.InterestActions = {
+var AppDispatcher = require("../dispatcher/AppDispatcher");
+var InterestConstants = require("../constants/InterestConstants");
+
+var InterestActions = {
   get: function () {
-    app.AppDispatcher.handleViewAction({
-      actionType: app.InterestConstants.INTEREST_GET
+    AppDispatcher.handleViewAction({
+      actionType: InterestConstants.INTEREST_GET
     });
   },
   create: function (idea_id) {
-    app.AppDispatcher.handleViewAction({
-      actionType: app.InterestConstants.INTEREST_CREATE,
+    AppDispatcher.handleViewAction({
+      actionType: InterestConstants.INTEREST_CREATE,
       idea_id: idea_id
     });
   },
   delete: function (_id) {
-    app.AppDispatcher.handleViewAction({
-      actionType: app.InterestConstants.INTEREST_DELETE,
+    AppDispatcher.handleViewAction({
+      actionType: InterestConstants.INTEREST_DELETE,
       _id: _id
     });
   }
 };
+
+module.exports = InterestActions;

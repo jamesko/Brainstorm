@@ -1,4 +1,11 @@
-app.RoomStore = _.extend({}, EventEmitter.prototype, {
+var socket = io.connect();
+var AppDispatcher = require("../dispatcher/AppDispatcher");
+var RoomConstants = require("../constants/RoomConstants");
+var PageActions = require("../actions/PageActions");
+
+var CHANGE_EVENT = 'change';
+
+var RoomStore = _.extend({}, EventEmitter.prototype, {
   _rooms: [],
 
   getAll: function() {
@@ -39,7 +46,7 @@ app.RoomStore = _.extend({}, EventEmitter.prototype, {
       socket.emit('room-change', this._rooms);
       this.emitChange();
 
-      app.PageActions.navigate({
+      PageActions.navigate({
         dest: 'rooms',
         props: room._id
       });
@@ -109,26 +116,26 @@ app.RoomStore = _.extend({}, EventEmitter.prototype, {
   }
 });
 
-app.AppDispatcher.register(function(payload) {
+AppDispatcher.register(function(payload) {
   var action = payload.action;
   var name;
 
   switch(action.actionType) {
-    case app.RoomConstants.ROOM_CREATE:
+    case RoomConstants.ROOM_CREATE:
       name = action.name.trim();
 
       if (name !== '') {
-        app.RoomStore.create(name);
+        RoomStore.create(name);
       }
       break;
-    case app.RoomConstants.ROOM_EDIT:
+    case RoomConstants.ROOM_EDIT:
       if(action.room.name !== '') {
-        app.RoomStore.edit(action.room);
+        RoomStore.edit(action.room);
       }
       break;
-    case app.RoomConstants.ROOM_DELETE:
+    case RoomConstants.ROOM_DELETE:
       if(action.room.id !== '') {
-        app.RoomStore.delete(action.room);
+        RoomStore.delete(action.room);
       }
       break;
 
@@ -136,3 +143,5 @@ app.AppDispatcher.register(function(payload) {
       return true;
   }
 });
+
+module.exports = RoomStore;

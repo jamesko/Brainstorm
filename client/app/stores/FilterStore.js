@@ -1,4 +1,9 @@
-app.FilterStore = _.extend({}, EventEmitter.prototype, {
+var AppDispatcher = require("../dispatcher/AppDispatcher");
+var FilterConstants = require("../constants/FilterConstants");
+
+var CHANGE_EVENT = 'change';
+
+var FilterStore = _.extend({}, EventEmitter.prototype, {
 
   _filtered:[],
 
@@ -14,7 +19,7 @@ app.FilterStore = _.extend({}, EventEmitter.prototype, {
       this._filtered.splice(index, 1);
 
     }
-  }
+  },
 
 
   emitChange: function () {
@@ -30,13 +35,13 @@ app.FilterStore = _.extend({}, EventEmitter.prototype, {
   }
 });
 
-app.AppDispatcher.register(function (payload) {
+AppDispatcher.register(function (payload) {
   var action = payload.action;
   var name;
 
   switch (action.actionType) {
 
-    case app.FilerConstants.FILTER_NAME:
+    case FilerConstants.FILTER_NAME:
       id = action.id.trim();
 
       this._filtered.push(id);
@@ -47,13 +52,14 @@ app.AppDispatcher.register(function (payload) {
       // }
       break;
 
-    case app.FilerConstants.UNFILTER_NAME:
+    case FilerConstants.UNFILTER_NAME:
 
-      app.FilterStore.filter(action.)
-
+      FilterStore.filter(action.)
       break;
 
     default:
       return true;
   }
 });
+
+module.exports = FilterStore;

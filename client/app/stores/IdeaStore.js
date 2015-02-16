@@ -1,10 +1,16 @@
 var socket = io.connect();
+var AppDispatcher = require("../dispatcher/AppDispatcher");
+var IdeaConstants = require("../constants/IdeaConstants");
+var PageConstants = require("../constants/PageConstants");
+var PageStore = require("./PageStore");
 
-app.IdeaStore = _.extend({}, EventEmitter.prototype, {
+var CHANGE_EVENT = 'change';
+
+var IdeaStore = _.extend({}, EventEmitter.prototype, {
   _ideas: [],
 
   _room: function() {
-    return app.PageStore.currentRoute.props;
+    return PageStore.currentRoute.props;
   },
 
   getAll: function() {
@@ -133,34 +139,36 @@ app.IdeaStore = _.extend({}, EventEmitter.prototype, {
 
 // register a callback function with the AppDispatcher
 // that will respond to the IdeaConstants listed below
-app.AppDispatcher.register(function (payload) {
+AppDispatcher.register(function (payload) {
   var action = payload.action;
   var name;
 
   switch (action.actionType) {
-    case app.IdeaConstants.IDEA_CREATE:
+    case IdeaConstants.IDEA_CREATE:
       name = action.name.trim();
 
       if (name !== '') {
-        app.IdeaStore.create(action.room_id, name);
+        IdeaStore.create(action.room_id, name);
       }
       break;
-    case app.IdeaConstants.IDEA_EDIT:
+    case IdeaConstants.IDEA_EDIT:
       if(action.idea.name !== '') {
-        app.IdeaStore.edit(action.idea);
+        IdeaStore.edit(action.idea);
       }
       break;
-    case app.IdeaConstants.IDEA_DELETE:
+    case IdeaConstants.IDEA_DELETE:
       if(action.idea.id !== '') {
-        app.IdeaStore.delete(action.idea);
+        IdeaStore.delete(action.idea);
       }
       break;
-    case app.PageConstants.GETROOMDATA:
+    case PageConstants.GETROOMDATA:
       if (action.room_id){
-        app.IdeaStore.get(action.room_id);
+        IdeaStore.get(action.room_id);
       }
       break;
     default:
       return true;
   }
 });
+
+module.exports = IdeaStore;
