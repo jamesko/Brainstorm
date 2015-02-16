@@ -3,6 +3,10 @@ var IdeaForm = require("./IdeaForm");
 var Ideas = require("./Ideas");
 var Interest = require("./Interest");
 var Comments = require("./Comments");
+var UserStore = require("../stores/UserStore");
+var IdeaActions = require("../actions/IdeaActions");
+var BrainswarmStore = require("../stores/BrainswarmStore");
+var BrainswarmActions = require("../actions/BrainswarmActions");
 
 var Idea = React.createClass({
   getInitialState: function() {
@@ -11,7 +15,7 @@ var Idea = React.createClass({
       displaying: true,
       editing: false,
       filtered: false,
-      currentUser: app.UserStore.get()
+      currentUser: UserStore.get()
     };
   },
 
@@ -99,7 +103,7 @@ var Idea = React.createClass({
   delete: function(e) {
     e.preventDefault();
     if (this.isMounted()) {
-      app.IdeaActions.delete({ id: this.props._id, owner: this.props.owner });
+      IdeaActions.delete({ id: this.props._id, owner: this.props.owner });
     }
   },
   brainswarm: function(e) {
@@ -107,14 +111,14 @@ var Idea = React.createClass({
 
     var brainswarmName = this.props.name + "_brainswarm";
     var name = this.props.name;
-    var brainswarm = app.BrainswarmStore.findBrainswarm(this.props._id);
+    var brainswarm = BrainswarmStore.findBrainswarm(this.props._id);
     if (brainswarm){
       // get a specific brainstorm
       // REFACTOR TO USE AN ACTION
       console.log("going to previous brainswarm");
-      app.BrainswarmStore.visitBrainswarm(brainswarm._id);
+      BrainswarmStore.visitBrainswarm(brainswarm._id);
     } else {
-      app.BrainswarmActions.create(this.props._id, brainswarmName);
+      BrainswarmActions.create(this.props._id, brainswarmName);
     }
     // CREATE THE BRAINSWARM
     // 1. make a brainswarm action

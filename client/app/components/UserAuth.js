@@ -1,14 +1,15 @@
 var React = require("react");
+var UserStore = require("../stores/UserStore");
 
 var UserAuth = React.createClass({
   getInitialState: function() {
-    return { currentUser: app.UserStore.get() };
+    return { currentUser: UserStore.get() };
   },
 
   handleClick: function(e) {
     if(this.state.currentUser) {
       e.preventDefault();
-      app.UserStore.logout();
+      UserStore.logout();
     }
   },
 
@@ -22,12 +23,12 @@ var UserAuth = React.createClass({
   },
 
   componentDidMount: function() {
-    app.UserStore.addChangeListener(function() {
+    UserStore.addChangeListener(function() {
       if(this.isMounted()) {
-        this.setState({ currentUser: app.UserStore.get() });
+        this.setState({ currentUser: UserStore.get() });
       }
     }.bind(this));
-    app.UserStore.getCurrentUser();
+    UserStore.getCurrentUser();
   }
 
 });

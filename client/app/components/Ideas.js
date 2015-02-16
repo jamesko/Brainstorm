@@ -1,10 +1,11 @@
 var React = require("react");
-var Idea = require("./Idea")
+var Idea = require("./Idea");
+var IdeaStore = require("../stores/IdeaStore");
 
 var Ideas = React.createClass({
   getInitialState: function () {
     return {
-      ideas: app.IdeaStore.getAll()
+      ideas: IdeaStore.getAll()
     };
   },
 
@@ -12,10 +13,10 @@ var Ideas = React.createClass({
 
   componentDidMount: function () {
     var that = this;
-    app.IdeaStore.addChangeListener(function() {
+    IdeaStore.addChangeListener(function() {
       if(this.isMounted()) {
         if(!that.pauseUpdates){
-          this.setState({ ideas: app.IdeaStore.getAll() });
+          this.setState({ ideas: IdeaStore.getAll() });
         }
       }
     }.bind(this));

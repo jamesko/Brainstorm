@@ -1,8 +1,16 @@
-app.CommentStore = _.extend({}, EventEmitter.prototype, {
+var AppDispatcher = require("../dispatcher/AppDispatcher");
+var CommentConstants = require("../constants/CommentConstants");
+var PageConstants = require("../constants/PageConstants");
+var PageStore = require("./PageStore");
+var socket = io.connect();
+
+var CHANGE_EVENT = 'change';
+
+var CommentStore = _.extend({}, EventEmitter.prototype, {
   _comments: [],
 
   _room: function() {
-    return app.PageStore.currentRoute.props;
+    return PageStore.currentRoute.props;
   },
 
   getAll: function (idea_id) {
@@ -138,7 +146,7 @@ app.CommentStore = _.extend({}, EventEmitter.prototype, {
 
 });
 
-app.AppDispatcher.register(function (payload) {
+AppDispatcher.register(function (payload) {
   var action = payload.action;
   var _id;
   var idea_id;
@@ -146,39 +154,39 @@ app.AppDispatcher.register(function (payload) {
   var ownerName;
 
   switch (action.actionType) {
-    case app.CommentConstants.COMMENT_GET:
-      app.CommentStore.all();
+    case CommentConstants.COMMENT_GET:
+      CommentStore.all();
       break;
 
-    case app.CommentConstants.COMMENT_CREATE:
+    case CommentConstants.COMMENT_CREATE:
       idea_id = action.idea_id;
       name = action.name.trim();
       ownerName = action.ownerName;
 
       if (name !== '') {
-        app.CommentStore.create(idea_id, name, ownerName);
+        CommentStore.create(idea_id, name, ownerName);
       }
       break;
 
-    case app.CommentConstants.COMMENT_EDIT:
+    case CommentConstants.COMMENT_EDIT:
       _id = action._id;
       name = action.name.trim();
       ownerName = action.ownerName;
 
       if (name !== '') {
-        app.CommentStore.edit(_id, name, ownerName);
+        CommentStore.edit(_id, name, ownerName);
       }
       break;
 
-    case app.CommentConstants.COMMENT_DELETE:
+    case CommentConstants.COMMENT_DELETE:
       _id = action._id;
 
-      app.CommentStore.delete(_id);
+      CommentStore.delete(_id);
       break;
 
-    case app.PageConstants.GETROOMDATA:
+    case PageConstants.GETROOMDATA:
       if (action.room_id){
-        app.CommentStore.get(action.room_id);
+        CommentStore.get(action.room_id);
       }
       break;
 
@@ -187,3 +195,5 @@ app.AppDispatcher.register(function (payload) {
   }
 
 });
+
+module.exports = CommentStore;

@@ -1,4 +1,5 @@
 var React = require("react");
+var IdeaActions = require("../actions/IdeaActions");
 
 var IdeaForm = React.createClass({
   handleSubmit: function(e) {
@@ -11,9 +12,9 @@ var IdeaForm = React.createClass({
       var idea = {id: this.props._id};
       idea.owner = this.props.owner;
       idea.name = name.value.trim();
-      app.IdeaActions.edit(idea);
+      IdeaActions.edit(idea);
     } else { // else an idea is being created
-      app.IdeaActions.create(this.props.room_id, name.value.trim());
+      IdeaActions.create(this.props.room_id, name.value.trim());
     }
     // clear the value in the input
     name.value = '';

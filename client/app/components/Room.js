@@ -1,5 +1,9 @@
 var React = require("react");
-var RoomCreateForm = require("./RoomCreateForm")
+var RoomCreateForm = require("./RoomCreateForm");
+var UserStore = require("../stores/UserStore");
+var PageActions = require("../actions/PageActions");
+var IdeaStore = require("../stores/IdeaStore");
+var RoomActions = require("../actions/RoomActions");
 
 var Room = React.createClass({
   getInitialState: function() {
@@ -8,13 +12,13 @@ var Room = React.createClass({
       displaying: true,
       editing: false,
       filtered: false,
-      currentUser: app.UserStore.get()
+      currentUser: UserStore.get()
     };
   },
 
   gotoRoom: function(e){
     e.preventDefault();
-    app.PageActions.navigate({
+    PageActions.navigate({
       dest: 'rooms',
       props: this.props._id
     });
@@ -23,7 +27,7 @@ var Room = React.createClass({
     // add a change listener on the IdeaStore
     // this is needed when the edit comes back and emits a change
     // that will force the component to re-render
-    app.IdeaStore.addChangeListener(function() {
+    IdeaStore.addChangeListener(function() {
       if(this.isMounted()) {
         this.setState({editing: false});
       }
@@ -98,7 +102,7 @@ var Room = React.createClass({
   delete: function(e) {
     e.preventDefault();
     if (this.isMounted()) {
-      app.RoomActions.delete({ id: this.props._id, owner: this.props.owner });
+      RoomActions.delete({ id: this.props._id, owner: this.props.owner });
     }
   }
 });

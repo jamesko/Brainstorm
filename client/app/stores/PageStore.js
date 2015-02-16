@@ -1,4 +1,9 @@
-app.PageStore = _.extend({}, EventEmitter.prototype, {
+var AppDispatcher = require("../dispatcher/AppDispatcher");
+var PageConstants = require("../constants/PageConstants");
+
+var CHANGE_EVENT = 'change';
+
+var PageStore = _.extend({}, EventEmitter.prototype, {
 
   //define routes for PageStore
   routes: {
@@ -46,22 +51,22 @@ app.PageStore = _.extend({}, EventEmitter.prototype, {
 
 });
 
-app.AppDispatcher.register(function (payload) {
+AppDispatcher.register(function (payload) {
   var action = payload.action;
   var body;
 
   //listen for navigate action
   switch (action.actionType) {
-    case app.PageConstants.NAVIGATE:
+    case PageConstants.NAVIGATE:
 
       //get destination and properties from action
       body = action.body;
 
       //set currentRoute in store for views to access
-      app.PageStore.currentRoute = body;
+      PageStore.currentRoute = body;
 
       //route application
-      page(app.PageStore.routes[body.dest](body.props));
+      page(PageStore.routes[body.dest](body.props));
       break;
 
     default:
@@ -83,15 +88,17 @@ page({
 
 //on welcome route: call welcome route
 page('/welcome', function(){
-  app.PageStore.welcome();
+  PageStore.welcome();
 });
 
 //on rooms route: call rooms route and pass it room id
 page('/rooms/:roomId', function(ctx){
-  app.PageStore.rooms(ctx.params.roomId);
+  PageStore.rooms(ctx.params.roomId);
 });
 
 page('/brainswarms/:brainswarmId', function(ctx) {
  // console.log('this is ctx', ctx);
-  app.PageStore.brainswarms(ctx.params.brainswarmId)
+  PageStore.brainswarms(ctx.params.brainswarmId)
 });
+
+module.exports = PageStore;

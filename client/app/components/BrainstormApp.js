@@ -7,29 +7,33 @@ var SearchBar = require("./SearchBar");
 var Ideas = require("./Ideas");
 var Brainswarm = require("./Brainswarm");
 var PageNav = require("./PageNav");
+var UserStore = require("../stores/UserStore");
+var PageStore = require("../stores/PageStore");
+var PageActions = require("../actions/PageActions");
+var socket = io.connect();
 
 var BrainstormApp = React.createClass({
   getInitialState: function() {
     return {
       indexView: true,
       roomView: false,
-      currentUser: app.UserStore.get(),
+      currentUser: UserStore.get(),
       filterText: '',
       filterNames: ''
     };
   },
 
   componentDidMount: function () {
-    app.UserStore.addChangeListener(function() {
+    UserStore.addChangeListener(function() {
       if(this.isMounted()) {
-        this.setState({ currentUser: app.UserStore.get() });
+        this.setState({ currentUser: UserStore.get() });
       }
     }.bind(this));
 
-    app.PageStore.addChangeListener(function(){
+    PageStore.addChangeListener(function(){
 
       //get state from the PageStore.currentRoute
-      var state = app.PageStore.currentRoute;
+      var state = PageStore.currentRoute;
 
       //if props is undefined set it to empty string
       state.props = state.props || '';
@@ -37,11 +41,11 @@ var BrainstormApp = React.createClass({
       state.roomView = (state.dest === 'rooms' ? true : false);
       if (state.dest === 'rooms'){
         setTimeout(function () {
-          app.PageActions.getRoomData(state.props);
+          PageActions.getRoomData(state.props);
         }, 0);
       } else if (state.dest === 'brainswarms') {
         setTimeout(function () {
-          app.PageActions.getBrainswarmData(state.props);
+          PageActions.getBrainswarmData(state.props);
         }, 0);
       }
       this.setState(state);

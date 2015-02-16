@@ -1,26 +1,27 @@
 var React = require("react");
+var RoomStore = require("../stores/RoomStore");
 
 var RoomTitle = React.createClass({
   getInitialState: function() {
     return {
       room:
-      _(app.RoomStore.getAll()).filter(function (room) {
+      _(RoomStore.getAll()).filter(function (room) {
         return room._id === this.props.room_id;
       },this)[0]
     };
   },
 
   componentDidMount: function() {
-    app.RoomStore.addChangeListener(function() {
+    RoomStore.addChangeListener(function() {
       if(this.isMounted()) {
         this.setState({ room:
-          _(app.RoomStore.getAll()).filter(function (room) {
+          _(RoomStore.getAll()).filter(function (room) {
             return room._id === this.props.room_id;
           },this)[0]
         });
       }
     }.bind(this));
-    app.RoomStore.all();
+    RoomStore.all();
   },
 
   render: function() {

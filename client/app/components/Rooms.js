@@ -1,20 +1,21 @@
 var React = require("react");
-var Room = require("./Room")
+var Room = require("./Room");
+var RoomStore = require("../stores/RoomStore");
 
 var Rooms = React.createClass({
   getInitialState: function() {
     return {
-      rooms: app.RoomStore.getAll()
+      rooms: RoomStore.getAll()
     };
   },
 
   componentDidMount: function() {
-    app.RoomStore.addChangeListener(function() {
+    RoomStore.addChangeListener(function() {
       if(this.isMounted()) {
-        this.setState({ rooms: app.RoomStore.getAll() });
+        this.setState({ rooms: RoomStore.getAll() });
       }
     }.bind(this));
-    app.RoomStore.all();
+    RoomStore.all();
   },
 
   render: function() {

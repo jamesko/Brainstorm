@@ -1,18 +1,23 @@
-app.FilterActions = {
+var AppDispatcher = require("../dispatcher/AppDispatcher");
+var FilterConstants = require("../constants/FilterConstants");
+
+var FilterActions = {
   filterName: function(name) {
-    app.AppDispatcher.handleViewAction({
-      actionType: app.FilterConstants.FILTER_NAME,
+    AppDispatcher.handleViewAction({
+      actionType: FilterConstants.FILTER_NAME,
       name: name
       id: id
     });
   },
 
   unfilterName: function(name) {
-    app.AppDispatcher.handleViewAction({
-      actionType: app.FilterConstants.UNFILTER_NAME,
+    AppDispatcher.handleViewAction({
+      actionType: FilterConstants.UNFILTER_NAME,
       name: name
       id: id
     });
   }
 
 };
+
+module.exports = FilterActions;

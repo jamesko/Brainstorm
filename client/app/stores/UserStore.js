@@ -1,4 +1,6 @@
-app.UserStore = _.extend({}, EventEmitter.prototype, {
+var CHANGE_EVENT = 'change';
+
+var UserStore = _.extend({}, EventEmitter.prototype, {
   _user: null,
 
   get: function() {
@@ -42,3 +44,5 @@ app.UserStore = _.extend({}, EventEmitter.prototype, {
     this.on(CHANGE_EVENT, callback);
   },
 });
+
+module.exports = UserStore;

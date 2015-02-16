@@ -1,12 +1,14 @@
 var React = require("react");
 var CommentForm = require("./CommentForm");
+var UserStore = require("../stores/UserStore");
+var CommentActions = require("../actions/CommentActions");
 
 var Comment = React.createClass({
   getInitialState: function() {
     // set initial editing state to false
     return {
       editing: false,
-      currentUser: app.UserStore.get()
+      currentUser: UserStore.get()
     };
   },
 
@@ -44,7 +46,7 @@ var Comment = React.createClass({
   delete: function(e) {
     e.preventDefault();
     if(this.isMounted()) {
-      app.CommentActions.delete(this.props._id);
+      CommentActions.delete(this.props._id);
     }
   }
 });

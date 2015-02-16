@@ -1,11 +1,14 @@
 var React = require("react");
+var UserStore = require("../stores/UserStore");
+var InterestActions = require("../actions/InterestActions");
+var InterestStore = require("../stores/InterestStore");
 
 var Interest = React.createClass({
   _liked: false,
 
   checkLiked: function (interests) {
     this._liked = false;
-    var currentUser = app.UserStore.get();
+    var currentUser = UserStore.get();
     if (currentUser){
       interests.forEach(function (interest) {
         if (interest.owner === currentUser._id){
@@ -16,7 +19,7 @@ var Interest = React.createClass({
   },
 
   getInitialState: function () {
-    var interests = app.InterestStore.getAll(this.props.idea_id);
+    var interests = InterestStore.getAll(this.props.idea_id);
     this.checkLiked(interests);
     return {
       interests: interests
@@ -26,16 +29,16 @@ var Interest = React.createClass({
   handleClick: function (e) {
     e.preventDefault();
     if (this._liked){
-      app.InterestActions.delete(this._liked);
+      InterestActions.delete(this._liked);
     } else {
-      app.InterestActions.create(this.props.idea_id);
+      InterestActions.create(this.props.idea_id);
     }
   },
 
   componentDidMount: function () {
-    app.InterestStore.addChangeListener(function () {
+    InterestStore.addChangeListener(function () {
       if(this.isMounted()) {
-        var interests = app.InterestStore.getAll(this.props.idea_id);
+        var interests = InterestStore.getAll(this.props.idea_id);
         this.checkLiked(interests);
         this.setState({ interests: interests });
       }

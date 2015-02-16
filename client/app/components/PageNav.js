@@ -1,11 +1,12 @@
 var React = require("react");
 var User = require("./User");
+var PageActions = require("../actions/PageActions");
 
 var PageNav = React.createClass({
 
   handleWelcome:function(){
     //dispatch a navigate to welcome on click
-    app.PageActions.navigate({
+    PageActions.navigate({
       dest: 'welcome'
     });
   },

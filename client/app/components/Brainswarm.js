@@ -1,3 +1,6 @@
+var React = require("react");
+var BrainswarmActions = require("../actions/BrainswarmActions");
+var BrainswarmStore = require("../stores/BrainswarmStore");
 
 function createMap(brainswarmId, brainswarm){
 
@@ -118,7 +121,7 @@ function createMap(brainswarmId, brainswarm){
           saveEdges.push({source: val.source.id, target: val.target.id});
         });
         var data = window.JSON.stringify({"nodes": thisGraph.nodes, "edges": saveEdges});
-        app.BrainswarmActions.edit(brainswarmId, data);
+        BrainswarmActions.edit(brainswarmId, data);
 
         //var blob = new Blob([window.JSON.stringify({"nodes": thisGraph.nodes, "edges": saveEdges})], {type: "text/plain;charset=utf-8"});
         //console.log(blob);
@@ -637,17 +640,17 @@ function createMap(brainswarmId, brainswarm){
 
 }
 
-var React = require("react");
+
 
 var Brainswarm = React.createClass({
 
   getInitialState: function(){
     // var currentBrainswarm = app.BrainswarmActions.getBrainswarm(this.props._id);
-    var currentBrainswarm = app.BrainswarmStore.getBrainswarm(this.props._id);
+    var currentBrainswarm = BrainswarmStore.getBrainswarm(this.props._id);
     console.log('this is brainswarm: ', currentBrainswarm);
 
     return {
-      currentBrainswarm: app.BrainswarmStore.getBrainswarm(this.props._id)
+      currentBrainswarm: BrainswarmStore.getBrainswarm(this.props._id)
     }
 
   },

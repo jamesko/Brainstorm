@@ -1,4 +1,5 @@
 var React = require("react");
+var RoomActions = require("../actions/RoomActions");
 
 var RoomCreateForm = React.createClass({
   // handleSubmit: function(e) {
@@ -24,9 +25,9 @@ var RoomCreateForm = React.createClass({
       var room = {id: this.props._id};
       room.owner = this.props.owner;
       room.name = name.value.trim();
-      app.RoomActions.edit(room);
+      RoomActions.edit(room);
     } else { // else an idea is being created
-      app.RoomActions.create(name.value.trim());
+      RoomActions.create(name.value.trim());
     }
     // clear the value in the input
     name.value = '';

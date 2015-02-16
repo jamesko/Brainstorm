@@ -1,21 +1,22 @@
 var React = require("react");
 var CommentForm = require("./CommentForm");
 var Comment = require("./Comment");
+var CommentStore = require("../stores/CommentStore");
 
 var Comments = React.createClass({
   //get all loaded comments
   getInitialState: function () {
     return {
       displaying: false,
-      comments: app.CommentStore.getAll(this.props.idea_id)
+      comments: CommentStore.getAll(this.props.idea_id)
     };
   },
 
   //when we mount the view setup event listener for store changes
   componentDidMount: function () {
-    app.CommentStore.addChangeListener(function () {
+    CommentStore.addChangeListener(function () {
       if (this.isMounted()) {
-        this.setState({ comments: app.CommentStore.getAll(this.props.idea_id) });
+        this.setState({ comments: CommentStore.getAll(this.props.idea_id) });
       }
     }.bind(this));
   },

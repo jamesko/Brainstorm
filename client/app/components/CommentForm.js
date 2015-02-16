@@ -1,4 +1,5 @@
 var React = require("react");
+var CommentActions = require("../actions/CommentActions");
 
 var CommentForm = React.createClass({
 
@@ -10,9 +11,9 @@ var CommentForm = React.createClass({
 
     //if editing dispatch to editing
     if (this.props.editing) {
-      app.CommentActions.edit(this.props._id, comment);
+      CommentActions.edit(this.props._id, comment);
     } else { //otherwise dispatch to create
-      app.CommentActions.create(this.props.idea_id, comment);
+      CommentActions.create(this.props.idea_id, comment);
     }
 
     //dispatch an event with the comment text
@@ -30,3 +31,5 @@ var CommentForm = React.createClass({
   }
 
 });
+
+module.exports = CommentForm;

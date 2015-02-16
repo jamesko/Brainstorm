@@ -1,22 +1,27 @@
-app.RoomActions = {
+var AppDispatcher = require("../dispatcher/AppDispatcher");
+var RoomConstants = require("../constants/RoomConstants");
+
+var RoomActions = {
   create: function(name) {
-    app.AppDispatcher.handleViewAction({
-      actionType: app.RoomConstants.ROOM_CREATE,
+    AppDispatcher.handleViewAction({
+      actionType: RoomConstants.ROOM_CREATE,
       name: name
     });
   },
 
   edit: function(room) {
-    app.AppDispatcher.handleViewAction({
-      actionType: app.RoomConstants.ROOM_EDIT,
+    AppDispatcher.handleViewAction({
+      actionType: RoomConstants.ROOM_EDIT,
       room: room
     });
   },
 
   delete: function(room) {
-    app.AppDispatcher.handleViewAction({
-      actionType: app.RoomConstants.ROOM_DELETE,
+    AppDispatcher.handleViewAction({
+      actionType: RoomConstants.ROOM_DELETE,
       room: room
     });
   }
 };
+
+module.exports = RoomActions;
