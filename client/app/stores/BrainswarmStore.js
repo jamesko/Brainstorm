@@ -40,8 +40,7 @@ var BrainswarmStore = assign({}, EventEmitter.prototype, {
 
     for (var i =0; i < brainswarms.length; i++){
       if (brainswarms[i].idea === idea_id){
-        callback(brainswarms[i]);
-        break;
+        return callback(brainswarms[i]);
         // return brainswarms[i];
       }
     }
@@ -64,10 +63,10 @@ var BrainswarmStore = assign({}, EventEmitter.prototype, {
       // broadcast that _ideas has changed
       this.emitChange();
       if (tempBrainswarm) {
-        console.log("callback of step2", tempBrainswarm);
-        callback(tempBrainswarm);
+        return callback(tempBrainswarm);
         // return tempBrainswarm;
-      }
+      };
+      callback();
     }.bind(this))
     .fail(function(error) {
       console.error(error);
