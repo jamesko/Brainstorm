@@ -623,9 +623,7 @@ function createMap(brainswarmId, brainswarm){
     // if (brainswarm) then map
     // else var nodes = .... var edges = ...
     // var nodes = [{title: brainswarm.name.slice(0, brainswarmName.length -11), id: 0, x: xLoc, y: yLoc}];
-    console.log('THIS IS BNAME',brainswarm.name);
     var ideaName = brainswarm.name.slice(0, brainswarm.name.length -11);
-    console.log("idea name 608", ideaName);
     console.log("the map", brainswarm.map);
     var nodes;
     var edges;

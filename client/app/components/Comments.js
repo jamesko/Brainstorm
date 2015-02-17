@@ -43,7 +43,8 @@ var Comments = React.createClass({
 
     //display comments if we are displaying, otherwise show buttons
     if (this.state.displaying){
-      commentForm = <CommentForm idea_id={this.props.idea_id} />
+      var ideaId = this.props.idea_id;
+      commentForm = <CommentForm idea_id={ideaId} />
       comments = [];
       //render a comment component for each comment
       this.state.comments.forEach(function (comment) {

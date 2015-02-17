@@ -15,12 +15,11 @@ var CommentActions = {
       ownerName: ownerName
     });
   },
-  edit: function (_id, name, ownerName) {
+  edit: function (_id, name) {
     AppDispatcher.handleViewAction({
       actionType: CommentConstants.COMMENT_EDIT,
       _id: _id,
-      name: name,
-      ownerName: ownerName
+      name: name
     });
   },
   delete: function (_id) {
