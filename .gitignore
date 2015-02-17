@@ -1,5 +1,6 @@
 node_modules/
-client/lib/
+client/lib/*
+!client/lib/jquery.pietimer.min.js
 client/app/react/
 production/
 npm-debug.log
