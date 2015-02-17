@@ -216,7 +216,7 @@ path.link.selected {
 }
 
 
-.stickyNotes {  
+.stickyNotes {
   overflow:hidden;
   padding:3em;
   display: inline;
@@ -238,7 +238,7 @@ path.link.selected {
   font-size:100%;
 }
 
-.stickyNotes .idea a{
+.stickyNotes .idea .anchor{
   text-decoration:none;
   color:#000;
   background:#ffc;
@@ -259,13 +259,13 @@ path.link.selected {
   float:left;
 }
 
-.stickyNotes .idea a{
+.stickyNotes .idea .anchor{
   -webkit-transform:rotate(-6deg);
   -o-transform:rotate(-6deg);
   -moz-transform:rotate(-6deg);
 }
 
-.stickyNotes .idea:nth-child(even) a{
+.stickyNotes .idea:nth-child(even) .anchor{
   -o-transform:rotate(4deg);
   -webkit-transform:rotate(4deg);
   -moz-transform:rotate(4deg);
@@ -274,7 +274,7 @@ path.link.selected {
   background:#cfc;
 }
 
-.stickyNotes .idea:nth-child(3n) a{
+.stickyNotes .idea:nth-child(3n) .anchor{
   -o-transform:rotate(-3deg);
   -webkit-transform:rotate(-3deg);
   -moz-transform:rotate(-3deg);
@@ -283,7 +283,7 @@ path.link.selected {
   background:#ccf;
 }
 
-.stickyNotes .idea:nth-child(5n) a{
+.stickyNotes .idea:nth-child(5n) .anchor{
   -o-transform:rotate(5deg);
   -webkit-transform:rotate(5deg);
   -moz-transform:rotate(5deg);
@@ -291,7 +291,7 @@ path.link.selected {
   top:-10px;
 }
 
-.stickyNotes .idea a:hover, .stickyNotes .idea a:focus{
+.stickyNotes .idea .anchor:hover, .stickyNotes .idea .anchor:focus{
   -moz-box-shadow:10px 10px 7px rgba(0,0,0,.7);
   -webkit-box-shadow: 10px 10px 7px rgba(0,0,0,.7);
   box-shadow:10px 10px 7px rgba(0,0,0,.7);
@@ -302,7 +302,7 @@ path.link.selected {
   z-index:5;
 }
 
-.stickyNotes .idea a{
+.stickyNotes .idea .anchor{
   text-decoration:none;
   color:#000;
   background:#ffc;
