@@ -12,7 +12,8 @@ function createMap(brainswarmId, brainswarm){
     var GraphCreator = function(svg, nodes, edges){
       var thisGraph = this;
           thisGraph.idct = 0;
-
+    console.log('THIS IS NODES', nodes)
+      console.log('THIS IS EDGES', edges)
       // if (brainswarm.map){
       // var modNodes = JSON.parse(brainswarm.map).nodes;
       // var modEdges = JSON.parse(brainswarm.map).edges;
