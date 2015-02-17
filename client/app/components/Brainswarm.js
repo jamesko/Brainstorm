@@ -1,6 +1,7 @@
 var React = require("react");
 var BrainswarmActions = require("../actions/BrainswarmActions");
 var BrainswarmStore = require("../stores/BrainswarmStore");
+// var d3 = require("d3");
 
 function createMap(brainswarmId, brainswarm){
 
@@ -12,8 +13,24 @@ function createMap(brainswarmId, brainswarm){
       var thisGraph = this;
           thisGraph.idct = 0;
 
+      // if (brainswarm.map){
+      // var modNodes = JSON.parse(brainswarm.map).nodes;
+      // var modEdges = JSON.parse(brainswarm.map).edges;
+      //   for (var i =  0; i < modEdges.length; i++){
+      //     var source = modEdges[i].source;
+      //     var target = modEdges[i].target;
+      //     modEdges[i].source = modNodes[source];
+      //     modEdges[i].target = modNodes[target];
+      //   }
+      //   thisGraph.nodes = modNodes || [];
+      //   thisGraph.edges = modEdges || [];
+      // } else {
+      //   thisGraph.nodes = nodes || [];
+      //   thisGraph.edges = edges || [];
+      // }
       thisGraph.nodes = nodes || [];
       thisGraph.edges = edges || [];
+
 
       thisGraph.state = {
         selectedNode: null,
@@ -646,11 +663,11 @@ var Brainswarm = React.createClass({
 
   getInitialState: function(){
     // var currentBrainswarm = app.BrainswarmActions.getBrainswarm(this.props._id);
-    var currentBrainswarm = BrainswarmStore.getBrainswarm(this.props._id);
+    var currentBrainswarm = BrainswarmStore.findBrainswarm(this.props._id);
     console.log('this is brainswarm: ', currentBrainswarm);
 
     return {
-      currentBrainswarm: BrainswarmStore.getBrainswarm(this.props._id)
+      currentBrainswarm: BrainswarmStore.findBrainswarm(this.props._id)
     }
 
   },
@@ -679,7 +696,7 @@ var Brainswarm = React.createClass({
     console.log('this is props',this.props);
     // pass in this.state.currentBrainswarm
     console.log("states", this.state.currentBrainswarm);
-    createMap(this.props._id, this.state.currentBrainswarm);
+    createMap(this.props._id, BrainswarmStore.findBrainswarm(this.props._id));
 
   }
 
