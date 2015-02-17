@@ -71,7 +71,7 @@ var Idea = React.createClass({
 
     ideaContent = (
       <div className="idea">
-        <a href="#">
+        <div className="anchor">
           <form>
             <div>
               <h2 ref="body">{this.props.name}</h2>
@@ -87,7 +87,7 @@ var Idea = React.createClass({
               <Comments idea_id={this.props._id} />
             </div>
           </form>
-        </a>
+        </div>
       </div>
     )}
 

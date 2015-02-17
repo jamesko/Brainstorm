@@ -87,13 +87,12 @@ var CommentStore = assign({}, EventEmitter.prototype, {
     });
   },
 
-  edit: function (_id, name, ownerName) {
+  edit: function (_id, name) {
     $.ajax({
       type: 'PUT',
       url: '/comments/' + _id,
       data: {
-        name: name,
-        ownerName: ownerName
+        name: name
       }
     })
     .done(function (commentEdit) {
@@ -101,7 +100,6 @@ var CommentStore = assign({}, EventEmitter.prototype, {
       this._comments.forEach(function (comment) {
         if (comment._id === commentEdit._id) {
           comment.name = commentEdit.name;
-          comment.ownerName = commentEdit.ownerName;
         }
       }.bind(this));
 
@@ -175,10 +173,9 @@ AppDispatcher.register(function (payload) {
     case CommentConstants.COMMENT_EDIT:
       _id = action._id;
       name = action.name.trim();
-      ownerName = action.ownerName;
 
       if (name !== '') {
-        CommentStore.edit(_id, name, ownerName);
+        CommentStore.edit(_id, name);
       }
       break;
 

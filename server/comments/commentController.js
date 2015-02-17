@@ -62,8 +62,7 @@ module.exports = {
     editComment({
       _id: req.params.comment_id
     },{
-      name: req.body.name,
-      ownerName: req.body.ownerName
+      name: req.body.name
     }).then(function (comment) {
         if (comment) {
           res.json(comment);

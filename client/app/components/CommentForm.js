@@ -8,7 +8,6 @@ var CommentForm = React.createClass({
 
     var commentBody = this.refs.input.getDOMNode();
     var comment = commentBody.value.trim();
-
     //if editing dispatch to editing
     if (this.props.editing) {
       CommentActions.edit(this.props._id, comment);
