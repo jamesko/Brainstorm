@@ -30,7 +30,7 @@ var RoomTitle = React.createClass({
       title = (
         <div>
             <h1>{ this.state.room.name }</h1>
-            <div style={{display:"inline", float:"right"}}>
+            <div id="hangoutsLink" style={{display:"none", float:"right"}}>
               <a href="http://hangouts.google.com/start" target = "_blank">Start Google Hangout Click Here</a>
               <div className = "gray">
                 post hangout in comments of idea you want to discuss

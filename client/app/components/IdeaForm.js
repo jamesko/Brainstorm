@@ -21,6 +21,29 @@ var IdeaForm = React.createClass({
     return;
   },
 
+  //add pie timer
+  componentDidMount: function(){
+
+    $('#pieTimer1').pietimer({
+      seconds: 300,
+      color: 'rgba(50, 50, 255, 0.8)',
+      height: 20,
+      width: 50
+    }, function(){
+        //event after timer here
+        //display google links
+        $('#hangoutsLink').css("display","inline");
+
+        //allow showing other's ideas
+
+    });
+
+    //start this timer when ready by clicking button...
+    $('#startTimer').on("click", function(){
+      $('#pieTimer1').pietimer('start');
+    })
+  },
+
   render: function(){
     // if editing the defaultValue will be the idea name
     // if editing an "Edit" button will show otherwise a "Create"
@@ -28,6 +51,11 @@ var IdeaForm = React.createClass({
       <form className="auth-check" ref="form" onSubmit={this.handleSubmit}>
         <input className="postfix" type="text" ref="name" defaultValue={this.props.name} placeholder="Add an Idea" />
         <button className="no-margin" type="submit" ref="submit" >{this.props.editing ? "Edit Idea" : "Create"}</button>
+        <div className="timer" style={{display:"inline"}}>
+          <span> 5 min Timer:</span>
+          <button id="startTimer" className="no-margin">start</button>
+          <div id="pieTimer1" style={{display:"inline"}}></div>
+        </div>        
       </form>
     );
   }
