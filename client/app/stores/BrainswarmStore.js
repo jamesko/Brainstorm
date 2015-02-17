@@ -82,8 +82,10 @@ var BrainswarmStore = assign({}, EventEmitter.prototype, {
 
   findBrainswarm: function(brainswarmId) {
     var brainswarms = this._brainswarms;
+    console.log("looking for brainswarm", brainswarms);
     for (var i =0; i< brainswarms.length; i++){
        if (brainswarms[i]._id === brainswarmId){
+        console.log("THESE should match", brainswarms[i]._id, brainswarmId);
          return brainswarms[i];
        }
     }
