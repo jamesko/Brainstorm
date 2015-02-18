@@ -15,10 +15,8 @@ var UserAuth = React.createClass({
 
   render: function(){
     var text = this.state.currentUser ? 'Logout' : 'Login';
-    return (
-      <div>
-        <a className='pure-button pure-button-primary' onClick={this.handleClick} href='/auth'>{text}</a>
-      </div>
+    return (      
+        <a onClick={this.handleClick} href='/auth'>{text}</a>      
     );
   },
 
