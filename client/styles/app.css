@@ -10,6 +10,62 @@ body {
 #main {
   max-width:1060px;
   margin:0 auto;
+  z-index: 1;
+}
+
+.hero-img{
+  opacity: 1;
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+  -webkit-filter: brightness(50%);
+}
+
+#hero{
+  position: relative;
+}
+
+.hero-text{
+  position: absolute;
+  top: 22%;
+  left: 20%;
+  font-size: 6em;
+  color: white;
+  font-family: GillSans, Calibri, Trebuchet, sans-serif;
+  letter-spacing: 2px;
+  font-weight: 600;
+}
+
+.hero-tagline{
+  position: absolute;
+  top: 37%;
+  left: 27%;
+  font-size: 4em;
+  font-family: GillSans, Calibri, Trebuchet, sans-serif;
+  letter-spacing: 1px;
+  font-weight: 300;
+  color: white;
+
+}
+
+.btn{
+  background-color: #7c4dff
+}
+.btn:hover{
+  background-color: #7c4dff
+}
+button:focus{
+  background-color: #7c4dff
+}
+
+.hero{
+ background: url("styles/assets/stickynotebackground.jpg") no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  opacity: 0.6;
+  z-index: -1;
 }
 
 header {

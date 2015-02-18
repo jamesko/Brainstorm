@@ -7,6 +7,7 @@ var UserAuth = React.createClass({
   },
 
   handleClick: function(e) {
+    $("#hero").remove();
     if(this.state.currentUser) {
       e.preventDefault();
       UserStore.logout();
