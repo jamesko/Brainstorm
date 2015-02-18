@@ -15,8 +15,10 @@ var UserAuth = React.createClass({
 
   render: function(){
     var text = this.state.currentUser ? 'Logout' : 'Login';
-    return (      
-        <a onClick={this.handleClick} href='/auth'>{text}</a>      
+    return (
+      <div>
+        <a onClick={this.handleClick} href='/auth'>{text}</a>
+      </div>
     );
   },
 

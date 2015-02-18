@@ -23,10 +23,10 @@ var PageNav = React.createClass({
             </ul>
             <ul id="nav-mobile" className="left hide-on-med-and-down">
               <li ref="welcome">
-                <a onClick={this.handleWelcome}>Home</a>
+                <div style={{paddingLeft:"10px", paddingRight:"10px"}} onClick={this.handleWelcome}>Home</div>
               </li>
               <li>
-                <a>About</a>
+                <div style={{paddingLeft:"10px", paddingRight:"10px"}}>About</div>
               </li>
             </ul>
           </div>

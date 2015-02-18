@@ -3,7 +3,11 @@ var UserAuth = require("./UserAuth");
 
 var User = React.createClass({
   render: function(){
-    return (<UserAuth />);
+    return (
+      <div>
+        <UserAuth />
+      </div>
+      );
   }
 });
 
