@@ -81,10 +81,8 @@ var BrainswarmStore = assign({}, EventEmitter.prototype, {
 
   findBrainswarm: function(brainswarmId) {
     var brainswarms = this._brainswarms;
-    console.log("looking for brainswarm", brainswarms);
     for (var i =0; i< brainswarms.length; i++){
        if (brainswarms[i]._id === brainswarmId){
-        console.log("THESE should match", brainswarms[i]._id, brainswarmId);
          return brainswarms[i];
        }
     }
@@ -143,7 +141,6 @@ var BrainswarmStore = assign({}, EventEmitter.prototype, {
        data: {map: map}
      })
      .done(function(brainswarmEdit) {
-         console.log('this is the edit: ', brainswarmEdit);
       // Why are we storing the data in the client and on the server??
        for (var i = 0; i < this._brainswarms.length; i++){
         if (this._brainswarms[i]._id === brainswarmEdit._id){
