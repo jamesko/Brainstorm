@@ -138,13 +138,13 @@ h2 {
 }
 
 /*For d3 chart*/
-#toolbox{
+.toolbox{
     position: absolute;
-    bottom: 0;
+    bottom: 100px;
     left: 0;
     margin-bottom: 0.5em;
     margin-left: 1em;
-    border: 2px solid #EEEEEE;
+    border-color: transparent;
     border-radius: 5px;
     padding: 1em;
     z-index: 5;
@@ -155,6 +155,7 @@ h2 {
     left: 0;
     margin-bottom: 0.5em;
     margin-left: 1em;
+    margin-right: 1em;
     border: 2px solid #EEEEEE;
     border-radius: 5px;
     padding: 1em;
