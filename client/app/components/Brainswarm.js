@@ -352,6 +352,8 @@ function createMap(brainswarmId, brainswarm){
           placePad  =  5*curScale,
           useHW = curScale > 1 ? nodeBCR.width*0.71 : consts.nodeRadius*1.42;
       // replace with editableconent text
+
+      //look here to fix style of node inputs
       var d3txt = thisGraph.svg.selectAll("foreignObject")
             .data([d])
             .enter()
@@ -444,6 +446,10 @@ function createMap(brainswarmId, brainswarm){
     // mousedown on main svg
     GraphCreator.prototype.svgMouseDown = function(){
       this.state.graphMouseDown = true;
+    };
+
+    GraphCreator.prototype.doubleClick = function(){
+
     };
 
     // mouseup on main svg
@@ -658,14 +664,21 @@ var Brainswarm = React.createClass({
   render: function(){
     return (
       <div>
-        <h1>success </h1>
-        <script src="//cdn.jsdelivr.net/filesaver.js/0.1/FileSaver.min.js"></script>
-        <div id="graph">
+        <div id="legend" class="col s3">
+
+          <p> drag/scroll to translate/zoom the graph</p>
+          <p> shift-click on graph to create a node</p>
+          <p> click on node or edge and press backspace/delete to delete</p>
+          <p> shift-click on a node to change its title</p>
+          <p>shift-click on a node and then drag to another node to connect them with a directed edge</p>
+        </div>
+        <div id="graph" className="blue lighten-2">
+
           <div id="toolbox">
-            <input type="file" id="hidden-file-upload"/>
-            <input id="upload-input" type="image" title="upload graph" src="upload-icon.png" alt="upload graph"/>
-            <input type="image" id="download-input" title="download graph" src="download-icon.png" alt="download graph"/>
-            <input type="image" id="delete-graph" title="delete graph" src="trash-icon.png" alt="delete graph"/>
+
+            <div id="download-input">
+            <i id="download-input" className="small mdi-file-cloud-done"></i>
+            </div>
           </div>
         </div>
 
