@@ -7,7 +7,7 @@ var User = React.createClass({
       <div>
         <UserAuth />
       </div>
-    );
+      );
   }
 });
 
