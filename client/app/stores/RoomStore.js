@@ -21,7 +21,6 @@ var RoomStore = assign({}, EventEmitter.prototype, {
       url: '/rooms'
     })
     .done(function(rooms) {
-      console.log(rooms)
       this._rooms = rooms;
       this.emitChange();
     }.bind(this))
