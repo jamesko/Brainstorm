@@ -616,9 +616,10 @@ function createMap(brainswarmId, brainswarm){
     var docEl = document.documentElement,
         bodyEl = document.getElementsByTagName('body')[0];
 
-    var width = window.innerWidth || docEl.clientWidth || bodyEl.clientWidth,
+    var width = window.innerWidth /*|| docEl.clientWidth*/ /*|| bodyEl.clientWidth*/,
         height =  window.innerHeight|| docEl.clientHeight|| bodyEl.clientHeight;
-
+    width *= .60;
+    height *= .75;
     var xLoc = width/2 - 25,
         yLoc = 100;
 
@@ -663,22 +664,24 @@ var Brainswarm = React.createClass({
 
   render: function(){
     return (
-      <div>
-        <div id="legend" class="col s3">
+      <div className="row">
 
-          <p> drag/scroll to translate/zoom the graph</p>
-          <p> shift-click on graph to create a node</p>
-          <p> click on node or edge and press backspace/delete to delete</p>
-          <p> shift-click on a node to change its title</p>
-          <p>shift-click on a node and then drag to another node to connect them with a directed edge</p>
+        <div id="legend" className="col s3">
+          <h5 className="center-align">Legend</h5>
+
+          <p className="center-align"> drag/scroll to move/zoom the graph</p>
+          <p className="center-align"> shift-click on graph to create a node</p>
+          <p className="center-align"> click on node or edge and press backspace/delete to delete</p>
+          <p className="center-align"> shift-click on a node to change its title</p>
+          <p className="center-align">shift-click on a node and then drag to another node to connect them with a directed edge</p>
         </div>
-        <div id="graph" className="blue lighten-2">
+        <div id="graph" className="blue lighten-2 col s9 offset-s3">
 
-          <div id="toolbox">
+          <div className="toolbox">
 
-            <div id="download-input">
-            <i id="download-input" className="small mdi-file-cloud-done"></i>
-            </div>
+            <a id="download-input" className="waves-effect waves-light btn-large light-green accent-2 ">
+            <i  className="small mdi-file-cloud-done"></i>
+            </a>
           </div>
         </div>
 
@@ -700,6 +703,8 @@ var Brainswarm = React.createClass({
   componentDidMount: function(){
 
     createMap(this.props._id, this.state.currentBrainswarm);
+
+
   },
 
   componentWillMount: function(){
