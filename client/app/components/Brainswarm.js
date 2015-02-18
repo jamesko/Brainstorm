@@ -2,7 +2,7 @@ var React = require("react");
 var BrainswarmActions = require("../actions/BrainswarmActions");
 var BrainswarmStore = require("../stores/BrainswarmStore");
 // var d3 = require("d3");
-
+var counter = 1;
 function createMap(brainswarmId, brainswarm){
 
   document.onload = (function(d3, saveAs, Blob, undefined){
@@ -14,6 +14,7 @@ function createMap(brainswarmId, brainswarm){
           thisGraph.idct = 0;
     console.log('THIS IS NODES', nodes)
       console.log('THIS IS EDGES', edges)
+      console.log("this.graph", thisGraph)
       // if (brainswarm.map){
       // var modNodes = JSON.parse(brainswarm.map).nodes;
       // var modEdges = JSON.parse(brainswarm.map).edges;
@@ -89,6 +90,7 @@ function createMap(brainswarmId, brainswarm){
             })
             .on("drag", function(args){
               thisGraph.state.justDragged = true;
+              console.log("I SHOULD BE DRAGGED");
               thisGraph.dragmove.call(thisGraph, args);
             })
             .on("dragend", function() {
@@ -134,10 +136,23 @@ function createMap(brainswarmId, brainswarm){
 
       // handle download data
       d3.select("#download-input").on("click", function(){
-        var saveEdges = [];
-        thisGraph.edges.forEach(function(val, i){
-          saveEdges.push({source: val.source.id, target: val.target.id});
-        });
+
+          var saveEdges = [];
+          thisGraph.edges.forEach(function(val, i){
+            saveEdges.push({source: val.source.id, target: val.target.id});
+          });
+
+      // Get rid of duplicate nodes
+        console.log("thisGraph", thisGraph);
+
+        for (var i = 0; i< thisGraph.nodes.length; i++){
+          console.log("nodes", thisGraph.nodes[i].id);
+          var temp = thisGraph.nodes.indexOf(thisGraph.nodes[i].id, i+1);
+          console.log("THIS IS TEMP",temp)
+          if( temp !== -1){
+           delete thisGraph.nodes[temp]
+          }
+        }
         var data = window.JSON.stringify({"nodes": thisGraph.nodes, "edges": saveEdges});
         BrainswarmActions.edit(brainswarmId, data);
 
@@ -146,43 +161,61 @@ function createMap(brainswarmId, brainswarm){
         //saveAs(blob, "mydag.json");
       });
 
+      // UPLOAD DATA IF THERE IS A BRAINSWARM!!!
+      if (brainswarm.map){
+        counter = 3;
+        console.log("COUNTER", counter);
+        thisGraph.deleteGraph(true);
+        thisGraph.nodes = JSON.parse(brainswarm.map).nodes;
+        thisGraph.setIdCt(thisGraph.nodes.length + 1);
+        console.log("SUPER NODE", nodes);
+        var newEdges = JSON.parse(brainswarm.map).edges;
+        newEdges.forEach(function(e, i){
+          newEdges[i] = {source: thisGraph.nodes.filter(function(n){return n.id == e.source;})[0],
+            target: thisGraph.nodes.filter(function(n){return n.id == e.target;})[0]};
+        });
+        thisGraph.edges = newEdges;
+        thisGraph.updateGraph();
+        console.log("super  EDGES", thisGraph.edges);
+      }
+
 
       // handle uploaded data
-      d3.select("#upload-input").on("click", function(){
-        document.getElementById("hidden-file-upload").click();
-      });
-      d3.select("#hidden-file-upload").on("change", function(){
-        if (window.File && window.FileReader && window.FileList && window.Blob) {
-          var uploadFile = this.files[0];
-          var filereader = new window.FileReader();
-
-          filereader.onload = function(){
-            var txtRes = filereader.result;
-            // TODO better error handling
-            try{
-              var jsonObj = JSON.parse(txtRes);
-              thisGraph.deleteGraph(true);
-              thisGraph.nodes = jsonObj.nodes;
-              thisGraph.setIdCt(jsonObj.nodes.length + 1);
-              var newEdges = jsonObj.edges;
-              newEdges.forEach(function(e, i){
-                newEdges[i] = {source: thisGraph.nodes.filter(function(n){return n.id == e.source;})[0],
-                            target: thisGraph.nodes.filter(function(n){return n.id == e.target;})[0]};
-              });
-              thisGraph.edges = newEdges;
-              thisGraph.updateGraph();
-            }catch(err){
-              window.alert("Error parsing uploaded file\nerror message: " + err.message);
-              return;
-            }
-          };
-          filereader.readAsText(uploadFile);
-
-        } else {
-          alert("Your browser won't let you save this graph -- try upgrading your browser to IE 10+ or Chrome or Firefox.");
-        }
-
-      });
+      //d3.select("#upload-input").on("click", function(){
+      //  document.getElementById("hidden-file-upload").click();
+      //});
+      //d3.select("#hidden-file-upload").on("change", function(){
+      //  if (window.File && window.FileReader && window.FileList && window.Blob) {
+      //    var uploadFile = this.files[0];
+      //    var filereader = new window.FileReader();
+      //
+      //    filereader.onload = function(){
+      //      var txtRes = filereader.result;
+      //      // TODO better error handling
+      //      try{
+      //        var jsonObj = JSON.parse(txtRes);
+      //        thisGraph.deleteGraph(true);
+      //        thisGraph.nodes = jsonObj.nodes;
+      //        thisGraph.setIdCt(jsonObj.nodes.length + 1);
+      //        var newEdges = jsonObj.edges;
+      //        newEdges.forEach(function(e, i){
+      //          newEdges[i] = {source: thisGraph.nodes.filter(function(n){return n.id == e.source;})[0],
+      //                      target: thisGraph.nodes.filter(function(n){return n.id == e.target;})[0]};
+      //        });
+      //        thisGraph.edges = newEdges;
+      //        thisGraph.updateGraph();
+      //      }catch(err){
+      //        window.alert("Error parsing uploaded file\nerror message: " + err.message);
+      //        return;
+      //      }
+      //    };
+      //    filereader.readAsText(uploadFile);
+      //
+      //  } else {
+      //    alert("Your browser won't let you save this graph -- try upgrading your browser to IE 10+ or Chrome or Firefox.");
+      //  }
+      //
+      //});
 
       // handle delete graph
       d3.select("#delete-graph").on("click", function(){
@@ -598,9 +631,9 @@ function createMap(brainswarmId, brainswarm){
     // MAIN
 
     // warn the user when leaving
-    window.onbeforeunload = function(){
-      return "Make sure to save your graph locally before leaving :-)";
-    };
+    //window.onbeforeunload = function(){
+    //  return "Make sure to save your graph locally before leaving :-)";
+    //};
 
     var docEl = document.documentElement,
         bodyEl = document.getElementsByTagName('body')[0];
@@ -628,29 +661,52 @@ function createMap(brainswarmId, brainswarm){
     console.log("the map", brainswarm.map);
     var nodes;
     var edges;
-    if (brainswarm.map){
-      nodes = JSON.parse(brainswarm.map).nodes;
-      edges = JSON.parse(brainswarm.map).edges;
-      for (var i =  0; i < edges.length; i++){
-        var source = edges[i].source;
-        var target = edges[i].target;
-        edges[i].source = nodes[source];
-        edges[i].target = nodes[target];
-      }
-    } else {
+    // if (brainswarm.map){
+    //   console.log("This GRAPH", thisGraph);
+    //   thisGraph.deleteGraph(true);
+    //   thisGraph.nodes = JSON.parse(brainswarm.map).nodes;
+    //   // thisGraph.setIdCt(thisGraph.nodes.length + 1);
+    //   console.log("SUPER NODE", nodes);
+    //   var newEdges = JSON.parse(brainswarm.map).edges;
+    //   newEdges.forEach(function(e, i){
+    //     newEdges[i] = {source: thisGraph.nodes.filter(function(n){return n.id == e.source;})[0],
+    //       target: thisGraph.nodes.filter(function(n){return n.id == e.target;})[0]};
+    //   });
+    //   thisGraph.edges = newEdges;
+    //   thisGraph.updateGraph();
+    //   // for (var i =  0; i < edges.length; i++){
+    //   //   var source = edges[i].source;
+    //   //   var target = edges[i].target;
+    //   //   edges[i].source = nodes[source];
+    //   //   edges[i].target = nodes[target];
+    //   // }
+    //   console.log("SUPER EDGE", edges);
+    // } else {
+    //   nodes = [{title: ideaName, id: 0, x: xLoc, y: yLoc}];
+    //   edges = [{source: nodes[0], target: nodes[0]}];
+    //    var svg = d3.select("#graph").append("svg")
+    //       .attr("width", width)
+    //       .attr("height", height);
+    //   var graph = new GraphCreator(svg, nodes, edges);
+    //     graph.setIdCt(1);
+    //     graph.updateGraph();
+    // }
       nodes = [{title: ideaName, id: 0, x: xLoc, y: yLoc}];
       edges = [{source: nodes[0], target: nodes[0]}];
-    }
+       var svg = d3.select("#graph").append("svg")
+          .attr("width", width)
+          .attr("height", height);
+      var graph = new GraphCreator(svg, nodes, edges);
+      if (!brainswarm.map){
+        graph.setIdCt(1);
+        graph.updateGraph();
+
+      }
       //console.log('this is node', nodes);
       //console.log('this is edge', edges);
     //{title: "new concept", id: 1, x: xLoc, y: yLoc + 200}
     // MAIN SVG
-    var svg = d3.select("#graph").append("svg")
-          .attr("width", width)
-          .attr("height", height);
-    var graph = new GraphCreator(svg, nodes, edges);
-        graph.setIdCt(1);
-    graph.updateGraph();
+
   })(window.d3, window.saveAs, window.Blob);
 
 
@@ -689,15 +745,38 @@ var Brainswarm = React.createClass({
     );
   },
 
+  getGraph:function(e){
 
+  },
+
+  updateGraph: function(e){
+    e.preventDefault();
+    if (this.isMounted()) {
+      this.setState({ currentBrainswarm: BrainswarmStore.findBrainswarm(this.props._id) });
+    }
+  },
 
   componentDidMount: function(){
     console.log('this is props',this.props);
     // pass in this.state.currentBrainswarm
     console.log("states", this.state.currentBrainswarm);
-    createMap(this.props._id, BrainswarmStore.findBrainswarm(this.props._id));
+    // createMap(this.props._id, BrainswarmStore.findBrainswarm(this.props._id));
+    createMap(this.props._id, this.state.currentBrainswarm);
+  },
 
+  componentWillMount: function(){
+    // similar to componentDidMount but also invoked on the server
+    // this may render the map quicker. if the ajax call is too quick map won't render at all.
+    console.log("componentWillMount");
+    // createMap(this.props._id, this.state.currentBrainswarm);
+  },
+
+  shouldComponentUpdate: function(){
+    // after new state has been set
+    console.log("updating brainswarm");
+    createMap(this.props._id, this.state.currentBrainswarm);
   }
+
 
 });
 
