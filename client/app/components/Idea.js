@@ -64,8 +64,8 @@ var Idea = React.createClass({
       if (currentUser._id === ideaOwner) {
         editableOption = (
               <div className="auth-check" style={{display:"inline"}}>
-                <button className="fa fa-pencil-square-o" onClick={this.edit}> { this.state.editing ? 'Cancel' : ''} </button>
-                <button className="fa fa-trash-o" onClick={this.delete}></button>
+                <button className="fa fa-pencil-square-o" style={{paddingRight:"30px"}} onClick={this.edit}> { this.state.editing ? 'Cancel' : ''} </button>
+                <button className="fa fa-trash-o" style={{paddingRight:"30px"}} onClick={this.delete}></button>
               </div>
           )
       }
@@ -77,18 +77,28 @@ var Idea = React.createClass({
         <div className="anchor">
           <form>
             <div>
-              <h2 ref="body">{this.props.name}</h2>
-              <span>{this.props.ownerName}</span>
-              <div className="auth-check watch" style={{display:"inline"}}>
-                <Interest idea_id={this.props._id} />
+              <div className="ideaDescription" ref="body">{this.props.name}</div>
+            </div>
+
+            <div className="ideaFooter">
+                <span>{this.props.ownerName}</span>
+
+                <div className="auth-check watch" style={{display:"inline"}}>
+                  <Interest idea_id={this.props._id} />
+                </div>
+
+              <button className="brainSwarm" style={{display:"inline"}} onClick={this.brainswarm}>Brainswarm</button>
+              <div>
+                {editForm}
+                {editableOption}
+                <div className="auth-check comments" style={{display:"inline"}}>
+                  <Comments idea_id={this.props._id} />
+                </div>
               </div>
-              {editForm}
+
             </div>
-            {editableOption}
-            <button className="brainSwarm" style={{display:"inline"}} onClick={this.brainswarm}>Brainswarm</button>
-            <div className="auth-check comments" style={{display:"inline"}}>
-              <Comments idea_id={this.props._id} />
-            </div>
+
+
           </form>
         </div>
       </Draggable>
