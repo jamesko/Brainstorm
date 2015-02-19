@@ -1,6 +1,8 @@
 var React = require("react");
 var Idea = require("./Idea");
 var IdeaStore = require("../stores/IdeaStore");
+var Draggable = require('react-draggable');
+
 
 var Ideas = React.createClass({
   getInitialState: function () {
@@ -40,8 +42,10 @@ var Ideas = React.createClass({
     });
     return (
 
-      <div className = "stickyNotes" ref="body">
+    <div className="container">
+      <div className="stickyNotes">
         { ideas }
+      </div>
       </div>
     );
   }

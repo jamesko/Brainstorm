@@ -330,6 +330,7 @@ path.link.selected {
   -webkit-transform:rotate(-6deg);
   -o-transform:rotate(-6deg);
   -moz-transform:rotate(-6deg);
+    position:relative;
 }
 
 .stickyNotes .idea:nth-child(even) .anchor{
@@ -403,5 +404,10 @@ path.link.selected {
 
 .roomTitle .gray{
   color: #a9a9a9;
+}
+
+.container{
+    width: 90%;
+    height: 90%;
 }
 
