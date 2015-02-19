@@ -20,9 +20,9 @@ var Rooms = React.createClass({
     }
   },
 
-  componentWillUnmount: function(){
-    RoomStore.removeChangeListener(this._onChange);
-  },
+  // componentWillUnmount: function(){
+  //   RoomStore.removeChangeListener(this._onChange);
+  // },
 
   render: function() {
     var rooms = [];

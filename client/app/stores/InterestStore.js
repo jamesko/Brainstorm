@@ -18,6 +18,7 @@ var InterestStore = assign({}, EventEmitter.prototype, {
   },
 
   getAll: function (idea_id) {
+    this.socketListener();
     if (!idea_id) return this._interests;
     return _(this._interests).filter(function (interest) {
       return interest.idea === idea_id;

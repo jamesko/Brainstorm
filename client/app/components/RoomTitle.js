@@ -27,9 +27,9 @@ var RoomTitle = React.createClass({
     }
   },
 
-  componentWillUnmount: function() {
-    RoomStore.removeChangeListener(this.onStoreChange);
-  },
+  // componentWillUnmount: function() {
+  //   RoomStore.removeChangeListener(this.onStoreChange);
+  // },
 
   render: function() {
     var title;

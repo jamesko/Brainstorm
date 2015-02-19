@@ -5,7 +5,6 @@ var mongoose = require('./db.js');
 var app = express();
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
-var roomController = require('./roomController.js');
 
 
 

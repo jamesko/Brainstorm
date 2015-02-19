@@ -18,6 +18,7 @@ var Ideas = React.createClass({
   },
 
   onStoreChange: function(){
+
     var that = this;
     if(this.isMounted()) {
       if(!that.pauseUpdates){
@@ -27,9 +28,9 @@ var Ideas = React.createClass({
     // get all ideas from db
   },
 
-  componentWillUnmount: function(){
-    IdeaStore.removeChangeListener(this.onStoreChange);
-  },
+  // componentWillUnmount: function(){
+  //   IdeaStore.removeChangeListener(this.onStoreChange);
+  // },
 
   render: function() {
     var ideas = [];

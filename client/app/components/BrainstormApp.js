@@ -51,7 +51,7 @@ var BrainstormApp = React.createClass({
       }
       this.setState(state);
 
-      if(!state.indexView && !roomView) {
+      if(!state.indexView && !state.roomView) {
         socket.emit('join', state.props);
       } else if (!state.indexView) {
         socket.emit('join-brainswarm', state.props);

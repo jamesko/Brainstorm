@@ -33,9 +33,9 @@ var UserAuth = React.createClass({
     }
   },
 
-  componentWillUnmount: function() {
-    UserStore.removeChangeListener(this.onStoreChange);
-  }
+  // componentWillUnmount: function() {
+  //   UserStore.removeChangeListener(this.onStoreChange);
+  // }
 
 });
 
