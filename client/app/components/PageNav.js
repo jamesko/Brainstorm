@@ -12,26 +12,36 @@ var PageNav = React.createClass({
   },
 
   render:function(){
+    var heroView;
+    if (window.globalBoolean){
+      heroView = (
+        <div id="hero" ref="hero">
+          <img className="hero-img" src="styles/assets/stickynotebackground.jpg"/>
+          <span className="hero-text">BRAINSTORMER</span>
+          <span className="hero-tagline">Ideation + Innovation</span>
+        </div>
+      );
+    }
     return (
-      <header ref="body">
-        <nav>
-          <div className="nav-wrapper  blue darken-3">
-            <ul className="login right">
-              <li>
-                <User />
-              </li>
-            </ul>
-            <ul id="nav-mobile" className="left hide-on-med-and-down">
-              <li ref="welcome">
-                <div style={{paddingLeft:"10px", paddingRight:"10px"}} onClick={this.handleWelcome}>Home</div>
-              </li>
-              <li>
-                <div style={{paddingLeft:"10px", paddingRight:"10px"}}>About</div>
-              </li>
-            </ul>
-          </div>
-        </nav>
-      </header>
+      <div>
+        <header ref="body">
+          <nav>
+            <div className="nav-wrapper  blue darken-3">
+              <ul className="login right">
+                <li>
+                  <User />
+                </li>
+              </ul>
+              <ul id="nav-mobile" className="left hide-on-med-and-down">
+                <li ref="welcome">
+                  <div style={{paddingLeft:"10px", paddingRight:"10px"}} onClick={this.handleWelcome}>Brainstormer</div>
+                </li>
+              </ul>
+            </div>
+          </nav>
+        </header>
+        {heroView}
+      </div>
     );
   }
 

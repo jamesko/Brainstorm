@@ -17,6 +17,9 @@ var UserStore = assign({}, EventEmitter.prototype, {
     })
     .done(function(user) {
       this._user = user;
+      if (user){
+        window.globalBoolean = false;
+      }
       this.emitChange();
     }.bind(this))
     .fail(function(err) {
@@ -31,6 +34,7 @@ var UserStore = assign({}, EventEmitter.prototype, {
     })
     .done(function(user) {
       this._user = user;
+      window.globalBoolean = true;
       this.emitChange();
       window.location.href = "/";
     }.bind(this))

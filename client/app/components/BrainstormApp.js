@@ -24,6 +24,7 @@ var BrainstormApp = React.createClass({
   },
 
   componentDidMount: function () {
+    window.globalBoolean = true;
     UserStore.addChangeListener(function() {
       if(this.isMounted()) {
         this.setState({ currentUser: UserStore.get() });
