@@ -83,10 +83,12 @@ var BrainstormApp = React.createClass({
               filterNames={this.state.filterNames}
               onUserInput={this.handleUserInput}
           />
+          <div>
           <Ideas room_id={this.state.props}
             filterText={this.state.filterText}
             filterNames={this.state.filterNames}
           />
+            </div>
         </div>
       );
     } else { // brainswarm

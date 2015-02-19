@@ -8,6 +8,7 @@ var IdeaActions = require("../actions/IdeaActions");
 var BrainswarmStore = require("../stores/BrainswarmStore");
 var BrainswarmActions = require("../actions/BrainswarmActions");
 var Q = require('q');
+var Draggable = require('react-draggable');
 
 var Idea = React.createClass({
   getInitialState: function() {
@@ -70,7 +71,9 @@ var Idea = React.createClass({
       }
 
     ideaContent = (
+
       <div className="idea">
+      <Draggable>
         <div className="anchor">
           <form>
             <div>
@@ -88,7 +91,10 @@ var Idea = React.createClass({
             </div>
           </form>
         </div>
+      </Draggable>
       </div>
+
+
     )}
 
     return (ideaContent);
