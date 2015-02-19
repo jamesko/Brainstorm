@@ -67,13 +67,13 @@ var Room = React.createClass({
       if (currentUser._id === roomOwner) {
         roomContent = (
           <div className="room pure-u-1">
-            <a href="#" onClick={this.gotoRoom}>{this.props.name}</a>
+            <a style={{fontSize: "18px"}} href="#" onClick={this.gotoRoom}>{this.props.name}</a>
             <form className="pure-form pure-g">
                 {editForm}
               </form>
             <div className="pure-u-1-1 auth-check">
-              <button className="button-small pure-button pure-button-primary" onClick={this.edit}>{ this.state.editing ? 'Cancel' : 'Edit Room'}</button>
-              <button className="button-small pure-button pure-button-primary" onClick={this.delete}>Delete Room</button>
+              <button style={{marginLeft:"5px", marginRight:"5px"}} className="button-small pure-button pure-button-primary" onClick={this.edit}>{ this.state.editing ? 'Cancel' : 'Edit Room'}</button>
+              <button style={{marginLeft:"5px", marginRight:"5px"}} className="button-small pure-button pure-button-primary" onClick={this.delete}>Delete Room</button>
             </div>
 
           </div>

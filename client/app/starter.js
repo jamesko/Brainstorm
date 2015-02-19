@@ -10,6 +10,8 @@ React.render(
   document.getElementById('main')
 );
 
+
+
 if (document.location.hash.substr(3, 5) === 'rooms'){
   PageActions.navigate({
 
