@@ -34,6 +34,7 @@ var RoomStore = assign({}, EventEmitter.prototype, {
     .fail(function(error) {
       console.log(error);
     });
+    this.socketListener();
   },
 
   create: function(name) {

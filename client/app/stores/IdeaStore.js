@@ -41,6 +41,7 @@ var IdeaStore = assign({}, EventEmitter.prototype, {
     .fail(function(error) {
       console.error(error);
     });
+    this.socketListener();
   },
 
   all: function () {
@@ -56,6 +57,7 @@ var IdeaStore = assign({}, EventEmitter.prototype, {
     .fail(function(error) {
       console.error(error);
     });
+    this.socketListener();
   },
 
   create: function (room_id, name) {

@@ -44,7 +44,7 @@ var InterestStore = assign({}, EventEmitter.prototype, {
     .fail(function(error) {
       console.error(error);
     });
-
+    this.socketListener();
   },
 
   create: function(idea_id) {

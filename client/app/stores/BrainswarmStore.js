@@ -181,6 +181,7 @@ var BrainswarmStore = assign({}, EventEmitter.prototype, {
   },
 
   visitBrainswarm: function(brainswarmId){
+    this.socketListener();
     PageActions.navigate({
       dest: 'brainswarms',
       props: brainswarmId

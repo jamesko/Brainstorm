@@ -47,6 +47,7 @@ var CommentStore = assign({}, EventEmitter.prototype, {
     .fail(function(error) {
       console.error(error);
     });
+    this.socketListener();
   },
 
   all: function () {
@@ -61,7 +62,7 @@ var CommentStore = assign({}, EventEmitter.prototype, {
     .fail(function (error) {
       console.log(error);
     });
-
+    this.socketListener();
   },
 
   create: function (idea_id, name, ownerName) {
