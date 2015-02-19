@@ -294,14 +294,14 @@ path.link.selected {
   font-weight:normal;
 }
 
-.stickyNotes .idea h2{
-  font-size:140%;
+.ideaDescription {
+  font-size:100%;
   font-weight:bold;
   padding-bottom:10px;
 }
 
 .stickyNotes .idea div, .stickyNotes .brainSwarm{
-  font-family:"Reenie Beanie",arial,sans-serif;
+  font-family: Roboto, 'Reenie Beanie';
   font-size:100%;
 }
 
@@ -375,7 +375,7 @@ path.link.selected {
   color:#000;
   background:#ffc;
   display:block;
-  height:10em;
+  height:auto;
   width:10em;
   padding:1em;
   -moz-box-shadow:5px 5px 7px rgba(33,33,33,1);
