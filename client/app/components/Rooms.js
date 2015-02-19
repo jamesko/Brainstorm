@@ -10,8 +10,8 @@ var Rooms = React.createClass({
   },
 
   componentDidMount: function() {
-    RoomStore.addChangeListener(this._onChange);
     RoomStore.all();
+    RoomStore.addChangeListener(this._onChange);
   },
 
   _onChange: function(){

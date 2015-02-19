@@ -13,8 +13,8 @@ var RoomTitle = React.createClass({
   },
 
   componentDidMount: function() {
-    RoomStore.addChangeListener(this.onStoreChange);
     RoomStore.all();
+    RoomStore.addChangeListener(this.onStoreChange);
   },
 
   onStoreChange: function(){

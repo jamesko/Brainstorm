@@ -131,7 +131,13 @@ function createMap(brainswarmId, brainswarm){
           }
         }
         var data = window.JSON.stringify({"nodes": thisGraph.nodes, "edges": saveEdges});
+
+        // MAKE PUT REQUEST
         BrainswarmActions.edit(brainswarmId, data);
+
+        // possibly make put request on every update graph
+        // thisGraph.saveEdges = saveEdges;
+        // go to updateGraph prototype
 
 
       });
@@ -588,6 +594,24 @@ function createMap(brainswarmId, brainswarm){
 
       // remove old nodes
       thisGraph.circles.exit().remove();
+
+      // send ajax request of edit this would create a loop that just keeps on sending ajax requests:
+      // var saveEdges = [];
+      //     thisGraph.edges.forEach(function(val, i){
+      //       saveEdges.push({source: val.source.id, target: val.target.id});
+      //     });
+
+      // // Get rid of duplicate nodes
+      //   for (var i = 0; i< thisGraph.nodes.length; i++){
+      //     var temp = thisGraph.nodes.indexOf(thisGraph.nodes[i].id, i+1);
+      //     if( temp !== -1){
+      //      delete thisGraph.nodes[temp]
+      //     }
+      //   }
+      //   var data = window.JSON.stringify({"nodes": thisGraph.nodes, "edges": saveEdges});
+
+      //   // MAKE PUT REQUEST
+      //   BrainswarmActions.edit(brainswarmId, data);
     };
 
     GraphCreator.prototype.zoomed = function(){
@@ -703,8 +727,17 @@ var Brainswarm = React.createClass({
   componentDidMount: function(){
 
     createMap(this.props._id, this.state.currentBrainswarm);
+    BrainswarmStore.addChangeListener(this._onChange);
+  },
 
+  _onChange: function(){
+    if(this.isMounted()) {
+      this.setState({ currentBrainswarm: BrainswarmStore.findBrainswarm(this.props._id) });
+    }
+  },
 
+  componentWillUnmount: function(){
+    BrainswarmStore.removeChangeListener(this._onChange);
   },
 
   componentWillMount: function(){

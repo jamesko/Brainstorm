@@ -5,7 +5,7 @@ var PageConstants = require("../constants/PageConstants");
 var PageStore = require("./PageStore");
 var $ = require("jquery");
 var _ = require("underscore");
-// var socket = io.connect();
+var socket = io.connect();
 var assign = require("object-assign");
 
 var CHANGE_EVENT = 'change';
@@ -24,6 +24,13 @@ var InterestStore = assign({}, EventEmitter.prototype, {
     });
   },
 
+  socketListener: function(){
+    socket.on('interest-change', function(currentInterests) {
+      this._interests = currentInterests;
+      this.emitChange();
+    }.bind(this));
+  },
+
   get: function (room_id) {
     $.ajax({
       type: 'GET',
@@ -38,10 +45,6 @@ var InterestStore = assign({}, EventEmitter.prototype, {
       console.error(error);
     });
 
-    // socket.on('interest-change', function(currentInterests) {
-    //   this._interests = currentInterests;
-    //   // this.emitChange();
-    // }.bind(this));
   },
 
   create: function(idea_id) {
@@ -53,7 +56,7 @@ var InterestStore = assign({}, EventEmitter.prototype, {
       this._interests.push(interest);
 
       // broadcast that _interests has changed
-    //   socket.emit('interest-change', this._interests, this._room());
+      socket.emit('interest-change', this._interests, this._room());
       this.emitChange();
     }.bind(this))
     .fail(function(error) {
@@ -75,7 +78,7 @@ var InterestStore = assign({}, EventEmitter.prototype, {
       }.bind(this));
 
       // broadcast that _comments has changed
-    //   socket.emit('interest-change', this._interests, this._room());
+      socket.emit('interest-change', this._interests, this._room());
       this.emitChange();
     }.bind(this))
     .fail(function (error) {
