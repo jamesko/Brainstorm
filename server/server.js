@@ -11,6 +11,10 @@ var io = require('socket.io')(server);
 io.on('connection', function(client) {
   console.log('i joined')
   client.on('join', function(room) {
+    if (client.brainswarm){
+      client.leave(client.brainswarm);
+    }
+    client.room = room;
     client.join(room);
   });
 
@@ -44,9 +48,11 @@ io.on('connection', function(client) {
     client.broadcast.emit('brainswarm-change', currentBrainswarms);
   })
   // Not sure if we should broadcast this in a room
-  // client.on('join-brainswarm', function(brainswarm) {
-  //   client.join(brainswarm);
-  // });
+  client.on('join-brainswarm', function(brainswarm) {
+    client.leave(client.room);
+    client.brainswarm = brainswarm;
+    client.join(brainswarm);
+  });
   // client.on('brainswarm-change', function(currentBrainswarms) {
   //   client.broadcast.emit('brainswarm-change', currentBrainswarms);
   // });

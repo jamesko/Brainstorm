@@ -144,6 +144,7 @@ function createMap(brainswarmId, brainswarm){
 
       // UPLOAD DATA IF THERE IS A BRAINSWARM!!!
       if (brainswarm.map){
+        console.log("here is the new brainswarm");
         thisGraph.deleteGraph(true);
         thisGraph.nodes = JSON.parse(brainswarm.map).nodes;
         thisGraph.setIdCt(thisGraph.nodes.length + 1);
@@ -154,7 +155,6 @@ function createMap(brainswarmId, brainswarm){
         });
         thisGraph.edges = newEdges;
         thisGraph.updateGraph();
-
       }
 
 
@@ -665,6 +665,7 @@ function createMap(brainswarmId, brainswarm){
       }
     //{title: "new concept", id: 1, x: xLoc, y: yLoc + 200}
     // MAIN SVG
+    console.log("MAP was JUST CREATEd");
 
   })(window.d3, window.saveAs, window.Blob);
 
@@ -728,17 +729,19 @@ var Brainswarm = React.createClass({
 
     createMap(this.props._id, this.state.currentBrainswarm);
     BrainswarmStore.addChangeListener(this._onChange);
+
   },
 
   _onChange: function(){
+    console.log("hit _onChange");
     if(this.isMounted()) {
       this.setState({ currentBrainswarm: BrainswarmStore.findBrainswarm(this.props._id) });
     }
   },
 
-  componentWillUnmount: function(){
-    BrainswarmStore.removeChangeListener(this._onChange);
-  },
+  // componentWillUnmount: function(){
+  //   BrainswarmStore.removeChangeListener(this._onChange);
+  // },
 
   componentWillMount: function(){
     // similar to componentDidMount but also invoked on the server
@@ -747,9 +750,9 @@ var Brainswarm = React.createClass({
     // createMap(this.props._id, this.state.currentBrainswarm);
   },
 
-  shouldComponentUpdate: function(){
+  componentDidUpdate: function(){
     // after new state has been set
-
+    console.log("brainswarm updating");
     createMap(this.props._id, this.state.currentBrainswarm);
   }
 

@@ -14,6 +14,7 @@ var Ideas = React.createClass({
   pauseUpdates: false,
 
   componentDidMount: function () {
+    IdeaStore.get(this.props.room_id);
     IdeaStore.addChangeListener(this.onStoreChange);
   },
 
