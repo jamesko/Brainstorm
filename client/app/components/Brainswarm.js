@@ -2,6 +2,8 @@ var React = require("react");
 var BrainswarmActions = require("../actions/BrainswarmActions");
 var BrainswarmStore = require("../stores/BrainswarmStore");
 // var d3 = require("d3");
+var socket = io.connect();
+
 function createMap(brainswarmId, brainswarm){
 
   document.onload = (function(d3, saveAs, Blob, undefined){
@@ -118,27 +120,9 @@ function createMap(brainswarmId, brainswarm){
       // handle download data
       d3.select("#download-input").on("click", function(){
 
-          var saveEdges = [];
-          thisGraph.edges.forEach(function(val, i){
-            saveEdges.push({source: val.source.id, target: val.target.id});
-          });
+        thisGraph.emit();
 
-      // Get rid of duplicate nodes
-        for (var i = 0; i< thisGraph.nodes.length; i++){
-          var temp = thisGraph.nodes.indexOf(thisGraph.nodes[i].id, i+1);
-          if( temp !== -1){
-           delete thisGraph.nodes[temp]
-          }
-        }
-        var data = window.JSON.stringify({"nodes": thisGraph.nodes, "edges": saveEdges});
-
-        // MAKE PUT REQUEST
         BrainswarmActions.edit(brainswarmId, data);
-
-        // possibly make put request on every update graph
-        // thisGraph.saveEdges = saveEdges;
-        // go to updateGraph prototype
-
 
       });
 
@@ -157,7 +141,19 @@ function createMap(brainswarmId, brainswarm){
         thisGraph.updateGraph();
       }
 
+      socket.on('edit map', function(map){
+        thisGraph.deleteGraph(true);
+        thisGraph.nodes = JSON.parse(map).nodes;
+        thisGraph.setIdCt(thisGraph.nodes.length + 1);
+        var newEdges = JSON.parse(map).edges;
+        newEdges.forEach(function(e, i){
+          newEdges[i] = {source: thisGraph.nodes.filter(function(n){return n.id == e.source;})[0],
+            target: thisGraph.nodes.filter(function(n){return n.id == e.target;})[0]};
+        });
+        thisGraph.edges = newEdges;
+        thisGraph.updateGraph();
 
+      });
       // handle uploaded data
       //d3.select("#upload-input").on("click", function(){
       //  document.getElementById("hidden-file-upload").click();
@@ -227,6 +223,7 @@ function createMap(brainswarmId, brainswarm){
         d.x += d3.event.dx;
         d.y +=  d3.event.dy;
         thisGraph.updateGraph();
+        thisGraph.emit.call(thisGraph);
       }
     };
 
@@ -385,6 +382,7 @@ function createMap(brainswarmId, brainswarm){
               d.title = this.textContent;
               thisGraph.insertTitleLinebreaks(d3node, d.title);
               d3.select(this.parentElement).remove();
+          thisGraph.emit.call(thisGraph);
             });
       return d3txt;
     };
@@ -416,6 +414,7 @@ function createMap(brainswarmId, brainswarm){
         if (!filtRes[0].length){
           thisGraph.edges.push(newEdge);
           thisGraph.updateGraph();
+          thisGraph.emit.call(thisGraph);
         }
       } else{
         // we're in the same node
@@ -442,10 +441,9 @@ function createMap(brainswarmId, brainswarm){
               thisGraph.removeSelectFromNode();
             }
           }
+          thisGraph.emit.call(thisGraph);
         }
       }
-      state.mouseDownNode = null;
-      return;
 
     }; // end of circles mouseup
 
@@ -478,6 +476,7 @@ function createMap(brainswarmId, brainswarm){
             txtNode = d3txt.node();
         thisGraph.selectElementContents(txtNode);
         txtNode.focus();
+        thisGraph.emit.call(thisGraph);
       } else if (state.shiftNodeDrag){
         // dragged from node
         state.shiftNodeDrag = false;
@@ -507,10 +506,12 @@ function createMap(brainswarmId, brainswarm){
           thisGraph.spliceLinksForNode(selectedNode);
           state.selectedNode = null;
           thisGraph.updateGraph();
+          thisGraph.emit.call(thisGraph);
         } else if (selectedEdge){
           thisGraph.edges.splice(thisGraph.edges.indexOf(selectedEdge), 1);
           state.selectedEdge = null;
           thisGraph.updateGraph();
+          thisGraph.emit.call(thisGraph);
         }
         break;
       }
@@ -522,7 +523,6 @@ function createMap(brainswarmId, brainswarm){
 
     // call to propagate changes to graph
     GraphCreator.prototype.updateGraph = function(){
-
       var thisGraph = this,
           consts = thisGraph.consts,
           state = thisGraph.state;
@@ -595,23 +595,6 @@ function createMap(brainswarmId, brainswarm){
       // remove old nodes
       thisGraph.circles.exit().remove();
 
-      // send ajax request of edit this would create a loop that just keeps on sending ajax requests:
-      // var saveEdges = [];
-      //     thisGraph.edges.forEach(function(val, i){
-      //       saveEdges.push({source: val.source.id, target: val.target.id});
-      //     });
-
-      // // Get rid of duplicate nodes
-      //   for (var i = 0; i< thisGraph.nodes.length; i++){
-      //     var temp = thisGraph.nodes.indexOf(thisGraph.nodes[i].id, i+1);
-      //     if( temp !== -1){
-      //      delete thisGraph.nodes[temp]
-      //     }
-      //   }
-      //   var data = window.JSON.stringify({"nodes": thisGraph.nodes, "edges": saveEdges});
-
-      //   // MAKE PUT REQUEST
-      //   BrainswarmActions.edit(brainswarmId, data);
     };
 
     GraphCreator.prototype.zoomed = function(){
@@ -628,8 +611,24 @@ function createMap(brainswarmId, brainswarm){
       svg.attr("width", x).attr("height", y);
     };
 
+      GraphCreator.prototype.emit = function(){
+        var thisGraph = this;
+        var saveEdges = [];
+        thisGraph.edges.forEach(function(val, i){
+          saveEdges.push({source: val.source.id, target: val.target.id});
+        });
 
+        // Get rid of duplicate nodes
+        for (var i = 0; i< thisGraph.nodes.length; i++){
+          var temp = thisGraph.nodes.indexOf(thisGraph.nodes[i].id, i+1);
+          if( temp !== -1){
+            delete thisGraph.nodes[temp]
+          }
+        }
+        var data = window.JSON.stringify({"nodes": thisGraph.nodes, "edges": saveEdges});
 
+        socket.emit('map change', data);
+      };
     // MAIN
 
     // warn the user when leaving
@@ -726,7 +725,6 @@ var Brainswarm = React.createClass({
   },
 
   componentDidMount: function(){
-
     createMap(this.props._id, this.state.currentBrainswarm);
     BrainswarmStore.addChangeListener(this._onChange);
 

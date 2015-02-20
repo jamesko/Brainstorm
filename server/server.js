@@ -9,7 +9,7 @@ var io = require('socket.io')(server);
 
 
 io.on('connection', function(client) {
-  console.log('i joined')
+
   client.on('join', function(room) {
     if (client.brainswarm){
       client.leave(client.brainswarm);
@@ -56,9 +56,11 @@ io.on('connection', function(client) {
   // client.on('brainswarm-change', function(currentBrainswarms) {
   //   client.broadcast.emit('brainswarm-change', currentBrainswarms);
   // });
-  // client.on('map-change', function(editMap){
-  //   client.broadcast.emit('map-change', editMap);
-  // })
+
+  client.on('map change', function(editMap){
+     client.broadcast.emit('edit map', editMap);
+  })
+
 });
 
 require('./config/middleware')(app, express);
