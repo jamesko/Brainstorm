@@ -152,7 +152,7 @@ function createMap(brainswarmId, brainswarm){
         });
         thisGraph.edges = newEdges;
         thisGraph.updateGraph();
-        
+
       });
       // handle uploaded data
       //d3.select("#upload-input").on("click", function(){
@@ -223,6 +223,7 @@ function createMap(brainswarmId, brainswarm){
         d.x += d3.event.dx;
         d.y +=  d3.event.dy;
         thisGraph.updateGraph();
+        thisGraph.emit.call(thisGraph);
       }
     };
 
