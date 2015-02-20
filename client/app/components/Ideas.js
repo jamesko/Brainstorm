@@ -14,10 +14,12 @@ var Ideas = React.createClass({
   pauseUpdates: false,
 
   componentDidMount: function () {
+    IdeaStore.get(this.props.room_id);
     IdeaStore.addChangeListener(this.onStoreChange);
   },
 
   onStoreChange: function(){
+
     var that = this;
     if(this.isMounted()) {
       if(!that.pauseUpdates){
@@ -27,9 +29,9 @@ var Ideas = React.createClass({
     // get all ideas from db
   },
 
-  componentWillUnmount: function(){
-    IdeaStore.removeChangeListener(this.onStoreChange);
-  },
+  // componentWillUnmount: function(){
+  //   IdeaStore.removeChangeListener(this.onStoreChange);
+  // },
 
   render: function() {
     var ideas = [];

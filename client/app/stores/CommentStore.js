@@ -5,7 +5,7 @@ var PageConstants = require("../constants/PageConstants");
 var PageStore = require("./PageStore");
 var $ = require("jquery");
 var _ = require("underscore");
-// var socket = io.connect();
+var socket = io.connect();
 var assign = require("object-assign");
 
 var CHANGE_EVENT = 'change';
@@ -24,6 +24,13 @@ var CommentStore = assign({}, EventEmitter.prototype, {
     });
   },
 
+  socketListener: function(){
+    socket.on('comment-change', function(currentComments) {
+      this._comments = currentComments;
+      this.emitChange();
+    }.bind(this));
+  },
+
   //ajax requests
   //TODO: DRY out this code
 
@@ -40,11 +47,7 @@ var CommentStore = assign({}, EventEmitter.prototype, {
     .fail(function(error) {
       console.error(error);
     });
-
-    // socket.on('comment-change', function(currentComments) {
-    //   this._comments = currentComments;
-    //   // this.emitChange();
-    // }.bind(this));
+    this.socketListener();
   },
 
   all: function () {
@@ -59,11 +62,7 @@ var CommentStore = assign({}, EventEmitter.prototype, {
     .fail(function (error) {
       console.log(error);
     });
-
-    // socket.on('comment-change', function(currentComments) {
-    //   this._comments = currentComments;
-    //   // this.emitChange();
-    // }.bind(this));
+    this.socketListener();
   },
 
   create: function (idea_id, name, ownerName) {
@@ -79,7 +78,7 @@ var CommentStore = assign({}, EventEmitter.prototype, {
       this._comments.push(comment);
 
       // broadcast that _comments has changed
-      // socket.emit('comment-change', this._comments, this._room());
+      socket.emit('comment-change', this._comments, this._room());
       this.emitChange();
     }.bind(this))
     .fail(function (error) {
@@ -104,7 +103,7 @@ var CommentStore = assign({}, EventEmitter.prototype, {
       }.bind(this));
 
       // broadcast that _comments has changed
-      // socket.emit('comment-change', this._comments, this._room());
+      socket.emit('comment-change', this._comments, this._room());
       this.emitChange();
     }.bind(this))
     .fail(function (error) {
@@ -126,7 +125,7 @@ var CommentStore = assign({}, EventEmitter.prototype, {
       }.bind(this));
 
       // broadcast that _comments has changed
-      // socket.emit('comment-change', this._comments, this._room());
+      socket.emit('comment-change', this._comments, this._room());
       this.emitChange();
     }.bind(this))
     .fail(function (error) {

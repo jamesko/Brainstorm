@@ -3,7 +3,7 @@ var EventEmitter = require('events').EventEmitter;
 var BrainswarmConstants = require("../constants/BrainswarmConstants");
 var PageActions = require("../actions/PageActions");
 var $ = require("jquery");
-// var socket = io.connect();
+var socket = io.connect();
 var assign = require("object-assign");
 // takes objects as arguements and assigns them to one large object
 // similar to underscore _extend
@@ -24,6 +24,14 @@ var BrainswarmStore = assign({}, EventEmitter.prototype, {
   // },
   getAll: function() {
     return this._brainswarms;
+  },
+
+  socketListener: function(){
+    console.log("noew listening");
+    socket.on('brainswarm-change', function(currentBrainswarms) {
+      this._brainswarms = currentBrainswarms;
+      this.emitChange();
+    }.bind(this));
   },
 
 
@@ -83,6 +91,7 @@ var BrainswarmStore = assign({}, EventEmitter.prototype, {
     var brainswarms = this._brainswarms;
     for (var i =0; i< brainswarms.length; i++){
        if (brainswarms[i]._id === brainswarmId){
+        console.log("brainswarm map", brainswarms[i].map);
          return brainswarms[i];
        }
     }
@@ -112,8 +121,9 @@ var BrainswarmStore = assign({}, EventEmitter.prototype, {
        // _brainswarms[brainswarm._id] = brainswarm
 
       // broadcast that _rooms has changed
-      // socket.emit('room-change', this._brainswarms);
+      socket.emit('brainswarm-change', this._brainswarms);
       this.emitChange();
+      this.socketListener();
       PageActions.navigate({
         dest: 'brainswarms',
         props: brainswarm._id
@@ -164,6 +174,7 @@ var BrainswarmStore = assign({}, EventEmitter.prototype, {
        //     // socket.emit('brainswarm-change', this._brainswarms);
        //     // return this.emitChange();
        //   }
+      socket.emit('brainswarm-change', this._brainswarms);
       this.emitChange();
        // }.bind(this));
      }.bind(this))
@@ -173,6 +184,7 @@ var BrainswarmStore = assign({}, EventEmitter.prototype, {
   },
 
   visitBrainswarm: function(brainswarmId){
+    this.socketListener();
     PageActions.navigate({
       dest: 'brainswarms',
       props: brainswarmId

@@ -10,8 +10,8 @@ var Rooms = React.createClass({
   },
 
   componentDidMount: function() {
-    RoomStore.addChangeListener(this._onChange);
     RoomStore.all();
+    RoomStore.addChangeListener(this._onChange);
   },
 
   _onChange: function(){
@@ -20,9 +20,9 @@ var Rooms = React.createClass({
     }
   },
 
-  componentWillUnmount: function(){
-    RoomStore.removeChangeListener(this._onChange);
-  },
+  // componentWillUnmount: function(){
+  //   RoomStore.removeChangeListener(this._onChange);
+  // },
 
   render: function() {
     var rooms = [];

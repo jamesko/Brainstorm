@@ -23,9 +23,9 @@ var Comments = React.createClass({
     }
   },
 
-  componentWillUnmount: function(){
-    CommentStore.removeChangeListener(this.onStoreChange);
-  },
+  // componentWillUnmount: function(){
+  //   CommentStore.removeChangeListener(this.onStoreChange);
+  // },
 
   show: function (e) {
     e.preventDefault();

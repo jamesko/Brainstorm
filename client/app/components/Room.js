@@ -36,9 +36,9 @@ var Room = React.createClass({
     }
   },
 
-  componentWillUnmount: function() {
-    IdeaStore.removeChangeListener(this._onChange);
-  },
+  // componentWillUnmount: function() {
+  //   IdeaStore.removeChangeListener(this._onChange);
+  // },
 
   show: function () {
     if (this.isMounted()) {

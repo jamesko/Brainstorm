@@ -13,8 +13,8 @@ var RoomTitle = React.createClass({
   },
 
   componentDidMount: function() {
-    RoomStore.addChangeListener(this.onStoreChange);
     RoomStore.all();
+    RoomStore.addChangeListener(this.onStoreChange);
   },
 
   onStoreChange: function(){
@@ -27,9 +27,9 @@ var RoomTitle = React.createClass({
     }
   },
 
-  componentWillUnmount: function() {
-    RoomStore.removeChangeListener(this.onStoreChange);
-  },
+  // componentWillUnmount: function() {
+  //   RoomStore.removeChangeListener(this.onStoreChange);
+  // },
 
   render: function() {
     var title;

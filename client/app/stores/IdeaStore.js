@@ -1,10 +1,10 @@
-// var socket = io.connect();
 var AppDispatcher = require("../dispatcher/AppDispatcher");
 var EventEmitter = require('events').EventEmitter;
 var IdeaConstants = require("../constants/IdeaConstants");
 var PageConstants = require("../constants/PageConstants");
 var PageStore = require("./PageStore");
 var assign = require("object-assign");
+var socket = io.connect();
 var $ = require("jquery");
 
 var CHANGE_EVENT = 'change';
@@ -18,6 +18,13 @@ var IdeaStore = assign({}, EventEmitter.prototype, {
 
   getAll: function() {
     return this._ideas;
+  },
+
+  socketListener: function(){
+    socket.on('idea-change', function(currentIdeas) {
+      this._ideas = currentIdeas;
+      this.emitChange();
+    }.bind(this));
   },
 
   get: function (room_id) {
@@ -34,11 +41,7 @@ var IdeaStore = assign({}, EventEmitter.prototype, {
     .fail(function(error) {
       console.error(error);
     });
-
-    // socket.on('idea-change', function(currentIdeas) {
-    //   this._ideas = currentIdeas;
-    //   // this.emitChange();
-    // }.bind(this));
+    this.socketListener();
   },
 
   all: function () {
@@ -54,11 +57,7 @@ var IdeaStore = assign({}, EventEmitter.prototype, {
     .fail(function(error) {
       console.error(error);
     });
-
-    // socket.on('idea-change', function(currentIdeas) {
-    //   this._ideas = currentIdeas;
-    //   // this.emitChange();
-    // }.bind(this));
+    this.socketListener();
   },
 
   create: function (room_id, name) {
@@ -71,7 +70,7 @@ var IdeaStore = assign({}, EventEmitter.prototype, {
       this._ideas.push(idea);
 
       // broadcast that _ideas has changed
-      // socket.emit('idea-change', this._ideas, this._room());
+      socket.emit('idea-change', this._ideas, this._room());
       this.emitChange();
     }.bind(this))
     .fail(function(error) {
@@ -93,7 +92,7 @@ var IdeaStore = assign({}, EventEmitter.prototype, {
           idea.name = ideaEdit.name;
 
           // broadcast that _ideas has changed
-          // socket.emit('idea-change', this._ideas, this._room());
+          socket.emit('idea-change', this._ideas, this._room());
           // return this.emitChange();
         }
       }.bind(this));
@@ -118,7 +117,7 @@ var IdeaStore = assign({}, EventEmitter.prototype, {
           this._ideas.splice(index, 1);
 
           // broadcast that _ideas has changed
-          // socket.emit('idea-change', this._ideas, this._room());
+          socket.emit('idea-change', this._ideas, this._room());
           // return this.emitChange();
         }
       }.bind(this));

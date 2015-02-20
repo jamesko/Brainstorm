@@ -5,7 +5,7 @@ var PageConstants = require("../constants/PageConstants");
 var PageStore = require("./PageStore");
 var $ = require("jquery");
 var _ = require("underscore");
-// var socket = io.connect();
+var socket = io.connect();
 var assign = require("object-assign");
 
 var CHANGE_EVENT = 'change';
@@ -18,10 +18,18 @@ var InterestStore = assign({}, EventEmitter.prototype, {
   },
 
   getAll: function (idea_id) {
+    this.socketListener();
     if (!idea_id) return this._interests;
     return _(this._interests).filter(function (interest) {
       return interest.idea === idea_id;
     });
+  },
+
+  socketListener: function(){
+    socket.on('interest-change', function(currentInterests) {
+      this._interests = currentInterests;
+      this.emitChange();
+    }.bind(this));
   },
 
   get: function (room_id) {
@@ -37,11 +45,7 @@ var InterestStore = assign({}, EventEmitter.prototype, {
     .fail(function(error) {
       console.error(error);
     });
-
-    // socket.on('interest-change', function(currentInterests) {
-    //   this._interests = currentInterests;
-    //   // this.emitChange();
-    // }.bind(this));
+    this.socketListener();
   },
 
   create: function(idea_id) {
@@ -53,7 +57,7 @@ var InterestStore = assign({}, EventEmitter.prototype, {
       this._interests.push(interest);
 
       // broadcast that _interests has changed
-    //   socket.emit('interest-change', this._interests, this._room());
+      socket.emit('interest-change', this._interests, this._room());
       this.emitChange();
     }.bind(this))
     .fail(function(error) {
@@ -75,7 +79,7 @@ var InterestStore = assign({}, EventEmitter.prototype, {
       }.bind(this));
 
       // broadcast that _comments has changed
-    //   socket.emit('interest-change', this._interests, this._room());
+      socket.emit('interest-change', this._interests, this._room());
       this.emitChange();
     }.bind(this))
     .fail(function (error) {
