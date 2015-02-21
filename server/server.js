@@ -48,17 +48,23 @@ io.on('connection', function(client) {
     client.broadcast.emit('brainswarm-change', currentBrainswarms);
   })
   // Not sure if we should broadcast this in a room
-  client.on('join-brainswarm', function(brainswarm) {
+  client.on('join brainswarm', function(brainswarm) {
+   //console.log('SERVER JOIN', brainswarm)
     client.leave(client.room);
     client.brainswarm = brainswarm;
     client.join(brainswarm);
+   // console.log(client.rooms)
+   // console.log('server stuff',client.brainswarm)
   });
-  // client.on('brainswarm-change', function(currentBrainswarms) {
-  //   client.broadcast.emit('brainswarm-change', currentBrainswarms);
-  // });
+  client.on('brainswarm change', function(currentBrainswarms) {
+   // console.log('LEFT ROOM', currentBrainswarms)
+     client.leave(currentBrainswarms);
+  });
 
   client.on('map change', function(editMap){
-     client.broadcast.emit('edit map', editMap);
+    console.log("CHANGES IN ROOMs",client.brainswarm);
+   // console.log("THESSE ARE CHANGES",editMap);
+     client.broadcast.to(client.brainswarm).emit('edit map', editMap);
   })
 
 });

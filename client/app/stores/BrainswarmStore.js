@@ -27,7 +27,6 @@ var BrainswarmStore = assign({}, EventEmitter.prototype, {
   },
 
   socketListener: function(){
-    console.log("noew listening");
     socket.on('brainswarm-change', function(currentBrainswarms) {
       this._brainswarms = currentBrainswarms;
       this.emitChange();
@@ -91,7 +90,6 @@ var BrainswarmStore = assign({}, EventEmitter.prototype, {
     var brainswarms = this._brainswarms;
     for (var i =0; i< brainswarms.length; i++){
        if (brainswarms[i]._id === brainswarmId){
-        console.log("brainswarm map", brainswarms[i].map);
          return brainswarms[i];
        }
     }
@@ -174,8 +172,8 @@ var BrainswarmStore = assign({}, EventEmitter.prototype, {
        //     // socket.emit('brainswarm-change', this._brainswarms);
        //     // return this.emitChange();
        //   }
-      socket.emit('brainswarm-change', this._brainswarms);
-      this.emitChange();
+     // socket.emit('brainswarm-change', this._brainswarms);
+      //this.emitChange();
        // }.bind(this));
      }.bind(this))
      .fail(function(error) {

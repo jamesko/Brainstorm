@@ -117,18 +117,51 @@ function createMap(brainswarmId, brainswarm){
       // listen for resize
       window.onresize = function(){thisGraph.updateWindow(svg);};
 
+     // console.log ("THIS IS LOC",window.location);
+     // window.onbeforeunload = function(){
+     //   console.log('got here')
+     //
+     //
+     //   var saveEdges = [];
+     //   thisGraph.edges.forEach(function(val, i){
+     //     saveEdges.push({source: val.source.id, target: val.target.id});
+     //   });
+     //
+     //   // Get rid of duplicate nodes
+     //   for (var i = 0; i< thisGraph.nodes.length; i++){
+     //     var temp = thisGraph.nodes.indexOf(thisGraph.nodes[i].id, i+1);
+     //     if( temp !== -1){
+     //       delete thisGraph.nodes[temp]
+     //     }
+     //   }
+     //   var data = window.JSON.stringify({"nodes": thisGraph.nodes, "edges": saveEdges});
+     //   BrainswarmActions.edit(brainswarmId, data);
+     //
+     //};
+
       // handle download data
       d3.select("#download-input").on("click", function(){
 
-        thisGraph.emit();
+        var saveEdges = [];
 
+        thisGraph.edges.forEach(function(val, i){
+          saveEdges.push({source: val.source.id, target: val.target.id});
+        });
+
+        // Get rid of duplicate nodes
+        for (var i = 0; i< thisGraph.nodes.length; i++){
+          var temp = thisGraph.nodes.indexOf(thisGraph.nodes[i].id, i+1);
+          if( temp !== -1){
+            delete thisGraph.nodes[temp]
+          }
+        }
+        var data = window.JSON.stringify({"nodes": thisGraph.nodes, "edges": saveEdges});
         BrainswarmActions.edit(brainswarmId, data);
 
       });
 
       // UPLOAD DATA IF THERE IS A BRAINSWARM!!!
       if (brainswarm.map){
-        console.log("here is the new brainswarm");
         thisGraph.deleteGraph(true);
         thisGraph.nodes = JSON.parse(brainswarm.map).nodes;
         thisGraph.setIdCt(thisGraph.nodes.length + 1);
@@ -154,42 +187,6 @@ function createMap(brainswarmId, brainswarm){
         thisGraph.updateGraph();
 
       });
-      // handle uploaded data
-      //d3.select("#upload-input").on("click", function(){
-      //  document.getElementById("hidden-file-upload").click();
-      //});
-      //d3.select("#hidden-file-upload").on("change", function(){
-      //  if (window.File && window.FileReader && window.FileList && window.Blob) {
-      //    var uploadFile = this.files[0];
-      //    var filereader = new window.FileReader();
-      //
-      //    filereader.onload = function(){
-      //      var txtRes = filereader.result;
-      //      // TODO better error handling
-      //      try{
-      //        var jsonObj = JSON.parse(txtRes);
-      //        thisGraph.deleteGraph(true);
-      //        thisGraph.nodes = jsonObj.nodes;
-      //        thisGraph.setIdCt(jsonObj.nodes.length + 1);
-      //        var newEdges = jsonObj.edges;
-      //        newEdges.forEach(function(e, i){
-      //          newEdges[i] = {source: thisGraph.nodes.filter(function(n){return n.id == e.source;})[0],
-      //                      target: thisGraph.nodes.filter(function(n){return n.id == e.target;})[0]};
-      //        });
-      //        thisGraph.edges = newEdges;
-      //        thisGraph.updateGraph();
-      //      }catch(err){
-      //        window.alert("Error parsing uploaded file\nerror message: " + err.message);
-      //        return;
-      //      }
-      //    };
-      //    filereader.readAsText(uploadFile);
-      //
-      //  } else {
-      //    alert("Your browser won't let you save this graph -- try upgrading your browser to IE 10+ or Chrome or Firefox.");
-      //  }
-      //
-      //});
 
       // handle delete graph
       d3.select("#delete-graph").on("click", function(){
@@ -214,6 +211,26 @@ function createMap(brainswarmId, brainswarm){
     };
 
     // PROTOTYPE FUNCTIONS
+   GraphCreator.prototype.saveDB = function(){
+     var thisGraph= this;
+     var saveEdges = [];
+   //  console.log(thisGraph);
+
+     thisGraph.edges.forEach(function(val, i){
+       saveEdges.push({source: val.source.id, target: val.target.id});
+     });
+
+     // Get rid of duplicate nodes
+     for (var i = 0; i< thisGraph.nodes.length; i++){
+       var temp = thisGraph.nodes.indexOf(thisGraph.nodes[i].id, i+1);
+       if( temp !== -1){
+         delete thisGraph.nodes[temp]
+       }
+     }
+     var data = window.JSON.stringify({"nodes": thisGraph.nodes, "edges": saveEdges});
+     BrainswarmActions.edit(brainswarmId, data);
+
+   };
 
     GraphCreator.prototype.dragmove = function(d) {
       var thisGraph = this;
@@ -352,7 +369,6 @@ function createMap(brainswarmId, brainswarm){
       d3node.selectAll("text").remove();
       var nodeBCR = htmlEl.getBoundingClientRect(),
           curScale = nodeBCR.width/consts.nodeRadius,
-          placePad  =  5*curScale,
           useHW = curScale > 1 ? nodeBCR.width*0.71 : consts.nodeRadius*1.42;
       // replace with editableconent text
 
@@ -361,8 +377,8 @@ function createMap(brainswarmId, brainswarm){
             .data([d])
             .enter()
             .append("foreignObject")
-            .attr("x", nodeBCR.left + placePad )
-            .attr("y", nodeBCR.top + placePad)
+            .attr("x",d.x -30)
+            .attr("y", d.y -30)
             .attr("height", 2*useHW)
             .attr("width", useHW)
             .append("xhtml:p")
@@ -626,15 +642,15 @@ function createMap(brainswarmId, brainswarm){
           }
         }
         var data = window.JSON.stringify({"nodes": thisGraph.nodes, "edges": saveEdges});
-
+      //  console.log("CLIENTMAP",mapId)
+       // var idz = mapId.toString();
+       // console.log('NUMZ', typeof idz)
         socket.emit('map change', data);
       };
     // MAIN
 
     // warn the user when leaving
-    //window.onbeforeunload = function(){
-    //  return "Make sure to save your graph locally before leaving :-)";
-    //};
+
 
     var docEl = document.documentElement,
         bodyEl = document.getElementsByTagName('body')[0];
@@ -664,7 +680,6 @@ function createMap(brainswarmId, brainswarm){
       }
     //{title: "new concept", id: 1, x: xLoc, y: yLoc + 200}
     // MAIN SVG
-    console.log("MAP was JUST CREATEd");
 
   })(window.d3, window.saveAs, window.Blob);
 
@@ -725,13 +740,14 @@ var Brainswarm = React.createClass({
   },
 
   componentDidMount: function(){
+    socket.emit('join brainswarm',this.props._id);
     createMap(this.props._id, this.state.currentBrainswarm);
     BrainswarmStore.addChangeListener(this._onChange);
 
   },
 
   _onChange: function(){
-    console.log("hit _onChange");
+  //  console.log("hit _onChange");
     if(this.isMounted()) {
       this.setState({ currentBrainswarm: BrainswarmStore.findBrainswarm(this.props._id) });
     }
@@ -741,16 +757,17 @@ var Brainswarm = React.createClass({
   //   BrainswarmStore.removeChangeListener(this._onChange);
   // },
 
-  componentWillMount: function(){
-    // similar to componentDidMount but also invoked on the server
-    // this may render the map quicker. if the ajax call is too quick map won't render at all.
+  componentWillUnmount: function(){
 
+   // console.log('GOT IN COMPONENT')
+    // similar to componentDidMount but also invoked on the server
+    socket.emit('brainswarm leave',this.props._id);
     // createMap(this.props._id, this.state.currentBrainswarm);
   },
 
   componentDidUpdate: function(){
     // after new state has been set
-    console.log("brainswarm updating");
+   // console.log("brainswarm updating");
     createMap(this.props._id, this.state.currentBrainswarm);
   }
 
