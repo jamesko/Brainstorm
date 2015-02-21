@@ -172,8 +172,8 @@ var BrainswarmStore = assign({}, EventEmitter.prototype, {
        //     // socket.emit('brainswarm-change', this._brainswarms);
        //     // return this.emitChange();
        //   }
-      socket.emit('brainswarm-change', this._brainswarms);
-      this.emitChange();
+     // socket.emit('brainswarm-change', this._brainswarms);
+      //this.emitChange();
        // }.bind(this));
      }.bind(this))
      .fail(function(error) {
