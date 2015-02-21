@@ -3,10 +3,9 @@
 var User = require('../db.js').User;
 var passport = require('passport');
 var session = require('express-session');
-
 var configQuery = process.env.NODE_ENV ==='production' ? "productionConfig" : "config";
-
 var config = require('../config/'+ configQuery);
+
 
 module.exports = function(app) {
   app.use(session({
@@ -17,7 +16,6 @@ module.exports = function(app) {
 
   app.use(passport.initialize());
   app.use(passport.session());
-
 
   passport.serializeUser(function(user, done) {
     done(null, user.username);
@@ -34,44 +32,89 @@ module.exports = function(app) {
   });
 
 
-  app.get('/auth', passport.authenticate('github'));
-  app.get('/auth/callback',
+  //========== AUTHENTICATION REQUESTS===========================================//
+  //========== github authenticate requests ==============================
+  app.get('/auth/github', passport.authenticate('github'));
+  app.get('/auth/github/callback',
   passport.authenticate('github', { failureRedirect: '/' }),
     function(req, res) {
       console.log('req.session.passport.user: ', req.user);
       res.redirect('/');
     });
 
-  if (process.env.NODE_ENV ==='production') {
-    var strategyConfiguration = {
-      clientID: config.clientIDpro,
-      clientSecret: config.clientSecretpro,
-      callbackURL: config.callbackURLpro
-    }
-  } else {
-    var strategyConfiguration = {
-      clientID: config.clientID,
-      clientSecret: config.clientSecret,
-      callbackURL: config.callbackURL
-    }
-  }
+  // ========== facebook authenticate requests  ==========================
+  app.get('/auth/facebook', passport.authenticate('facebook', { scope: 'email'}));
+  app.get('/auth/facebook/callback',
+  passport.authenticate('facebook', { failureRedirect: '/' }),
+    function(req, res) {
+      console.log('req.session.passport.user: ', req.user);
+      res.redirect('/');
+    });
+
+  // ========== google authenticate requests  ============================
+  app.get('/auth/google', passport.authenticate('google'));
+  app.get('/auth/google/return',
+  passport.authenticate('google', { failureRedirect: '/' }),
+    function(req, res) {
+      console.log('req.session.passport.user: ', req.user);
+      res.redirect('/');
+    });
 
 
+  //========== CONFIGURATION OF STRATEGIES ======================================//
+  // ========== github configure strategy ================================
   var GitHubStrategy = require('passport-github').Strategy;
   passport.use(
-    new GitHubStrategy(strategyConfiguration,
+    new GitHubStrategy(config.github,
     function(accessToken, refreshToken, profile, done) {
-      User.findOne({username: profile.username}, function(err, user) {
+      User.findOne({username: profile.emails[0].value}, function(err, user) {
         if(err) {
           console.log(err);
         }
-
         if (!user) {
-          user = new User({ username: profile.username, socialData: profile._json });
+          user = new User({ username: profile.emails[0].value, socialData: {name: profile.displayName} });
           user.save();
         }
         done(null, user);
       });
     }
   ));
+
+// ========== facebook configure strategy ================================
+  var FaceBookStrategy = require('passport-facebook').Strategy;
+  passport.use(
+    new FaceBookStrategy(config.facebook,  // Note that profile fields can be included to limit data included from facebook.
+    function(accessToken, refreshToken, profile, done) {
+      User.findOne({username: profile.emails[0].value}, function(err, user) {
+        if(err) {
+          console.log(err);
+        }
+        if (!user) {
+          user = new User({ username: profile.emails[0].value, socialData: {name: profile.displayName} });
+          user.save();
+        }
+        done(null, user);
+      });
+    }
+  ));
+
+  // ========== google configure strategy ================================
+  var GoogleStrategy = require('passport-google').Strategy;
+  passport.use(
+    new GoogleStrategy(config.google,
+    function(identifier, profile, done) {
+      User.findOne({username: profile.emails[0].value}, function(err, user) {
+        if(err) {
+          console.log(err);
+        }
+        if (!user) {
+          user = new User({ username: profile.emails[0].value, socialData: {name: profile.displayName} });          
+          user.save();
+        }
+        done(null, user);
+      });
+    }
+  ));
+
+
 };

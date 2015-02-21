@@ -28,9 +28,7 @@ var PageNav = React.createClass({
           <nav>
             <div className="nav-wrapper  blue darken-3">
               <ul className="login right">
-                <li>
-                  <User />
-                </li>
+                <User />                
               </ul>
               <ul id="nav-mobile" className="left hide-on-med-and-down">
                 <li ref="welcome">
