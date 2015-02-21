@@ -1,8 +1,17 @@
 var config = {
-  clientIDpro: process.env.CLIENT_ID,
-  clientSecretpro: process.env.CLIENT_SECRET,
-  callbackURLpro: "https://brainstormideation.herokuapp.com/auth/callback",
-  MONGOLAB_URI: "mongodb://heroku_app33914307:uoptf0qmv9gma56c98gt98qks9@ds041871.mongolab.com:41871/heroku_app33914307"
-
+  github:{
+    clientID: process.env.GITHUB_CLIENT_ID,
+    clientSecret: process.env.GITHUB_CLIENT_SECRET,
+    callbackURL: 'https://brainstormideation.herokuapp.com/auth/github/callback'
+  },
+  facebook:{
+    clientID: process.env.FACEBOOK_CLIENT_ID,
+    clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
+    callbackURL: 'https://brainstormideation.herokuapp.com/auth/facebook/callback'
+  },  
+  google:{
+    returnURL: "https://brainstormideation.herokuapp.com/auth/google/return",
+    realm: "https://brainstormideation.herokuapp.com/"    
+  }  
 };
 module.exports = config;
