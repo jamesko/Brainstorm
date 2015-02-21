@@ -411,3 +411,46 @@ path.link.selected {
     height: 90%;
 }
 
+.trashcan{
+  font-size: 100px;
+  z-index: 50;
+  position: absolute;
+  top: 0;
+  right: 10px;
+
+}
+
+.idea-whiteboard{
+    height: 900px;
+    border: 23px double black;
+    border-radius: 1.75em/.8em;
+    padding: 1.5em;
+    color: black;
+    background-color: white;
+    position: relative;
+}
+
+.expo-marker{
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  height: 50px;
+  width: 150px;
+  opacity: .75;
+}
+
+.room-anchor{
+  /*cursor: url('assets/small.png'), url('http://www.homeroomteacher.com/Images/Products/Display/S_SBZ/SAN80001_L.jpg'), pointer;*/
+  font-family: Comic Sans MS;
+}
+
+.room-whiteboard{
+
+    border: 15px double black;
+    border-radius: 1.75em/.8em;
+    padding: 1.5em;
+    color: black;
+    background-color: white;
+    position: relative;
+}
+
