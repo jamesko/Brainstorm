@@ -1,6 +1,7 @@
 var React = require("react");
 var Room = require("./Room");
 var RoomStore = require("../stores/RoomStore");
+var IdeaStore = require("../stores/IdeaStore");
 
 var Rooms = React.createClass({
   getInitialState: function() {
@@ -11,6 +12,7 @@ var Rooms = React.createClass({
 
   componentDidMount: function() {
     RoomStore.all();
+    IdeaStore.all();
     RoomStore.addChangeListener(this._onChange);
   },
 
