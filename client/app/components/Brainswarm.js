@@ -4,6 +4,8 @@ var BrainswarmStore = require("../stores/BrainswarmStore");
 // var d3 = require("d3");
 var socket = io.connect();
 
+var dataz;
+
 function createMap(brainswarmId, brainswarm){
 
   document.onload = (function(d3, saveAs, Blob, undefined){
@@ -643,6 +645,7 @@ function createMap(brainswarmId, brainswarm){
         }
         var data = window.JSON.stringify({"nodes": thisGraph.nodes, "edges": saveEdges});
       //  console.log("CLIENTMAP",mapId)
+        dataz = data;
        // var idz = mapId.toString();
        // console.log('NUMZ', typeof idz)
         socket.emit('map change', data);
@@ -742,7 +745,7 @@ var Brainswarm = React.createClass({
   componentDidMount: function(){
     socket.emit('join brainswarm',this.props._id);
     createMap(this.props._id, this.state.currentBrainswarm);
-    BrainswarmStore.addChangeListener(this._onChange);
+   // BrainswarmStore.addChangeListener(this._onChange);
 
   },
 
@@ -761,6 +764,8 @@ var Brainswarm = React.createClass({
 
    // console.log('GOT IN COMPONENT')
     // similar to componentDidMount but also invoked on the server
+    console.log("I GOT THE DATAZ",dataz);
+    BrainswarmActions.edit(this.props._id, dataz);
     socket.emit('brainswarm leave',this.props._id);
     // createMap(this.props._id, this.state.currentBrainswarm);
   },
