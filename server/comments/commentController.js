@@ -11,6 +11,7 @@ module.exports = {
     comment.idea = req.params.idea_id;
     comment.owner = req.user._id;
     comment.ownerName = req.user.socialData.name;
+    comment.urlBoolean = req.body.urlBoolean;
     // comment.idea = req.body.ideaId;
     // comment.owner = req.body.userId;
 

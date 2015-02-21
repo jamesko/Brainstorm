@@ -17,6 +17,10 @@ var CommentSchema = new Schema({
   },
   ownerName: {
     type: String
+  },
+  urlBoolean: {
+    type: Boolean,
+    Default: false
   }
 });
 
