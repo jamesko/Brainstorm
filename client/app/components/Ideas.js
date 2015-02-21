@@ -2,12 +2,15 @@ var React = require("react");
 var Idea = require("./Idea");
 var IdeaStore = require("../stores/IdeaStore");
 var Draggable = require('react-draggable');
+var UserStore = require("../stores/UserStore");
+var socket = io();
 
-
+React.initializeTouchEvents(true);
 var Ideas = React.createClass({
   getInitialState: function () {
     return {
-      ideas: IdeaStore.getAll()
+      ideas: IdeaStore.getAll(),
+      currentUser: UserStore.get()
     };
   },
 
@@ -29,6 +32,19 @@ var Ideas = React.createClass({
     // get all ideas from db
   },
 
+  deleteIdea: function(event){
+    event.preventDefault();
+    console.log("delete me");
+    console.log("delete event", event);
+    // socket.on("idea-move", function(ideaId, ideaOwner, ideaPosition){
+    //   if (currentUser._id === ideaOwner){
+    //     IdeaActions.delete({ id: ideaId, owner: ideaOwner});
+    //   } else {
+    //     alert("Not your idea!");
+    //   }
+    // });
+  },
+
   // componentWillUnmount: function(){
   //   IdeaStore.removeChangeListener(this.onStoreChange);
   // },
@@ -48,7 +64,11 @@ var Ideas = React.createClass({
       <div className="stickyNotes">
         { ideas }
       </div>
-      </div>
+      <br/>
+      <br/>
+      <div style={{marginBottom: "50px"}} className="fa fa-trash-o fa-5x trashcan" onMouseEnter={this.deleteIdea}> </div>
+      <img className="expo-marker" src="styles/assets/expo-marker.jpg" />
+    </div>
     );
   }
 });

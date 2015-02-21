@@ -51,7 +51,7 @@ var IdeaForm = React.createClass({
     return (
       <form className="auth-check" ref="form" onSubmit={this.handleSubmit}>
         <input className="postfix" type="text" ref="name" defaultValue={this.props.name} placeholder="Add an Idea" />
-        <button className="no-margin" type="submit" ref="submit" >{this.props.editing ? "Edit Idea" : "Create"}</button>
+        <button className="no-margin btn waves-effect waves-light" type="submit" ref="submit" >{this.props.editing ? "Edit Idea" : "Create"}</button>
         <div className="timer" style={{display:"inline"}}>
           <span> 5 min Timer:</span>
           <button id="startTimer" className="no-margin">start</button>
