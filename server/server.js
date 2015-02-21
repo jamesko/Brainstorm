@@ -58,6 +58,7 @@ io.on('connection', function(client) {
   // });
 
   client.on('map change', function(editMap){
+    console.log(editMap);
      client.broadcast.emit('edit map', editMap);
   })
 
