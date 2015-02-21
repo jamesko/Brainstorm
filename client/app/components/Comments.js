@@ -4,12 +4,23 @@ var Comment = require("./Comment");
 var CommentStore = require("../stores/CommentStore");
 
 var Comments = React.createClass({
+  _url: false,
   //get all loaded comments
   getInitialState: function () {
+    var comments = CommentStore.getAll(this.props.idea_id);
     return {
       displaying: false,
-      comments: CommentStore.getAll(this.props.idea_id)
+      comments: comments
     };
+  },
+
+  checkUrl: function(comments){
+    var that = this;
+    for (var i = 0; i < comments.length; i++){
+      if (comments[i].toString().slice(0,7) === "http://" || "https:/"){
+        comments[i].urlBoolean = true;
+      }
+    }
   },
 
   //when we mount the view setup event listener for store changes
@@ -50,7 +61,7 @@ var Comments = React.createClass({
       this.state.comments.forEach(function (comment) {
         console.log(comment)
         comments.push(
-          <Comment ownerName={comment.ownerName} name={comment.name} key={comment._id} _id={comment._id} idea_id={comment.idea_id} />
+          <Comment anchor={comment.urlBoolean} ownerName={comment.ownerName} name={comment.name} key={comment._id} _id={comment._id} idea_id={comment.idea_id} />
         );
       });
     }

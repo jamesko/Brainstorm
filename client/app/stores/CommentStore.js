@@ -66,12 +66,17 @@ var CommentStore = assign({}, EventEmitter.prototype, {
   },
 
   create: function (idea_id, name, ownerName) {
+    var urlBoolean = false;
+    if (name.toString().slice(0,7) === "http://" || name.toString().slice(0,8) === "https://"){
+        urlBoolean = true;
+      }
     $.ajax({
       type: 'POST',
       url: '/comments/' + idea_id,
       data: {
         name: name,
-        ownerName: ownerName
+        ownerName: ownerName,
+        urlBoolean: urlBoolean
       }
     })
     .done(function (comment) {

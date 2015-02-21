@@ -19,14 +19,26 @@ var Comment = React.createClass({
 
   render: function() {
     var editForm;
+    var commentContent;
     // if editing render edit form otherwise render "Edit Idea" button
     if (this.state.editing) {
       editForm = <CommentForm editing={this.state.editing} name={this.props.name} key={this.props._id} _id={this.props._id} />
     }
+    if (this.props.anchor){
+      commentContent = (
+
+          <h5 ref="body">{this.props.ownerName}: <a href={this.props.name} target="_blank">{this.props.name}</a></h5>
+
+      );
+    } else {
+      commentContent = (
+        <h5 ref="body">{this.props.ownerName}: {this.props.name}</h5>
+      );
+    }
 
     return (
       <div>
-        <h5 ref="body">{this.props.ownerName}: {this.props.name}</h5>
+        {commentContent}
         <form className="pure-form formEditComment" >
           {editForm}
           <button className="pure-button" onClick={this.edit}>{ this.state.editing ? 'Cancel' : 'Edit Comment'}</button>

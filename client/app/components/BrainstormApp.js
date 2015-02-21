@@ -85,7 +85,7 @@ var BrainstormApp = React.createClass({
               filterNames={this.state.filterNames}
               onUserInput={this.handleUserInput}
           />
-          <div>
+          <div className="idea-whiteboard">
           <Ideas room_id={this.state.props}
             filterText={this.state.filterText}
             filterNames={this.state.filterNames}
