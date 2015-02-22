@@ -10,8 +10,9 @@ var config = {
     callbackURL: 'https://brainstormideation.herokuapp.com/auth/facebook/callback'
   },  
   google:{
-    returnURL: "https://brainstormideation.herokuapp.com/auth/google/return",
-    realm: "https://brainstormideation.herokuapp.com/"    
+    clientID: process.env.GOOGLE_CLIENT_ID,
+    clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+    callbackURL: 'https://brainstormideation.herokuapp.com/auth/google/callback'
   }  
 };
 module.exports = config;

@@ -52,8 +52,8 @@ module.exports = function(app) {
     });
 
   // ========== google authenticate requests  ============================
-  app.get('/auth/google', passport.authenticate('google'));
-  app.get('/auth/google/return',
+  app.get('/auth/google', passport.authenticate('google', { scope : 'email'}));
+  app.get('/auth/google/callback',
   passport.authenticate('google', { failureRedirect: '/' }),
     function(req, res) {
       console.log('req.session.passport.user: ', req.user);
@@ -99,10 +99,11 @@ module.exports = function(app) {
   ));
 
   // ========== google configure strategy ================================
-  var GoogleStrategy = require('passport-google').Strategy;
+  // var GoogleStrategy = require('passport-google').Strategy;
+  var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
   passport.use(
     new GoogleStrategy(config.google,
-    function(identifier, profile, done) {
+    function(token, refreshToken, profile, done) {
       User.findOne({username: profile.emails[0].value}, function(err, user) {
         if(err) {
           console.log(err);
