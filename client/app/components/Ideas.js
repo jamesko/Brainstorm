@@ -17,9 +17,22 @@ var Ideas = React.createClass({
   pauseUpdates: false,
 
   componentDidMount: function () {
+    socket.emit('join ideaRoom',this.props.room_id);
     IdeaStore.get(this.props.room_id);
     IdeaStore.addChangeListener(this.onStoreChange);
   },
+
+  componentWillUnmount: function(){
+    // console.log('GOT IN COMPONENT')
+    // similar to componentDidMount but also invoked on the server
+    //console.log("I GOT THE DATAZ",dataz);
+    //make save below after leaving page
+    // BrainswarmActions.edit(this.props._id, dataz);
+    //set up room on server
+    socket.emit('leave ideaRoom',this.props.room_id);
+    // createMap(this.props._id, this.state.currentBrainswarm);
+  },
+
 
   onStoreChange: function(){
 

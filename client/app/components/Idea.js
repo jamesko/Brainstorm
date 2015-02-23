@@ -9,27 +9,66 @@ var BrainswarmStore = require("../stores/BrainswarmStore");
 var BrainswarmActions = require("../actions/BrainswarmActions");
 var Q = require('q');
 var Draggable = require('react-draggable');
+var socket = io();
+var $ = require('jquery');
 
 var Idea = React.createClass({
+
   getInitialState: function() {
     // set initial editing state to false
     return {
       displaying: true,
       editing: false,
       filtered: false,
-      currentUser: UserStore.get()
+      currentUser: UserStore.get(),
+      position: {
+        top: 0, left: 0
+      }
+
     };
   },
+  updatePosition: function(data){
 
+    this.setState({position: data});
+  },
+
+  componentWillUpdate: function() {
+
+
+  },
   componentDidMount: function() {
     // add a change listener on the IdeaStore
+
+    console.log ("THIS IS STATE",this.state);
     // this is needed when the edit comes back and emits a change
     // that will force the component to re-render
-    // app.IdeaStore.addChangeListener(function() {
+    //app.IdeaStore.addChangeListener(function() {
     //   if(this.isMounted()) {
     //     this.setState({editing: false});
     //   }
-    // }.bind(this));
+    //}.bind(this));
+    var self = this;
+    var ideaId = self.props._id;
+    var selectz = '#'+ ideaId;
+   // var node = this.getDOMNode();
+    var node =  $( selectz);
+    console.log("THIS IS NODE",node);
+
+    socket.on('edit location', function(data){
+
+
+      console.log("DATA ID", data.ui)
+      var ideaId = self.props._id;
+       console.log ("IDEA ID",ideaId);
+       if(data.id === ideaId) {
+
+      self.updatePosition(data.ui);
+      node.css({"-webkit-transform":"translate("+ data.ui.left+"px,"+ data.ui.top+"px)"})
+         console.log("GOT HERE",self.state)
+       }
+    });
+
+
 
 
   },
@@ -39,12 +78,37 @@ var Idea = React.createClass({
       this.setState({ displaying: !this.state.displaying });
     }
   },
+  handleStart: function (event, ui) {
+   // console.log('Event: ', event);
+    //console.log('Position: ', ui.position);
+  },
+  handleDrag: function (event, ui) {
+    var obj = {};
+    // obj.event = event;
+    obj.ui = ui.position;
+    obj.id = this.props._id;
+    // console.log('OBJ', obj.id)
+    console.log(event);
+    console.log(obj.ui);
+    socket.emit('idea change', obj);
+  },
+  handleStop: function (event, ui) {
+   // var obj = {};
+   //// obj.event = event;
+   // obj.ui = ui.position;
+   // obj.id = this.props._id;
+   // // console.log('OBJ', obj.id)
+   // console.log(event);
+   // console.log(obj.ui);
+   // socket.emit('idea change', obj);
+  },
 
   render: function() {
     var ideaContent;
     var editForm;
     var currentUser = this.state.currentUser;
     var ideaOwner = this.props.owner;
+    var cssSelector = this.props._id;
 
     // if editing render edit form otherwise render "Edit Idea" button
     if (this.state.editing) {
@@ -72,8 +136,8 @@ var Idea = React.createClass({
 
     ideaContent = (
 
-      <div className="idea">
-      <Draggable>
+      <div className="idea" id ={cssSelector} >
+        <Draggable onStart={this.handleStart} onDrag={this.handleDrag} onStop={this.handleStop}>
         <div className="anchor">
           <form>
             <div>
@@ -154,27 +218,6 @@ var Idea = React.createClass({
         });
       }
     });
-
-
-
-
-
-
-    // CREATE THE BRAINSWARM
-    // 1. make a brainswarm action
-    // 2. within the brainswarm store
-    //  -within the store, make a post request to server to create brainswarm
-    //
-    // NOT NAVIGATE TO THE BRAINSWARM
-    //console.log(e);
-    //console.log(this.isMounted());
-    //console.log(this.props._id);
-    // Put page navigation
-    // app.PageActions.navigate({
-    //   dest: 'brainswarms',
-    //   props: brainswarm.id
-    // });
-
   }
 });
 
