@@ -57,25 +57,30 @@ io.on('connection', function(client) {
     client.join(brainswarm);
     // console.log(client.rooms)
   });
+
   client.on('brainswarm change', function(currentBrainswarms) {
     // console.log('LEFT ROOM', currentBrainswarms)
     client.leave(currentBrainswarms);
   });
+
   client.on('map change', function(editMap){
     //console.log("CHANGES IN ROOMs",client.brainswarm);
     // console.log("THESSE ARE CHANGES",editMap);
     client.broadcast.to(client.brainswarm).emit('edit map', editMap);
-  })
+  });
+
   client.on('join ideaRoom', function(ideaRoom) {
     //console.log('SERVER JOIN', brainswarm)
     client.ideaRoom = ideaRoom;
     client.join(ideaRoom);
     // console.log(client.rooms)
   });
+
   client.on('leave ideaRoom', function(ideaRoom) {
     // console.log('LEFT ROOM', currentBrainswarms)
     client.leave(ideaRoom);
   });
+
   client.on('idea change', function(obj){
     console.log("CHANGES IN IDEA", obj);
     client.broadcast.to(client.ideaRoom).emit('edit location', obj);

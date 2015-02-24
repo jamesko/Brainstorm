@@ -65,6 +65,7 @@ module.exports = {
         // if the idea is found update the name and save
         if (foundIdea) {
           foundIdea.name = req.body.name;
+          foundIdea.position = req.body.position;
           foundIdea.save(function(err) {
             if (err) {
               res.send(err);

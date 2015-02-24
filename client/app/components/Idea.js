@@ -4,6 +4,7 @@ var Ideas = require("./Ideas");
 var Interest = require("./Interest");
 var Comments = require("./Comments");
 var UserStore = require("../stores/UserStore");
+var IdeaStore = require("../stores/IdeaStore");
 var IdeaActions = require("../actions/IdeaActions");
 var BrainswarmStore = require("../stores/BrainswarmStore");
 var BrainswarmActions = require("../actions/BrainswarmActions");
@@ -20,26 +21,19 @@ var Idea = React.createClass({
       displaying: true,
       editing: false,
       filtered: false,
-      currentUser: UserStore.get(),
-      position: {
-        top: 0, left: 0
-      }
-
+      currentUser: UserStore.get()
     };
   },
+
   updatePosition: function(data){
 
     this.setState({position: data});
   },
 
-  componentWillUpdate: function() {
-
-
-  },
   componentDidMount: function() {
     // add a change listener on the IdeaStore
 
-    console.log ("THIS IS STATE",this.state);
+   // console.log ("THIS IS STATE",this.state);
     // this is needed when the edit comes back and emits a change
     // that will force the component to re-render
     //app.IdeaStore.addChangeListener(function() {
@@ -50,27 +44,38 @@ var Idea = React.createClass({
     var self = this;
     var ideaId = self.props._id;
     var selectz = '#'+ ideaId;
-   // var node = this.getDOMNode();
-    var node =  $( selectz);
-    console.log("THIS IS NODE",node);
+
+    var node =  $(selectz);
+
+    //might need to look into offset to make correct location calculation
+   //var offset =  node.offset()
+   //  console.log("THS IS OFFSET",offset)
+
+      //tried using css to set location, or translate to it
+   // node.css({position: "relative", left: this.props.position.left+"px", top: this.props.position.top+"px"});
+    //node.css({"-webkit-transform":"translate("+ this.props.position.left+"px,"+ this.props.position.top+"px)"});
 
     socket.on('edit location', function(data){
-
-
-      console.log("DATA ID", data.ui)
       var ideaId = self.props._id;
-       console.log ("IDEA ID",ideaId);
+
        if(data.id === ideaId) {
 
-      self.updatePosition(data.ui);
-      node.css({"-webkit-transform":"translate("+ data.ui.left+"px,"+ data.ui.top+"px)"})
-         console.log("GOT HERE",self.state)
+     // self.updatePosition(data.ui);
+      node.css({"-webkit-transform":"translate("+ data.ui.left+"px,"+ data.ui.top+"px)"});
+
        }
     });
 
 
 
 
+  },
+  componentWillUnmount: function(){
+    //saving coordinates when leaving room
+    this.props.position = this.state.position;
+    var idea = this.props;
+     idea.id = this.props._id;
+    IdeaStore.edit(idea)
   },
 
   show: function () {
@@ -84,23 +89,16 @@ var Idea = React.createClass({
   },
   handleDrag: function (event, ui) {
     var obj = {};
-    // obj.event = event;
+
     obj.ui = ui.position;
     obj.id = this.props._id;
-    // console.log('OBJ', obj.id)
-    console.log(event);
-    console.log(obj.ui);
+
     socket.emit('idea change', obj);
   },
   handleStop: function (event, ui) {
-   // var obj = {};
-   //// obj.event = event;
-   // obj.ui = ui.position;
-   // obj.id = this.props._id;
-   // // console.log('OBJ', obj.id)
-   // console.log(event);
-   // console.log(obj.ui);
-   // socket.emit('idea change', obj);
+    console.log(event);
+    this.setState({position: {top: event.clientY, left:event.clientX}});
+
   },
 
   render: function() {
@@ -136,7 +134,7 @@ var Idea = React.createClass({
 
     ideaContent = (
 
-      <div className="idea" id ={cssSelector} >
+      <div className="idea" id ={cssSelector}  >
         <Draggable onStart={this.handleStart} onDrag={this.handleDrag} onStop={this.handleStop}>
         <div className="anchor">
           <form>

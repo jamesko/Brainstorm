@@ -13,6 +13,7 @@ var IdeaForm = React.createClass({
       var idea = {id: this.props._id};
       idea.owner = this.props.owner;
       idea.name = name.value.trim();
+      idea.position = {top:0, left:0};
       IdeaActions.edit(idea);
     } else { // else an idea is being created
       IdeaActions.create(this.props.room_id, name.value.trim());

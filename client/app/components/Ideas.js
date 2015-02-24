@@ -23,14 +23,12 @@ var Ideas = React.createClass({
   },
 
   componentWillUnmount: function(){
-    // console.log('GOT IN COMPONENT')
-    // similar to componentDidMount but also invoked on the server
-    //console.log("I GOT THE DATAZ",dataz);
-    //make save below after leaving page
-    // BrainswarmActions.edit(this.props._id, dataz);
     //set up room on server
     socket.emit('leave ideaRoom',this.props.room_id);
-    // createMap(this.props._id, this.state.currentBrainswarm);
+
+    //remove listner
+    IdeaStore.removeChangeListener(this.onStoreChange);
+
   },
 
 
@@ -69,7 +67,7 @@ var Ideas = React.createClass({
     this.state.ideas.forEach(function(idea) {
       if (idea.name.toLowerCase().indexOf(that.props.filterText.toLowerCase()) !== -1)
         if (idea.ownerName.toLowerCase().indexOf(that.props.filterNames.toLowerCase()) !== -1)
-          ideas.push(<Idea name={idea.name} ownerName={idea.ownerName} owner={idea.owner} room={idea.room} key={idea._id} _id={idea._id} />);
+          ideas.push(<Idea name={idea.name} ownerName={idea.ownerName} owner={idea.owner} room={idea.room} key={idea._id} _id={idea._id} position={idea.position}/>);
     });
     return (
 
