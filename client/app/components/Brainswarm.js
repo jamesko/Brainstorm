@@ -762,10 +762,9 @@ var Brainswarm = React.createClass({
 
   componentWillUnmount: function(){
 
-   // console.log('GOT IN COMPONENT')
     // similar to componentDidMount but also invoked on the server
     console.log("I GOT THE DATAZ",dataz);
-    BrainswarmActions.edit(this.props._id, dataz);
+    BrainswarmStore.edit(this.props._id, dataz);
     socket.emit('brainswarm leave',this.props._id);
     // createMap(this.props._id, this.state.currentBrainswarm);
   },
