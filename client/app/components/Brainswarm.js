@@ -671,7 +671,7 @@ function createMap(brainswarmId, brainswarm){
     var nodes;
     var edges;
       nodes = [{title: ideaName, id: 0, x: xLoc, y: yLoc}];
-      edges = [{source: nodes[0], target: nodes[0]}];
+      edges = [];
        var svg = d3.select("#graph").append("svg")
           .attr("width", width)
           .attr("height", height);
