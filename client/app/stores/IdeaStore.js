@@ -30,7 +30,7 @@ var IdeaStore = assign({}, EventEmitter.prototype, {
   get: function (room_id) {
     $.ajax({
       type: 'GET',
-      url: '/ideas/' + room_id,
+      url: '/ideas/' + room_id
     })
     .done(function (ideas) {
       this._ideas = ideas;
@@ -90,6 +90,7 @@ var IdeaStore = assign({}, EventEmitter.prototype, {
       this._ideas.forEach(function(idea) {
         if(idea._id === ideaEdit._id) {
           idea.name = ideaEdit.name;
+          idea.position = ideaEdit.position;
 
           // broadcast that _ideas has changed
           socket.emit('idea-change', this._ideas, this._room());
