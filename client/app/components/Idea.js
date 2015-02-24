@@ -126,8 +126,8 @@ var Idea = React.createClass({
   brainswarm: function(e) {
     e.preventDefault();
 
-    var brainswarmName = this.props.name + "_brainswarm";
     var name = this.props.name;
+    var brainswarmName = name + "_brainswarm";
     // var brainswarm = BrainswarmStore.checkBrainswarm(this.props._id);
     // if (!brainswarm){
     //   var brainswarm = BrainswarmStore.getBrainswarm(this.props._id);

@@ -242,14 +242,26 @@ marker{
     fill: #333;
 }
 
+g.graph g:first-child circle {
+  fill: rgb(170, 255, 133);
+}
+
+g.graph g:first-child tspan {
+  font-weight: bold;
+}
+
+g.graph g:first-child circle:hover {
+  fill: rgb(133, 255, 106);
+}
+
 g.conceptG circle{
-    fill: #F6FBFF;
+    fill: rgb(249, 248, 191);
     stroke: #333;
     stroke-width: 2px;
 }
 
 g.conceptG:hover circle{
-    fill: rgb(200, 238, 241);
+    fill: rgb(255, 253, 131);
 }
 
 g.selected circle{
