@@ -466,3 +466,10 @@ path.link.selected {
     position: relative;
 }
 
+.gif{
+  width: 440px;
+  height: 400px;
+  -webkit-backface-visibility: hidden;
+  -webkit-transform: scale(1);
+}
+
