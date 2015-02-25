@@ -100,7 +100,7 @@ var Idea = React.createClass({
     socket.emit('idea change', obj);
   },
   handleStop: function (event, ui) {
-    console.log(event);
+    
     this.setState({position: {top: event.clientY, left:event.clientX}});
 
   },
@@ -194,9 +194,7 @@ var Idea = React.createClass({
   delete: function(e) {
     e.preventDefault();
     if (this.isMounted()) {
-      console.log("I got called")
       this.setState({ deleteIdea: !this.state.deleteIdea });
-      console.log(this.state)
     }
   },
 
