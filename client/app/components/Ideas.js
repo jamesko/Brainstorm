@@ -43,22 +43,7 @@ var Ideas = React.createClass({
     // get all ideas from db
   },
 
-  deleteIdea: function(event){
-    event.preventDefault();
-    console.log("delete me");
-    console.log("delete event", event);
-    // socket.on("idea-move", function(ideaId, ideaOwner, ideaPosition){
-    //   if (currentUser._id === ideaOwner){
-    //     IdeaActions.delete({ id: ideaId, owner: ideaOwner});
-    //   } else {
-    //     alert("Not your idea!");
-    //   }
-    // });
-  },
 
-  // componentWillUnmount: function(){
-  //   IdeaStore.removeChangeListener(this.onStoreChange);
-  // },
 
   render: function() {
     var ideas = [];
@@ -77,7 +62,6 @@ var Ideas = React.createClass({
       </div>
       <br/>
       <br/>
-      <div style={{marginBottom: "50px"}} className="fa fa-trash-o fa-5x trashcan" onMouseEnter={this.deleteIdea}> </div>
       <img className="expo-marker" src="styles/assets/expo-marker.jpg" />
     </div>
     );
