@@ -11,7 +11,10 @@ var BrainswarmActions = require("../actions/BrainswarmActions");
 var Q = require('q');
 var Draggable = require('react-draggable');
 var socket = io();
-var $ = require('jquery');
+//var $ = require('jquery');
+var ConfirmationBox = require("./confirmationBox");
+
+
 
 var Idea = React.createClass({
 
@@ -21,13 +24,16 @@ var Idea = React.createClass({
       displaying: true,
       editing: false,
       filtered: false,
-      currentUser: UserStore.get()
+      currentUser: UserStore.get(),
+      deleteIdea: false
     };
   },
 
-  updatePosition: function(data){
+  componentDidUpdate: function(){
 
-    this.setState({position: data});
+    if(this.state.deleteIdea){
+      var mod = $('#modal1').openModal();
+    }
   },
 
   componentDidMount: function() {
@@ -42,7 +48,7 @@ var Idea = React.createClass({
     //   }
     //}.bind(this));
     var self = this;
-    var ideaId = self.props._id;
+    var ideaId = self.props._iULd;
     var selectz = '#'+ ideaId;
 
     var node =  $(selectz);
@@ -65,8 +71,6 @@ var Idea = React.createClass({
 
        }
     });
-
-
 
 
   },
@@ -96,7 +100,7 @@ var Idea = React.createClass({
     socket.emit('idea change', obj);
   },
   handleStop: function (event, ui) {
-    console.log(event);
+    
     this.setState({position: {top: event.clientY, left:event.clientX}});
 
   },
@@ -107,6 +111,7 @@ var Idea = React.createClass({
     var currentUser = this.state.currentUser;
     var ideaOwner = this.props.owner;
     var cssSelector = this.props._id;
+    var confirmBox;
 
     // if editing render edit form otherwise render "Edit Idea" button
     if (this.state.editing) {
@@ -126,17 +131,24 @@ var Idea = React.createClass({
       if (currentUser._id === ideaOwner) {
         editableOption = (
               <div className="auth-check" style={{display:"inline"}}>
+                <button className="fa fa-trash-o" style={{paddingRight:"30px"}}  onClick={this.delete}></button>
                 <button className="fa fa-pencil-square-o" style={{paddingRight:"30px"}} onClick={this.edit}> { this.state.editing ? 'Cancel' : ''} </button>
-                <button className="fa fa-trash-o" style={{paddingRight:"30px"}} onClick={this.delete}></button>
               </div>
           )
+      }
+      if(this.state.deleteIdea){
+        confirmBox = <ConfirmationBox name={this.props.name} id={this.props._id} owner={this.props.owner}/>
       }
 
     ideaContent = (
 
-      <div className="idea" id ={cssSelector}  >
+      <div className="idea" id ={cssSelector}>
+        <div>
+          {confirmBox}
+          </div>
         <Draggable onStart={this.handleStart} onDrag={this.handleDrag} onStop={this.handleStop}>
         <div className="anchor">
+
           <form>
             <div>
               <div className="ideaDescription" ref="body">{this.props.name}</div>
@@ -182,9 +194,10 @@ var Idea = React.createClass({
   delete: function(e) {
     e.preventDefault();
     if (this.isMounted()) {
-      IdeaActions.delete({ id: this.props._id, owner: this.props.owner });
+      this.setState({ deleteIdea: !this.state.deleteIdea });
     }
   },
+
   brainswarm: function(e) {
     e.preventDefault();
 
