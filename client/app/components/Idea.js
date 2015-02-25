@@ -48,7 +48,7 @@ var Idea = React.createClass({
     //   }
     //}.bind(this));
     var self = this;
-    var ideaId = self.props._iULd;
+    var ideaId = self.props._id;
     var selectz = '#'+ ideaId;
 
     var node =  $(selectz);
