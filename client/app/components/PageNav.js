@@ -49,7 +49,7 @@ var PageNav = React.createClass({
     if (this.state.currentUser){
       aboutView = (
         <li ref="about">
-          <div style={{paddingLeft:"10px", paddingRight:"10px"}} onClick={this.handleAbout}>About</div>
+          <div style={{paddingLeft:"10px", paddingRight:"10px"}} onClick={this.handleAbout}>Getting Started</div>
         </li>
       );
     }
