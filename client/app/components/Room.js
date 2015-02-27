@@ -127,16 +127,16 @@ var Room = React.createClass({
     // that will force the component to re-render
 
     IdeaStore.addChangeListener(this._onChange);
-    var that = this;
+    var self = this;
     window.setTimeout(function() {
       var ideas = IdeaStore.getAll();
       var ideaNames = [];
       for (var i = 0; i < ideas.length; i++){
-        if (ideas[i].room === that.props._id){
+        if (ideas[i].room === self.props._id){
           ideaNames.push(ideas[i].name);
         }
       }
-      ideaWordCloud("."+that.props.name, ideaNames)
+      ideaWordCloud("."+self.props.name, ideaNames)
     }, 5000)
 
   },
@@ -164,11 +164,6 @@ var Room = React.createClass({
     var currentUser = this.state.currentUser;
     var roomOwner = this.props.owner;
 
-    // console.log("This is the current user")
-    // console.log(currentUser)
-    // console.log("this is the room owner")
-    // console.log(roomOwner);
-    // if editing render edit form otherwise render "Edit Idea" button
     if (this.state.editing) {
       editForm = <RoomCreateForm editing="true" owner={this.props.owner} name={this.props.name} key={this.props._id} _id={this.props._id} />
     }

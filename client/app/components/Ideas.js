@@ -9,8 +9,6 @@ var PureRenderMixin = require('react/addons').addons.PureRenderMixin;
 React.initializeTouchEvents(true);
 var Ideas = React.createClass({
 
-
-
   propTypes: {
     _id: React.PropTypes.string,
     idea: React.PropTypes.string,
@@ -41,15 +39,13 @@ var Ideas = React.createClass({
 
     //remove listner
     IdeaStore.removeChangeListener(this.onStoreChange);
-
   },
 
 
   onStoreChange: function(){
-
-    var that = this;
+    var self = this;
     if(this.isMounted()) {
-      if(!that.pauseUpdates){
+      if(!self.pauseUpdates){
         this.setState({ ideas: IdeaStore.getAll() });
       }
     }
@@ -60,11 +56,11 @@ var Ideas = React.createClass({
 
   render: function() {
     var ideas = [];
-    var that = this;
+    var self = this;
     // create all idea components
     this.state.ideas.forEach(function(idea) {
-      if (idea.name.toLowerCase().indexOf(that.props.filterText.toLowerCase()) !== -1)
-        if (idea.ownerName.toLowerCase().indexOf(that.props.filterNames.toLowerCase()) !== -1)
+      if (idea.name.toLowerCase().indexOf(self.props.filterText.toLowerCase()) !== -1)
+        if (idea.ownerName.toLowerCase().indexOf(self.props.filterNames.toLowerCase()) !== -1)
           ideas.push(<Idea name={idea.name} ownerName={idea.ownerName} owner={idea.owner} room={idea.room} key={idea._id} _id={idea._id} position={idea.position}/>);
     });
     return (

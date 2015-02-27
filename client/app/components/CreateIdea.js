@@ -5,6 +5,7 @@ var PureRenderMixin = require('react/addons').addons.PureRenderMixin;
 var CreateIdea = React.createClass({
 
   mixins: [PureRenderMixin],
+
   propTypes:{
     room_id: React.PropTypes.string
   },

@@ -34,7 +34,7 @@ var UserAuth = React.createClass({
     if(this.isMounted()) {
       this.setState({ currentUser: UserStore.get() });
     }
-  },
+  }
 
   // componentWillUnmount: function() {
   //   UserStore.removeChangeListener(this.onStoreChange);
