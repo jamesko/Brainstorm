@@ -697,10 +697,18 @@ var Brainswarm = React.createClass({
     // var currentBrainswarm = app.BrainswarmActions.getBrainswarm(this.props._id);
     var currentBrainswarm = BrainswarmStore.findBrainswarm(this.props._id);
 
-
     return {
       currentBrainswarm: BrainswarmStore.findBrainswarm(this.props._id)
     }
+  },
+  propTypes: {
+    currentBrainswarm: React.PropTypes.shape({
+      id: React.PropTypes.string,
+      idea: React.PropTypes.string,
+      name: React.PropTypes.string,
+      owner: React.PropTypes.string,
+      ownerName: React.PropTypes.string
+    })
 
   },
 
@@ -761,9 +769,7 @@ var Brainswarm = React.createClass({
   // },
 
   componentWillUnmount: function(){
-
-    // similar to componentDidMount but also invoked on the server
-    console.log("I GOT THE DATAZ",dataz);
+    // similar to componentDidMount but also invoked on the server;
     BrainswarmStore.edit(this.props._id, dataz);
     socket.emit('brainswarm leave',this.props._id);
     // createMap(this.props._id, this.state.currentBrainswarm);

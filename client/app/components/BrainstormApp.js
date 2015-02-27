@@ -14,6 +14,18 @@ var About = require("./About");
 var socket = io.connect();
 
 var BrainstormApp = React.createClass({
+
+  propTypes: {
+    indexView: React.PropTypes.bool,
+    roomView: React.PropTypes.bool,
+    aboutView: React.PropTypes.bool,
+    filterText: React.PropTypes.string,
+    filterNames:React.PropTypes.string,
+    room_id: React.PropTypes.string
+
+  },
+
+
   getInitialState: function() {
     return {
       indexView: true,

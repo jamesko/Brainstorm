@@ -4,6 +4,14 @@ var RoomStore = require("../stores/RoomStore");
 var IdeaStore = require("../stores/IdeaStore");
 
 var Rooms = React.createClass({
+  propTypes: {
+    id : React.PropTypes.string ,
+    name : React.PropTypes.string ,
+    owner : React.PropTypes.object ,
+    ownerName : React.PropTypes.string
+
+  },
+
   getInitialState: function() {
     return {
       rooms: RoomStore.getAll()
@@ -22,9 +30,9 @@ var Rooms = React.createClass({
     }
   },
 
-  // componentWillUnmount: function(){
-  //   RoomStore.removeChangeListener(this._onChange);
-  // },
+  componentWillUnmount: function(){
+     RoomStore.removeChangeListener(this._onChange);
+  },
 
   render: function() {
     var rooms = [];

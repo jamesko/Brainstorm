@@ -2,8 +2,19 @@ var React = require("react");
 var CommentForm = require("./CommentForm");
 var UserStore = require("../stores/UserStore");
 var CommentActions = require("../actions/CommentActions");
+var PureRenderMixin = require('react/addons').addons.PureRenderMixin;
 
 var Comment = React.createClass({
+
+  propTypes: {
+    editing: React.PropTypes.bool,
+    name: React.PropTypes.string,
+    _id: React.PropTypes.string
+  },
+
+  mixins: [PureRenderMixin],
+
+
   getInitialState: function() {
     // set initial editing state to false
     return {

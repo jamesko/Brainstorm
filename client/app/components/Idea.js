@@ -13,10 +13,21 @@ var Draggable = require('react-draggable');
 var socket = io();
 //var $ = require('jquery');
 var ConfirmationBox = require("./confirmationBox");
+var PureRenderMixin = require('react/addons').addons.PureRenderMixin;
 
 
 
 var Idea = React.createClass({
+
+  mixins: [PureRenderMixin],
+
+  propTypes: {
+      id: React.PropTypes.string,
+      idea: React.PropTypes.string,
+      name: React.PropTypes.string,
+      owner: React.PropTypes.string,
+      ownerName: React.PropTypes.string
+  },
 
   getInitialState: function() {
     // set initial editing state to false

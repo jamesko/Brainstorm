@@ -1,8 +1,12 @@
 var React = require("react");
 var IdeaActions = require("../actions/IdeaActions");
 // var $ = require("jquery");
+var PureRenderMixin = require('react/addons').addons.PureRenderMixin;
 
 var IdeaForm = React.createClass({
+
+  mixins: [PureRenderMixin],
+
   handleSubmit: function(e) {
     e.preventDefault();
     // get the value out of the input with ref="name"

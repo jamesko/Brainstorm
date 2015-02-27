@@ -4,9 +4,22 @@ var IdeaStore = require("../stores/IdeaStore");
 var Draggable = require('react-draggable');
 var UserStore = require("../stores/UserStore");
 var socket = io();
+var PureRenderMixin = require('react/addons').addons.PureRenderMixin;
 
 React.initializeTouchEvents(true);
 var Ideas = React.createClass({
+
+
+
+  propTypes: {
+    _id: React.PropTypes.string,
+    idea: React.PropTypes.string,
+    name: React.PropTypes.string,
+    owner: React.PropTypes.string,
+    ownerName: React.PropTypes.string,
+    position: React.PropTypes.object
+  },
+
   getInitialState: function () {
     return {
       ideas: IdeaStore.getAll(),
