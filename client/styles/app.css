@@ -94,6 +94,7 @@ form .pure-button:last-of-type {
 
 input.postfix {
   margin-bottom:0.5em;
+  background-color: white;
 }
 
 /*background-color: rgba(202, 202, 202, 0.37);
@@ -171,6 +172,10 @@ h2 {
 
 .formComment .pure-button {
 
+}
+
+.comment-form{
+  font-size: 12px !important;
 }
 
 .formEditComment {
