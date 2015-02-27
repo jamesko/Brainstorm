@@ -82,7 +82,7 @@ io.on('connection', function(client) {
   });
 
   client.on('idea change', function(obj){
-    console.log("CHANGES IN IDEA", obj);
+    //console.log("CHANGES IN IDEA", obj);
     client.broadcast.to(client.ideaRoom).emit('edit location', obj);
   });
 

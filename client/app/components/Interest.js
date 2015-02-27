@@ -49,9 +49,9 @@ var Interest = React.createClass({
     }
   },
 
-  // componentWillUnmount: function() {
-  //   InterestStore.removeChangeListener(this.onStoreChange);
-  // },
+  componentWillUnmount: function() {
+     InterestStore.removeChangeListener(this.onStoreChange);
+  },
 
   render: function () {
     var interestCount = this.state.interests.length;

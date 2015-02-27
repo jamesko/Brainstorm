@@ -161,8 +161,8 @@ var Room = React.createClass({
   render: function() {
     var roomContent;
     var editForm;
-    var currentUser = this.state.currentUser
-    var roomOwner = this.props.owner
+    var currentUser = this.state.currentUser;
+    var roomOwner = this.props.owner;
 
     // console.log("This is the current user")
     // console.log(currentUser)

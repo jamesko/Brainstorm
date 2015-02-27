@@ -12,7 +12,7 @@ var RoomSchema = new Schema({
     ref: 'User'
   },
   ownerName: {
-    type: String,
+    type: String
   }
 });
 

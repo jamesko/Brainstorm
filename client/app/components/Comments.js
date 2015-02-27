@@ -2,8 +2,20 @@ var React = require("react");
 var CommentForm = require("./CommentForm");
 var Comment = require("./Comment");
 var CommentStore = require("../stores/CommentStore");
+var PureRenderMixin = require('react/addons').addons.PureRenderMixin;
 
 var Comments = React.createClass({
+
+ mixins: [PureRenderMixin],
+
+ propTypes: {
+ _id: React.PropTypes.string,
+ idea_id: React.PropTypes.string,
+ name: React.PropTypes.string,
+ ownerName: React.PropTypes.string
+ },
+
+
   _url: false,
   //get all loaded comments
   getInitialState: function () {
@@ -34,9 +46,9 @@ var Comments = React.createClass({
     }
   },
 
-  // componentWillUnmount: function(){
-  //   CommentStore.removeChangeListener(this.onStoreChange);
-  // },
+  componentWillUnmount: function(){
+     CommentStore.removeChangeListener(this.onStoreChange);
+  },
 
   show: function (e) {
     e.preventDefault();
@@ -59,7 +71,6 @@ var Comments = React.createClass({
       comments = [];
       //render a comment component for each comment
       this.state.comments.forEach(function (comment) {
-        console.log(comment)
         comments.push(
           <Comment anchor={comment.urlBoolean} ownerName={comment.ownerName} name={comment.name} key={comment._id} _id={comment._id} idea_id={comment.idea_id} />
         );
