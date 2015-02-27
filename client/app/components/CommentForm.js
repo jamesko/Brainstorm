@@ -24,7 +24,7 @@ var CommentForm = React.createClass({
     return (
       <form className="pure-form auth-check formComment" ref="body" onSubmit={this.handleSubmit}>
         <input className="pure-u-1-1 pure-u-sm-5-6 postfix" type="text" ref="input" placeholder="Add your comment..." />
-        <button className="pure-u-1-1 pure-u-sm-1-6 button-small pure-button pure-button-primary no-margin" type="submit" ref="submit">{this.props.editing ? 'Edit' : 'Create'}</button>
+        <button className="no-margin btn waves-effect waves-light" type="submit" ref="submit">{this.props.editing ? 'Edit' : 'Create'}</button>
       </form>
     );
   }
