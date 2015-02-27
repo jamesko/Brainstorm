@@ -7,6 +7,10 @@ body {
   padding:2em 1em;
 }
 
+a:hover {
+  text-decoration: underline;
+}
+
 #main {
   max-width:1060px;
   margin:0 auto;
@@ -49,7 +53,7 @@ body {
 }
 
 .btn{
-  background-color: #7c4dff
+  background-color: #7c4dff !important
 }
 .btn:hover{
   background-color: #7c4dff
