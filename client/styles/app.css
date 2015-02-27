@@ -96,6 +96,9 @@ input.postfix {
   margin-bottom:0.5em;
 }
 
+/*background-color: rgba(202, 202, 202, 0.37);
+  font-size: 12px;*/
+
 .pure-button.no-margin {
   margin-left:0 !important;
 }
