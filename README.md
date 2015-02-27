@@ -1,6 +1,6 @@
 #Brainstormer
 
-![](http://imgur.com/a/z7icd)
+![](http://i.imgur.com/wuEHk5r.png?1)
 
 This app is built to make the process of brainstorming and idea sharing easier.
 
@@ -10,11 +10,11 @@ It leverages [React](https://github.com/facebook/react), [Flux](https://github.c
 
 So we created a software solution for this problem. Introducing brainswarming:
 
-![](http://imgur.com/SNeCTR8)
+![](http://i.imgur.com/SNeCTR8.png?1)
 
 Ideate ideas in a traditional brainstorm manner but then brainswarm on creating an actionable plan. It is an interactive experience with your colleagues that produces not just more ideas but more "good ideas".
 
-![](http://imgur.com/ks6baoL)
+![](http://i.imgur.com/ks6baoL.png?1)
 
 ##Roadmap
 
