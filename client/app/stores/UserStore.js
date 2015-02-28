@@ -25,7 +25,7 @@ var UserStore = assign({}, EventEmitter.prototype, {
     });
   },
 
-  logout: function() {
+  logout: function(callback) {
     $.ajax({
       url: '/users',
       type: 'DELETE'
@@ -34,6 +34,7 @@ var UserStore = assign({}, EventEmitter.prototype, {
       console.log("logged out ", user);
       this._user = user;
       this.emitChange();
+      callback();
     }.bind(this))
     .fail(function(err) {
       console.log(err);

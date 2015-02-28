@@ -5,7 +5,10 @@ var IdeaForm = require("./IdeaForm");
 var SearchBar = require("./SearchBar");
 var Ideas = require("./Ideas");
 var IdeaStore = require("../stores/IdeaStore");
+var CommentStore = require("../stores/CommentStore");
+var InterestStore = require("../stores/InterestStore");
 var State = Router.State;
+var socket = io.connect();
 
 var RoomView = React.createClass({
 
@@ -19,7 +22,11 @@ var RoomView = React.createClass({
   },
 
   componentDidMount: function() {
-    IdeaStore.setRoom(this.getParams().roomId);
+    var roomId = this.getParams().roomId;
+    socket.emit('join', roomId);
+    IdeaStore.setRoom(roomId);
+    CommentStore.setRoom(roomId);
+    InterestStore.setRoom(roomId);
   },
 
   handleUserInput: function(filterText, filterNames) {
@@ -31,7 +38,6 @@ var RoomView = React.createClass({
 
   render: function(){
     var roomId = this.getParams().roomId;
-    console.log("params", roomId);
 
     return(
     <div>

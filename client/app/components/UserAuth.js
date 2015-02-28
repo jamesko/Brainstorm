@@ -14,8 +14,10 @@ var UserAuth = React.createClass({
   handleClick: function(e) {
     if(this.state.currentUser) {
       e.preventDefault();
-      this.transitionTo('/')
-      UserStore.logout();
+      var self = this;
+      UserStore.logout(function(){
+        self.transitionTo('/');
+      });
 
     }
   },

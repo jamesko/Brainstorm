@@ -162,7 +162,6 @@ var Room = React.createClass({
     var editForm;
     var currentUser = this.state.currentUser;
     var roomOwner = this.props.owner;
-    console.log("THIS IS ID",this.props._id)
 
     if (this.state.editing) {
       editForm = <RoomCreateForm editing="true" owner={this.props.owner} name={this.props.name} key={this.props._id} _id={this.props._id} />

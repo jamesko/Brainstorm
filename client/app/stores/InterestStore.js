@@ -1,9 +1,6 @@
 var AppDispatcher = require("../dispatcher/AppDispatcher");
 var EventEmitter = require('events').EventEmitter;
 var InterestConstants = require("../constants/InterestConstants");
-var PageConstants = require("../constants/PageConstants");
-var PageStore = require("./PageStore");
-var $ = require("jquery");
 var _ = require("underscore");
 var socket = io.connect();
 var assign = require("object-assign");
@@ -13,8 +10,10 @@ var CHANGE_EVENT = 'change';
 var InterestStore = assign({}, EventEmitter.prototype, {
   _interests: [],
 
-  _room: function() {
-    return PageStore.currentRoute.props;
+  _room: "",
+
+  setRoom: function(currentRoom) {
+    this._room = currentRoom;
   },
 
   getAll: function (idea_id) {
@@ -57,7 +56,7 @@ var InterestStore = assign({}, EventEmitter.prototype, {
       this._interests.push(interest);
 
       // broadcast that _interests has changed
-      socket.emit('interest-change', this._interests, this._room());
+      socket.emit('interest-change', this._interests, this._room);
       this.emitChange();
     }.bind(this))
     .fail(function(error) {
@@ -79,7 +78,7 @@ var InterestStore = assign({}, EventEmitter.prototype, {
       }.bind(this));
 
       // broadcast that _comments has changed
-      socket.emit('interest-change', this._interests, this._room());
+      socket.emit('interest-change', this._interests, this._room);
       this.emitChange();
     }.bind(this))
     .fail(function (error) {
@@ -120,12 +119,6 @@ AppDispatcher.register(function(payload) {
       _id = action._id;
 
       InterestStore.delete(_id);
-      break;
-
-    case PageConstants.GETROOMDATA:
-      if (action.room_id){
-        InterestStore.get(action.room_id);
-      }
       break;
 
     default:

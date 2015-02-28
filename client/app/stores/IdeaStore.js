@@ -1,8 +1,6 @@
 var AppDispatcher = require("../dispatcher/AppDispatcher");
 var EventEmitter = require('events').EventEmitter;
 var IdeaConstants = require("../constants/IdeaConstants");
-var PageConstants = require("../constants/PageConstants");
-var PageStore = require("./PageStore");
 var assign = require("object-assign");
 var socket = io.connect();
 
@@ -14,7 +12,7 @@ var IdeaStore = assign({}, EventEmitter.prototype, {
   _room: '',
 
   setRoom: function(currentRoom) {
-    _room = currentRoom;
+    this._room = currentRoom;
   },
 
   getAll: function() {
@@ -167,11 +165,7 @@ AppDispatcher.register(function (payload) {
         IdeaStore.delete(action.idea);
       }
       break;
-    case PageConstants.GETROOMDATA:
-      if (action.room_id){
-        IdeaStore.get(action.room_id);
-      }
-      break;
+
     default:
       return true;
   }

@@ -1,9 +1,6 @@
 var AppDispatcher = require("../dispatcher/AppDispatcher");
 var EventEmitter = require('events').EventEmitter;
 var CommentConstants = require("../constants/CommentConstants");
-var PageConstants = require("../constants/PageConstants");
-var PageStore = require("./PageStore");
-var $ = require("jquery");
 var _ = require("underscore");
 var socket = io.connect();
 var assign = require("object-assign");
@@ -13,8 +10,10 @@ var CHANGE_EVENT = 'change';
 var CommentStore = assign({}, EventEmitter.prototype, {
   _comments: [],
 
-  _room: function() {
-    return PageStore.currentRoute.props;
+  _room: "",
+
+  setRoom: function(currentRoom) {
+    this._room = currentRoom;
   },
 
   getAll: function (idea_id) {
@@ -37,7 +36,7 @@ var CommentStore = assign({}, EventEmitter.prototype, {
   get: function (room_id) {
     $.ajax({
       type: 'GET',
-      url: '/comments/' + room_id,
+      url: '/comments/' + room_id
     })
     .done(function (comments) {
       this._comments = comments;
@@ -83,7 +82,7 @@ var CommentStore = assign({}, EventEmitter.prototype, {
       this._comments.push(comment);
 
       // broadcast that _comments has changed
-      socket.emit('comment-change', this._comments, this._room());
+      socket.emit('comment-change', this._comments, this._room);
       this.emitChange();
     }.bind(this))
     .fail(function (error) {
@@ -108,7 +107,7 @@ var CommentStore = assign({}, EventEmitter.prototype, {
       }.bind(this));
 
       // broadcast that _comments has changed
-      socket.emit('comment-change', this._comments, this._room());
+      socket.emit('comment-change', this._comments, this._room);
       this.emitChange();
     }.bind(this))
     .fail(function (error) {
@@ -130,7 +129,7 @@ var CommentStore = assign({}, EventEmitter.prototype, {
       }.bind(this));
 
       // broadcast that _comments has changed
-      socket.emit('comment-change', this._comments, this._room());
+      socket.emit('comment-change', this._comments, this._room);
       this.emitChange();
     }.bind(this))
     .fail(function (error) {
@@ -187,12 +186,6 @@ AppDispatcher.register(function (payload) {
       _id = action._id;
 
       CommentStore.delete(_id);
-      break;
-
-    case PageConstants.GETROOMDATA:
-      if (action.room_id){
-        CommentStore.get(action.room_id);
-      }
       break;
 
     default:
