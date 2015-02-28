@@ -1,19 +1,8 @@
-/**
- * Created by jared on 2/27/15.
- */
-//var currentView;
-//if(this.state.indexView) { //thisIsHomePage
-//  currentView = (
-//    <div>
-//      <CreateRoom />
-//      <Rooms />
-//    </div>
-//  );
 var React = require("react");
 var Router = require('react-router');
 var Navigation = Router.Navigation;
 var RouteHandler = Router.RouteHandler;
-var UserStore = require("../stores/UserStore");
+var UserStore = require("../../stores/UserStore");
 
 var IndexView = React.createClass({
 

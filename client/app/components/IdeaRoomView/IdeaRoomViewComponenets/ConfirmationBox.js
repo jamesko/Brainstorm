@@ -1,5 +1,5 @@
 var React = require('react');
-var IdeaActions = require("../actions/IdeaActions");
+var IdeaActions = require("../../../actions/IdeaActions");
 var PureRenderMixin = require('react/addons').addons.PureRenderMixin;
 
 var ConfirmationBox = React.createClass({

@@ -1,6 +1,6 @@
 var React = require("react");
-var RoomCreateForm = require("./RoomCreateForm");
-var Rooms = require("./Rooms");
+var RoomCreateForm = require("./RoomsViewComponents/RoomCreateForm");
+var Rooms = require("./RoomsViewComponents/Rooms");
 
 var RoomsView = React.createClass({
   render: function() {

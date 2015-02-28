@@ -1,7 +1,7 @@
 var React = require("react");
-var UserStore = require("../stores/UserStore");
-var InterestActions = require("../actions/InterestActions");
-var InterestStore = require("../stores/InterestStore");
+var UserStore = require("../../../stores/UserStore");
+var InterestActions = require("../../../actions/InterestActions");
+var InterestStore = require("../../../stores/InterestStore");
 
 var Interest = React.createClass({
   _liked: false,

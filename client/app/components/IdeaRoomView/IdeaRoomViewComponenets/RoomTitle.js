@@ -1,5 +1,5 @@
 var React = require("react");
-var RoomStore = require("../stores/RoomStore");
+var RoomStore = require("../../../stores/RoomStore");
 var _ = require("underscore");
 
 var RoomTitle = React.createClass({

@@ -2,7 +2,7 @@ var React = require("react");
 var Router = require('react-router');
 var PageNav = require("./PageNav");
 var UserStore = require("../stores/UserStore");
-var About = require("./About");
+
 
 var RouteHandler = Router.RouteHandler;
 

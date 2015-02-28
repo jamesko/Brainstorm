@@ -1,5 +1,5 @@
 var React = require("react");
-var RoomActions = require("../actions/RoomActions");
+var RoomActions = require("../../../actions/RoomActions");
 var Router = require("react-router");
 var Navigation = Router.Navigation;
 

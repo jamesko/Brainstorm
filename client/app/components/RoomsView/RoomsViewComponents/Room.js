@@ -1,9 +1,9 @@
 var React = require("react");
 var RoomCreateForm = require("./RoomCreateForm");
-var UserStore = require("../stores/UserStore");
-var PageActions = require("../actions/PageActions");
-var IdeaStore = require("../stores/IdeaStore");
-var RoomActions = require("../actions/RoomActions");
+var UserStore = require("../../../stores/UserStore");
+var PageActions = require("../../../actions/PageActions");
+var IdeaStore = require("../../../stores/IdeaStore");
+var RoomActions = require("../../../actions/RoomActions");
 var Router = require("react-router");
 var Link = Router.Link;
 
@@ -173,7 +173,7 @@ var Room = React.createClass({
       if (currentUser._id === roomOwner) {
         roomContent = (
           <div className="room pure-u-1">
-            <span><Link to="roomView" params={{roomId: this.props._id}} className="room-anchor" style={{fontSize: "18px", paddingLeft: "10px"}}>{this.props.name}</Link></span><span className={this.props.name}></span>
+            <span><Link to="ideaRoomView" params={{roomId: this.props._id}} className="room-anchor" style={{fontSize: "18px", paddingLeft: "10px"}}>{this.props.name}</Link></span><span className={this.props.name}></span>
 
             <form className="pure-form pure-g">
                 {editForm}
@@ -190,7 +190,7 @@ var Room = React.createClass({
       else {
         roomContent = (
           <div className="room pure-u-1">
-            <span><Link to="roomView" params={{roomId: this.props._id}} style={{fontSize: "18px", paddingLeft: "10px"}} className="room-anchor">{this.props.name}</Link></span><span className={this.props.name}></span>
+            <span><Link to="ideaRoomView" params={{roomId: this.props._id}} style={{fontSize: "18px", paddingLeft: "10px"}} className="room-anchor">{this.props.name}</Link></span><span className={this.props.name}></span>
           </div>
         );
       }

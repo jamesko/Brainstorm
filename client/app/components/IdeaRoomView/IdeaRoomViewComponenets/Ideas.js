@@ -1,8 +1,8 @@
 var React = require("react");
 var Idea = require("./Idea");
-var IdeaStore = require("../stores/IdeaStore");
+var IdeaStore = require("../../../stores/IdeaStore");
+var UserStore = require("../../../stores/UserStore");
 var Draggable = require('react-draggable');
-var UserStore = require("../stores/UserStore");
 var socket = io();
 var PureRenderMixin = require('react/addons').addons.PureRenderMixin;
 

@@ -1,8 +1,8 @@
 var React = require("react");
 var Router = require("react-router");
 var State = Router.State;
-var BrainswarmActions = require("../actions/BrainswarmActions");
-var BrainswarmStore = require("../stores/BrainswarmStore");
+var BrainswarmActions = require("../../actions/BrainswarmActions");
+var BrainswarmStore = require("../../stores/BrainswarmStore");
 var socket = io.connect();
 
 var mapData;

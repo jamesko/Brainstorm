@@ -1,7 +1,7 @@
 var React = require("react");
 var Room = require("./Room");
-var RoomStore = require("../stores/RoomStore");
-var IdeaStore = require("../stores/IdeaStore");
+var RoomStore = require("../../../stores/RoomStore");
+var IdeaStore = require("../../../stores/IdeaStore");
 var Router = require('react-router');
 var Navigation = Router.Navigation;
 
