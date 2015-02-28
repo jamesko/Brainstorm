@@ -2,10 +2,11 @@ var AppDispatcher = require("../dispatcher/AppDispatcher");
 var RoomConstants = require("../constants/RoomConstants");
 
 var RoomActions = {
-  create: function(name) {
+  create: function(name, cb) {
     AppDispatcher.handleViewAction({
       actionType: RoomConstants.ROOM_CREATE,
-      name: name
+      name: name,
+      callback: cb
     });
   },
 

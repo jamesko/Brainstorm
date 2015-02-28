@@ -55,7 +55,7 @@ var BrainswarmStore = assign({}, EventEmitter.prototype, {
   getBrainswarm: function(idea_id, callback) {
     $.ajax({
       type: 'GET',
-      url: '/brainswarms/' + idea_id,
+      url: '/brainswarms/' + idea_id
     })
     .done(function (brainswarmsData) {
       // var brainswarms = this._brainswarms;
@@ -105,7 +105,7 @@ var BrainswarmStore = assign({}, EventEmitter.prototype, {
   //    }
   //  },
 
-  create: function(idea_id, name) {
+  create: function(idea_id, name, callback) {
   //  console.log('this is create name', name);
     $.ajax({
       type: 'POST',
@@ -121,10 +121,7 @@ var BrainswarmStore = assign({}, EventEmitter.prototype, {
       socket.emit('brainswarm-change', this._brainswarms);
       this.emitChange();
       this.socketListener();
-      PageActions.navigate({
-        dest: 'brainswarms',
-        props: brainswarm._id
-      });
+      callback(brainswarm._id);
     }.bind(this))
     .fail(function(error) {
       console.log(error);
@@ -211,7 +208,7 @@ AppDispatcher.register(function(payload) {
       name = action.name.trim();
 
       if (name !== '') {
-        BrainswarmStore.create(action.idea_id, name);
+        BrainswarmStore.create(action.idea_id, name, action.callback);
       }
       break;
 

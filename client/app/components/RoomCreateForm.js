@@ -1,24 +1,17 @@
 var React = require("react");
 var RoomActions = require("../actions/RoomActions");
+var Router = require("react-router");
+var Navigation = Router.Navigation;
 
 var RoomCreateForm = React.createClass({
 
+  mixins:[Navigation],
 
-  // handleSubmit: function(e) {
-  //   e.preventDefault();
 
-  //   var roomName = this.refs.name.getDOMNode();
-
-  //   app.RoomActions.create(roomName.value.trim());
-  //   roomName.value = '';
-  //   return;
-  // },
   handleSubmit: function(e) {
     e.preventDefault();
 
     var name = this.refs.name.getDOMNode();
-
-
 
     // if editing send info to edit method in IdeaActions
     if (this.props.editing) {
@@ -29,7 +22,10 @@ var RoomCreateForm = React.createClass({
       room.name = name.value.trim();
       RoomActions.edit(room);
     } else { // else an idea is being created
-      RoomActions.create(name.value.trim());
+      var self = this;
+      RoomActions.create(name.value.trim(), function(roomId){
+          self.transitionTo("/rooms/"+ roomId);
+      });
     }
     // clear the value in the input
     name.value = '';

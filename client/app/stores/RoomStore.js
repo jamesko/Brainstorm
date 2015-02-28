@@ -37,24 +37,19 @@ var RoomStore = assign({}, EventEmitter.prototype, {
     //this.socketListener();
   },
 
-  create: function(name) {
+  create: function(name, callback) {
     $.ajax({
       type: 'POST',
       url: '/rooms',
       data: {name: name}
     })
     .done(function(room) {
-      console.log(room)
       this._rooms.push(room);
 
       // broadcast that _rooms has changed
     //  socket.emit('room-change', this._rooms);
       this.emitChange();
-
-      PageActions.navigate({
-        dest: 'rooms',
-        props: room._id
-      });
+      callback(room._id);
     }.bind(this))
     .fail(function(error) {
       console.log(error);
@@ -131,8 +126,9 @@ AppDispatcher.register(function(payload) {
     case RoomConstants.ROOM_CREATE:
       name = action.name.trim();
 
+
       if (name !== '') {
-        RoomStore.create(name);
+        RoomStore.create(name, action.callback);
       }
       break;
     case RoomConstants.ROOM_EDIT:
