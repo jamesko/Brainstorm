@@ -28,6 +28,7 @@ var Ideas = React.createClass({
   pauseUpdates: false,
 
   componentDidMount: function () {
+    console.log("THIS IS PROPS", this.props.room_id)
     socket.emit('join ideaRoom',this.props.room_id);
     IdeaStore.get(this.props.room_id);
     IdeaStore.addChangeListener(this.onStoreChange);

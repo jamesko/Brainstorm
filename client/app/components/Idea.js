@@ -12,12 +12,13 @@ var Draggable = require('react-draggable');
 var socket = io();
 var ConfirmationBox = require("./confirmationBox");
 var PureRenderMixin = require('react/addons').addons.PureRenderMixin;
-
+var Router = require("react-router");
+var Navigation = Router.Navigation;
 
 
 var Idea = React.createClass({
 
-  mixins: [PureRenderMixin],
+  mixins: [PureRenderMixin, Navigation],
 
   propTypes: {
       id: React.PropTypes.string,
@@ -213,11 +214,11 @@ var Idea = React.createClass({
     var self = this;
     BrainswarmStore.checkBrainswarm(this.props._id, function(brainswarm){
       if (brainswarm){
-        BrainswarmStore.visitBrainswarm(brainswarm._id);
+        self.transitionTo("/brainswarms/"+brainswarm._id);
       } else {
         BrainswarmStore.getBrainswarm(self.props._id, function(brainswarmData){
           if (brainswarmData) {
-            BrainswarmStore.visitBrainswarm(brainswarmData._id);
+            self.transitionTo("/brainswarms/"+brainswarmData._id)
           } else {
             BrainswarmActions.create(self.props._id, brainswarmName);
           }
