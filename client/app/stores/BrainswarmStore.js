@@ -103,7 +103,6 @@ var BrainswarmStore = Reflux.createStore({
         }
        };
        this.trigger();
-       this.socketListener();
      }.bind(this))
      .fail(function(error) {
        console.log(error);

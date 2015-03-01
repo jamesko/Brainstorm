@@ -57,7 +57,6 @@ var InterestStore = Reflux.createStore({
       // broadcast that _interests has changed
       this.trigger();
       socket.emit('interest-change', this._interests, this._room);
-      this.socketListener();
     }.bind(this))
     .fail(function(error) {
       console.log(error);
@@ -80,7 +79,6 @@ var InterestStore = Reflux.createStore({
       // broadcast that _comments has changed
       this.trigger();
       socket.emit('interest-change', this._interests, this._room);
-      this.socketListener();
     }.bind(this))
     .fail(function (error) {
       console.log(error);

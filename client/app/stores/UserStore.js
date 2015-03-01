@@ -17,7 +17,6 @@ var UserStore = Reflux.createStore({
     })
     .done(function(user) {
       this._user = user;
-      console.log("user returned", user);
       this.trigger();
     }.bind(this))
     .fail(function(err) {

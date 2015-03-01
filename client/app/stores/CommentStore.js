@@ -80,7 +80,6 @@ var CommentStore = Reflux.createStore({
       this.trigger();
       // broadcast that _comments has changed
       socket.emit('comment-change', this._comments, this._room);
-      this.socketListener();
     }.bind(this))
     .fail(function (error) {
       console.log(error);
@@ -105,7 +104,6 @@ var CommentStore = Reflux.createStore({
       this.trigger();
       // broadcast that _comments has changed
       socket.emit('comment-change', this._comments, this._room);
-      this.socketListener();
     }.bind(this))
     .fail(function (error) {
       console.log(error);
@@ -127,7 +125,6 @@ var CommentStore = Reflux.createStore({
       this.trigger();
       // broadcast that _comments has changed
       socket.emit('comment-change', this._comments, this._room);
-      this.socketListener();
     }.bind(this))
     .fail(function (error) {
       console.log(error);
