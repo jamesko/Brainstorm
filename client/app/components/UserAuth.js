@@ -1,11 +1,14 @@
 var React = require("react");
+var UserActions = require("../actions/UserActions");
 var UserStore = require("../stores/UserStore");
 var Router = require("react-router");
 var Navigation = Router.Navigation;
+var Reflux = require("reflux");
+var PureRenderMixin = require('react/addons').addons.PureRenderMixin;
 
 var UserAuth = React.createClass({
 
-  mixins: [Navigation],
+  mixins: [Navigation, Reflux.ListenerMixin, PureRenderMixin],
 
   getInitialState: function() {
     return { currentUser: UserStore.get() };
@@ -15,7 +18,7 @@ var UserAuth = React.createClass({
     if(this.state.currentUser) {
       e.preventDefault();
       var self = this;
-      UserStore.logout(function(){
+      UserActions.logout(function(){
         self.transitionTo('/');
       });
 
@@ -35,8 +38,8 @@ var UserAuth = React.createClass({
   },
 
   componentDidMount: function() {
-    UserStore.addChangeListener(this.onStoreChange);
-    UserStore.getCurrentUser();
+    this.listenTo(UserStore, this.onStoreChange);
+    UserActions.getCurrentUser();
   },
 
   onStoreChange: function(){
@@ -45,9 +48,6 @@ var UserAuth = React.createClass({
     }
   }
 
-  // componentWillUnmount: function() {
-  //   UserStore.removeChangeListener(this.onStoreChange);
-  // }
 
 });
 

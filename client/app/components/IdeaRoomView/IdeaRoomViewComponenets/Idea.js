@@ -18,13 +18,13 @@ var Navigation = Router.Navigation;
 
 var Idea = React.createClass({
 
-  mixins : [PureRenderMixin , Navigation] ,
+  mixins : [PureRenderMixin, Navigation],
 
   propTypes : {
-    id : React.PropTypes.string ,
-    idea : React.PropTypes.string ,
-    name : React.PropTypes.string ,
-    owner : React.PropTypes.string ,
+    id : React.PropTypes.string,
+    idea : React.PropTypes.string,
+    name : React.PropTypes.string,
+    owner : React.PropTypes.string,
     ownerName : React.PropTypes.string
   } ,
 
@@ -34,7 +34,7 @@ var Idea = React.createClass({
       displaying : true ,
       editing : false ,
       filtered : false ,
-      currentUser : UserStore.get () ,
+      currentUser : UserStore.get(),
       deleteIdea : false
     };
   } ,
@@ -47,16 +47,7 @@ var Idea = React.createClass({
   } ,
 
   componentDidMount : function () {
-    // add a change listener on the IdeaStore
 
-    // console.log ("THIS IS STATE",this.state);
-    // this is needed when the edit comes back and emits a change
-    // that will force the component to re-render
-    //app.IdeaStore.addChangeListener(function() {
-    //   if(this.isMounted()) {
-    //     this.setState({editing: false});
-    //   }
-    //}.bind(this));
     var self = this;
     var ideaId = self.props._id;
     var selectz = '#' + ideaId;
@@ -71,51 +62,48 @@ var Idea = React.createClass({
     // node.css({position: "relative", left: this.props.position.left+"px", top: this.props.position.top+"px"});
     //node.css({"-webkit-transform":"translate("+ this.props.position.left+"px,"+ this.props.position.top+"px)"});
 
-    socket.on ('edit location' , function (data) {
+    socket.on('edit location', function (data) {
       var ideaId = self.props._id;
 
       if (data.id === ideaId) {
-
-        // self.updatePosition(data.ui);
         node.css ({"-webkit-transform" : "translate(" + data.ui.left + "px," + data.ui.top + "px)"});
-
       }
     });
 
 
-  } ,
-  componentWillUnmount : function () {
+  },
+  componentWillUnmount : function() {
     //saving coordinates when leaving room
     this.props.position = this.state.position;
     var idea = this.props;
     idea.id = this.props._id;
     IdeaStore.edit (idea)
-  } ,
+  },
 
-  show : function () {
+  show : function() {
     if (this.isMounted ()) {
       this.setState ({displaying : !this.state.displaying});
     }
-  } ,
-  handleStart : function (event , ui) {
+  },
+  handleStart : function(event , ui) {
     // console.log('Event: ', event);
     //console.log('Position: ', ui.position);
-  } ,
-  handleDrag : function (event , ui) {
+  },
+  handleDrag : function(event , ui) {
     var obj = {};
 
     obj.ui = ui.position;
     obj.id = this.props._id;
 
     socket.emit ('idea change' , obj);
-  } ,
-  handleStop : function (event , ui) {
+  },
+  handleStop : function(event , ui) {
 
     this.setState ({position : {top : event.clientY , left : event.clientX}});
 
-  } ,
+  },
 
-  render : function () {
+  render : function() {
     var ideaContent;
     var editForm;
     var currentUser = this.state.currentUser;
@@ -190,21 +178,21 @@ var Idea = React.createClass({
     }
 
     return (ideaContent);
-  } ,
+  },
 
   edit : function (e) {
     e.preventDefault ();
     if (this.isMounted ()) {
       this.setState ({editing : !this.state.editing});
     }
-  } ,
+  },
 
   delete : function (e) {
     e.preventDefault ();
     if (this.isMounted ()) {
       this.setState ({deleteIdea : !this.state.deleteIdea});
     }
-  } ,
+  },
 
   brainswarm : function (e) {
     e.preventDefault ();
@@ -213,11 +201,12 @@ var Idea = React.createClass({
     var brainswarmName = name + "_brainswarm";
 
     var self = this;
-    BrainswarmStore.checkBrainswarm(this.props._id , function (brainswarm) {
+    BrainswarmStore.checkBrainswarm(this.props._id, function (brainswarm) {
       if (brainswarm) {
         self.transitionTo("/brainswarms/" + brainswarm._id);
       } else {
-        BrainswarmStore.getBrainswarm(self.props._id , function (brainswarmData) {
+        //change to actions
+        BrainswarmActions.getBrainswarm(self.props._id, function (brainswarmData) {
           if (brainswarmData) {
             self.transitionTo("/brainswarms/" + brainswarmData._id)
           } else {

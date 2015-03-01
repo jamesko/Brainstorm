@@ -8,6 +8,9 @@ var ConfirmationBox = React.createClass({
 
   delete: function(e) {
     e.preventDefault();
+    if(this.props.id === '' || undefined){
+      return
+    }
     if (this.isMounted()) {
        IdeaActions.delete({ id: this.props.id, owner: this.props.owner });
     }

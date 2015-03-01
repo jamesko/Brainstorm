@@ -4,15 +4,19 @@ var RoomTitle = require("./IdeaRoomViewComponenets/RoomTitle");
 var IdeaForm = require("./IdeaRoomViewComponenets/IdeaForm");
 var SearchBar = require("./IdeaRoomViewComponenets/SearchBar");
 var Ideas = require("./IdeaRoomViewComponenets/Ideas");
+var IdeaActions = require("../../actions/IdeaActions");
+var CommentActions = require("../../actions/CommentActions");
+var InterestActions = require("../../actions/InterestActions");
 var IdeaStore = require("../../stores/IdeaStore");
 var CommentStore = require("../../stores/CommentStore");
 var InterestStore = require("../../stores/InterestStore");
 var State = Router.State;
 var socket = io.connect();
+var PureRenderMixin = require('react/addons').addons.PureRenderMixin;
 
 var RoomView = React.createClass({
 
-  mixins: [ State ],
+  mixins: [ State, PureRenderMixin],
 
   getInitialState: function() {
     return {
@@ -27,6 +31,9 @@ var RoomView = React.createClass({
     IdeaStore.setRoom(roomId);
     CommentStore.setRoom(roomId);
     InterestStore.setRoom(roomId);
+    IdeaActions.get(roomId);
+    CommentActions.get(roomId);
+    InterestActions.get(roomId);
   },
 
   handleUserInput: function(filterText, filterNames) {

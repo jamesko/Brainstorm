@@ -1,12 +1,13 @@
-var AppDispatcher = require("../dispatcher/AppDispatcher");
-var EventEmitter = require('events').EventEmitter;
-var IdeaConstants = require("../constants/IdeaConstants");
-var assign = require("object-assign");
+var Reflux = require("reflux");
+var IdeaActions = require("../actions/IdeaActions");
 var socket = io.connect();
 
-var CHANGE_EVENT = 'change';
 
-var IdeaStore = assign({}, EventEmitter.prototype, {
+
+var IdeaStore = Reflux.createStore({
+
+  listenables: IdeaActions,
+
   _ideas: [],
 
   _room: '',
@@ -22,7 +23,6 @@ var IdeaStore = assign({}, EventEmitter.prototype, {
   socketListener: function(){
     socket.on('idea-change', function(currentIdeas) {
       this._ideas = currentIdeas;
-      this.emitChange();
     }.bind(this));
   },
 
@@ -35,7 +35,7 @@ var IdeaStore = assign({}, EventEmitter.prototype, {
       this._ideas = ideas;
 
       // broadcast that _ideas has changed
-      this.emitChange();
+      this.trigger();
     }.bind(this))
     .fail(function(error) {
       console.error(error);
@@ -51,7 +51,7 @@ var IdeaStore = assign({}, EventEmitter.prototype, {
     .done(function (ideas) {
       this._ideas = ideas;
       // broadcast that _ideas has changed
-      this.emitChange();
+      this.trigger();
     }.bind(this))
     .fail(function(error) {
       console.error(error);
@@ -67,10 +67,9 @@ var IdeaStore = assign({}, EventEmitter.prototype, {
     })
     .done(function (idea) {
       this._ideas.push(idea);
-
       // broadcast that _ideas has changed
       socket.emit('idea-change', this._ideas, room_id);
-      this.emitChange();
+      this.trigger();
     }.bind(this))
     .fail(function(error) {
       console.error(error);
@@ -78,6 +77,7 @@ var IdeaStore = assign({}, EventEmitter.prototype, {
   },
 
   edit: function(idea) {
+    console.log("getting ready for ajax");
     $.ajax({
       type: 'PUT',
       url: '/ideas/' + idea.id,
@@ -96,7 +96,7 @@ var IdeaStore = assign({}, EventEmitter.prototype, {
           // return this.emitChange();
         }
       }.bind(this));
-      this.emitChange();
+      this.trigger();
     }.bind(this))
     .fail(function(error) {
       console.error(error);
@@ -121,54 +121,15 @@ var IdeaStore = assign({}, EventEmitter.prototype, {
           // return this.emitChange();
         }
       }.bind(this));
-      this.emitChange();
+      this.trigger();
     }.bind(this))
     .fail(function(error) {
       console.error(error);
     });
-  },
-
-  emitChange: function () {
-    this.emit(CHANGE_EVENT);
-  },
-
-  addChangeListener: function (callback) {
-    this.on(CHANGE_EVENT, callback);
-  },
-
-  removeChangeListener: function (callback) {
-    this.removeListener(CHANGE_EVENT, callback);
   }
+
 });
 
-// register a callback function with the AppDispatcher
-// that will respond to the IdeaConstants listed below
-AppDispatcher.register(function (payload) {
-  var action = payload.action;
-  var name;
 
-  switch (action.actionType) {
-    case IdeaConstants.IDEA_CREATE:
-      name = action.name.trim();
-
-      if (name !== '') {
-        IdeaStore.create(action.room_id, name);
-      }
-      break;
-    case IdeaConstants.IDEA_EDIT:
-      if(action.idea.name !== '') {
-        IdeaStore.edit(action.idea);
-      }
-      break;
-    case IdeaConstants.IDEA_DELETE:
-      if(action.idea.id !== '') {
-        IdeaStore.delete(action.idea);
-      }
-      break;
-
-    default:
-      return true;
-  }
-});
 
 module.exports = IdeaStore;

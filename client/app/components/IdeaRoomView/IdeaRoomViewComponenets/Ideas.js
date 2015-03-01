@@ -1,13 +1,18 @@
 var React = require("react");
 var Idea = require("./Idea");
 var IdeaStore = require("../../../stores/IdeaStore");
+var IdeaActions = require("../../../actions/IdeaActions");
 var UserStore = require("../../../stores/UserStore");
 var Draggable = require('react-draggable');
 var socket = io();
 var PureRenderMixin = require('react/addons').addons.PureRenderMixin;
+var Reflux = require("reflux");
 
 React.initializeTouchEvents(true);
+
 var Ideas = React.createClass({
+
+  mixins: [Reflux.ListenerMixin, PureRenderMixin],
 
   propTypes: {
     _id: React.PropTypes.string,
@@ -29,27 +34,24 @@ var Ideas = React.createClass({
 
   componentDidMount: function () {
     socket.emit('join ideaRoom',this.props.room_id);
-    IdeaStore.get(this.props.room_id);
-    IdeaStore.addChangeListener(this.onStoreChange);
+    IdeaActions.get(this.props.room_id);
+    this.listenTo(IdeaStore, this.onStoreChange);
   },
 
   componentWillUnmount: function(){
     //set up room on server
     socket.emit('leave ideaRoom',this.props.room_id);
-
-    //remove listner
-    IdeaStore.removeChangeListener(this.onStoreChange);
   },
 
 
-  onStoreChange: function(){
+  onStoreChange: function(data){
     var self = this;
+    console.log("POSSIBLE IDEA DATA", data)
     if(this.isMounted()) {
       if(!self.pauseUpdates){
         this.setState({ ideas: IdeaStore.getAll() });
       }
     }
-    // get all ideas from db
   },
 
 

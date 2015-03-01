@@ -19,7 +19,7 @@ var routes = (
     <Route name="roomsView" path="/rooms" handler={RoomsView} />
     <Route name="ideaRoomView" path="/rooms/:roomId" handler={IdeaRoomView}/>
     <Route name="brainswarm" path="/brainswarms/:brainswarmId" handler={Brainswarm}/>
-    <DefaultRoute handler={IndexView}/>
+    <DefaultRoute  handler={IndexView}/>
     <NotFoundRoute handler={NotFoundView} />
   </Route>
 );
