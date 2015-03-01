@@ -22,7 +22,9 @@ var IdeaStore = Reflux.createStore({
 
   socketListener: function(){
     socket.on('idea-change', function(currentIdeas) {
+      console.log("IDEAS CHANGED!!!")
       this._ideas = currentIdeas;
+      this.trigger();
     }.bind(this));
   },
 
@@ -68,6 +70,7 @@ var IdeaStore = Reflux.createStore({
     .done(function (idea) {
       this._ideas.push(idea);
       // broadcast that _ideas has changed
+      console.log("room's id", room_id);
       socket.emit('idea-change', this._ideas, room_id);
       this.trigger();
     }.bind(this))
@@ -92,6 +95,7 @@ var IdeaStore = Reflux.createStore({
           idea.position = ideaEdit.position;
 
           // broadcast that _ideas has changed
+          console.log("this room", this._room);
           socket.emit('idea-change', this._ideas, this._room);
           // return this.emitChange();
         }
