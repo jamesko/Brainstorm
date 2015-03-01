@@ -1,14 +1,11 @@
-var AppDispatcher = require("../dispatcher/AppDispatcher");
-var EventEmitter = require('events').EventEmitter;
-var RoomConstants = require("../constants/RoomConstants");
-var PageActions = require("../actions/PageActions");
-var assign = require("object-assign");
+var Reflux = require("reflux");
 var socket = io.connect();
-var $ = require("jquery");
+var RoomActions = require("../actions/RoomActions");
 
-var CHANGE_EVENT = 'change';
 
-var RoomStore = assign({}, EventEmitter.prototype, {
+var RoomStore = Reflux.createStore({
+
+  listenables: RoomActions,
   _rooms: [],
 
   getAll: function() {
@@ -18,7 +15,7 @@ var RoomStore = assign({}, EventEmitter.prototype, {
   socketListener: function(){
     socket.on('room-change', function(currentRooms) {
       this._rooms = currentRooms;
-      this.emitChange();
+      this.trigger();
     }.bind(this));
   },
 
@@ -29,32 +26,27 @@ var RoomStore = assign({}, EventEmitter.prototype, {
     })
     .done(function(rooms) {
       this._rooms = rooms;
-      this.emitChange();
+      this.trigger();
     }.bind(this))
     .fail(function(error) {
       console.log(error);
     });
-    //this.socketListener();
+    this.socketListener();
   },
 
-  create: function(name) {
+  create: function(name, callback) {
     $.ajax({
       type: 'POST',
       url: '/rooms',
       data: {name: name}
     })
     .done(function(room) {
-      console.log(room)
       this._rooms.push(room);
 
       // broadcast that _rooms has changed
-    //  socket.emit('room-change', this._rooms);
-      this.emitChange();
-
-      PageActions.navigate({
-        dest: 'rooms',
-        props: room._id
-      });
+      socket.emit('room-change', this._rooms);
+      this.trigger();
+      callback(room._id);
     }.bind(this))
     .fail(function(error) {
       console.log(error);
@@ -62,7 +54,6 @@ var RoomStore = assign({}, EventEmitter.prototype, {
   },
 
   edit: function(room) {
-    // console.log("i shouldnt be in edit")
     $.ajax({
       type: 'PUT',
       url: '/rooms/' + room.id,
@@ -71,15 +62,16 @@ var RoomStore = assign({}, EventEmitter.prototype, {
     .done(function(roomEdit) {
       // look through the rooms until finding a match
       // for id and then update the name property
+      this.socketListener();
       this._rooms.forEach(function(room) {
         if(room._id === roomEdit._id) {
           room.name = roomEdit.name;
           // broadcast that _rooms has changed
-        //  socket.emit('room-change', this._rooms);
+          socket.emit('room-change', this._rooms);
           // return this.emitChange();
         }
       }.bind(this));
-      this.emitChange();
+    this.trigger();
     }.bind(this))
     .fail(function(error) {
       console.error(error);
@@ -99,56 +91,18 @@ var RoomStore = assign({}, EventEmitter.prototype, {
           this._rooms.splice(index, 1);
 
           // broadcast that _rooms has changed
-        //  socket.emit('room-change', this._rooms);
+          socket.emit('room-change', this._rooms);
           // return this.emitChange();
         }
+        this.socketListener();
       }.bind(this));
-      this.emitChange();
+      this.trigger();
     }.bind(this))
     .fail(function(error) {
       console.error(error);
     });
-  },
-
-  emitChange: function() {
-    this.emit(CHANGE_EVENT);
-  },
-
-  addChangeListener: function(callback) {
-    this.on(CHANGE_EVENT, callback);
-  },
-
-  removeChangeListener: function(callback) {
-    this.removeListener(CHANGE_EVENT, callback);
   }
 });
 
-AppDispatcher.register(function(payload) {
-  var action = payload.action;
-  var name;
-
-  switch(action.actionType) {
-    case RoomConstants.ROOM_CREATE:
-      name = action.name.trim();
-
-      if (name !== '') {
-        RoomStore.create(name);
-      }
-      break;
-    case RoomConstants.ROOM_EDIT:
-      if(action.room.name !== '') {
-        RoomStore.edit(action.room);
-      }
-      break;
-    case RoomConstants.ROOM_DELETE:
-      if(action.room.id !== '') {
-        RoomStore.delete(action.room);
-      }
-      break;
-
-    default:
-      return true;
-  }
-});
 
 module.exports = RoomStore;

@@ -1,9 +1,9 @@
-var CHANGE_EVENT = 'change';
-var EventEmitter = require('events').EventEmitter;
-var assign = require("object-assign");
-var $ = require("jquery");
+var Reflux = require("reflux");
+var UserActions = require("../actions/UserActions");
 
-var UserStore = assign({}, EventEmitter.prototype, {
+var UserStore = Reflux.createStore({
+
+  listenables: [UserActions],
   _user: null,
 
   get: function() {
@@ -17,39 +17,28 @@ var UserStore = assign({}, EventEmitter.prototype, {
     })
     .done(function(user) {
       this._user = user;
-      if (user){
-        window.globalBoolean = false;
-      }
-      this.emitChange();
+      this.trigger();
     }.bind(this))
     .fail(function(err) {
       console.log(err);
     });
   },
 
-  logout: function() {
+  logout: function(callback) {
     $.ajax({
       url: '/users',
       type: 'DELETE'
     })
     .done(function(user) {
+      console.log("logged out ", user);
       this._user = user;
-      window.globalBoolean = true;
-      this.emitChange();
-      window.location.href = "/";
+      this.trigger();
+      callback();
     }.bind(this))
     .fail(function(err) {
       console.log(err);
     });
-  },
-
-  emitChange: function() {
-    this.emit(CHANGE_EVENT);
-  },
-
-  addChangeListener:function(callback){
-    this.on(CHANGE_EVENT, callback);
-  },
+  }
 });
 
 module.exports = UserStore;

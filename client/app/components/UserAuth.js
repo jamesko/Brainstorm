@@ -1,7 +1,15 @@
 var React = require("react");
+var UserActions = require("../actions/UserActions");
 var UserStore = require("../stores/UserStore");
+var Router = require("react-router");
+var Navigation = Router.Navigation;
+var Reflux = require("reflux");
+var PureRenderMixin = require('react/addons').addons.PureRenderMixin;
 
 var UserAuth = React.createClass({
+
+  mixins: [Navigation, Reflux.ListenerMixin, PureRenderMixin],
+
   getInitialState: function() {
     return { currentUser: UserStore.get() };
   },
@@ -9,7 +17,11 @@ var UserAuth = React.createClass({
   handleClick: function(e) {
     if(this.state.currentUser) {
       e.preventDefault();
-      UserStore.logout();
+      var self = this;
+      UserActions.logout(function(){
+        self.transitionTo('/');
+      });
+
     }
   },
 
@@ -17,28 +29,25 @@ var UserAuth = React.createClass({
     var text = this.state.currentUser ? 'Logout' : 'Login';
     return (
       <div>
-          <li><a onClick={this.handleClick} href='/auth/github'>{text}</a></li> 
+          <li><a onClick={this.handleClick} href='/auth/github'>{text}</a></li>
           <li><a onClick={this.handleClick} href='/auth/github'>Github</a></li>
           <li><a onClick={this.handleClick} href='/auth/facebook'>Facebook</a></li>
-          <li><a onClick={this.handleClick} href='/auth/google'>Google</a></li>          
+          <li><a onClick={this.handleClick} href='/auth/google'>Google</a></li>
       </div>
     );
   },
 
   componentDidMount: function() {
-    UserStore.addChangeListener(this.onStoreChange);
-    UserStore.getCurrentUser();
+    this.listenTo(UserStore, this.onStoreChange);
+    UserActions.getCurrentUser();
   },
 
   onStoreChange: function(){
     if(this.isMounted()) {
       this.setState({ currentUser: UserStore.get() });
     }
-  },
+  }
 
-  // componentWillUnmount: function() {
-  //   UserStore.removeChangeListener(this.onStoreChange);
-  // }
 
 });
 

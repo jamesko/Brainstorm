@@ -1,10 +1,14 @@
 var React = require("react");
-var User = require("./User");
-var PageActions = require("../actions/PageActions");
+var Router = require('react-router');
+var Navigation = Router.Navigation;
+var UserAuth = require("./UserAuth");
 var UserStore = require("../stores/UserStore");
-
-
+var Link = Router.Link;
+var Reflux = require("reflux");
+var PureRenderMixin = require('react/addons').addons.PureRenderMixin;
 var PageNav = React.createClass({
+
+  mixins: [Navigation, Reflux.ListenerMixin, PureRenderMixin],
 
   getInitialState: function() {
     return {
@@ -12,65 +16,47 @@ var PageNav = React.createClass({
     };
   },
 
+  onStoreChange: function(){
+    if(this.isMounted()) {
+      this.setState({ currentUser: UserStore.get() });
+    }
+  },
+
   componentDidMount: function(){
-    UserStore.addChangeListener(function() {
-      if(this.isMounted()) {
-        this.setState({ currentUser: UserStore.get() });
-      }
-    }.bind(this));
+    this.listenTo(UserStore, this.onStoreChange)
   },
 
   handleWelcome:function(){
     //dispatch a navigate to welcome on click
-    PageActions.navigate({
-      dest: 'welcome'
-    });
-  },
-
-  handleAbout:function(){
-    //dispatch a navigate to about on click
-    PageActions.navigate({
-      dest: 'about'
-    });
+    if (this.state.currentUser){
+      this.transitionTo('/rooms')
+    } else {
+      this.transitionTo('/')
+    }
   },
 
   render:function(){
-    var heroView;
-    var aboutView;
-    if (window.globalBoolean){
-      heroView = (
-        <div id="hero" ref="hero">
-          <img className="hero-img" src="styles/assets/stickynotebackground.jpg"/>
-          <span className="hero-text">BRAINSTORMER</span>
-          <span className="hero-tagline">Ideation + Innovation</span>
-        </div>
-      );
-    }
-    if (this.state.currentUser){
-      aboutView = (
-        <li ref="about">
-          <div style={{paddingLeft:"10px", paddingRight:"10px"}} onClick={this.handleAbout}>Getting Started</div>
-        </li>
-      );
-    }
     return (
       <div>
-        <header ref="body">
+        <header>
           <nav>
             <div className="nav-wrapper  blue darken-3">
               <ul className="login right">
-                <User />
+                <UserAuth />
               </ul>
               <ul id="nav-mobile" className="left hide-on-med-and-down">
-                <li ref="welcome">
+                <li>
                   <div style={{paddingLeft:"10px", paddingRight:"10px"}} onClick={this.handleWelcome}>Brainstormer</div>
                 </li>
-                {aboutView}
+                <li>
+                  <Link to="about" style={{paddingLeft:"10px", paddingRight:"10px"}}>
+                    Getting Started
+                  </Link>
+                </li>
               </ul>
             </div>
           </nav>
         </header>
-        {heroView}
       </div>
     );
   }
