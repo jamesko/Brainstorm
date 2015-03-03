@@ -1,6 +1,7 @@
 var React = require("react");
 var Router = require("react-router");
 var State = Router.State;
+var Link = Router.Link;
 var BrainswarmActions = require("../../actions/BrainswarmActions");
 var BrainswarmStore = require("../../stores/BrainswarmStore");
 var socket = io.connect();
@@ -696,9 +697,22 @@ var Brainswarm = React.createClass({
   getInitialState: function(){
     var brainswarmId = this.getParams().brainswarmId;
     var currentBrainswarm = BrainswarmStore.findBrainswarm(brainswarmId);
-
+    // if user refreshes page create the brainswarm map
+    var currentBrainswarmBackup;
+    if (currentBrainswarm === undefined){
+      BrainswarmActions.getBrainswarmById(brainswarmId, function(backupBrainswarm){
+        currentBrainswarmBackup = backupBrainswarm;
+        createMap(brainswarmId, backupBrainswarm);
+      });
+    }
+    // create a set interval function so that if user happens to refresh the page
+    // then the map is most likely saved
+    var self = this;
+    window.setInterval(function(){
+      BrainswarmActions.edit(self.state.brainswarmId, mapData);
+    }, 5000)
     return {
-      currentBrainswarm: currentBrainswarm,
+      currentBrainswarm: currentBrainswarm || currentBrainswarmBackup,
       brainswarmId: brainswarmId
     }
   },
@@ -715,26 +729,32 @@ var Brainswarm = React.createClass({
 
   render: function(){
     return (
-      <div className="row">
+      <div>
+        <section className="brainswarm-section">
+        <div id="legendSection" className="col s3">
+          <div className="header-text2"><Link to="about"> Tips on how to brainswarm </Link></div>
+          <div className="legend">
+            <h5 className="center-align">Legend</h5>
 
-        <div id="legend" className="col s3">
-          <h5 className="center-align">Legend</h5>
-
-          <p className="center-align"> drag/scroll to move/zoom the graph</p>
-          <p className="center-align"> shift-click on graph to create a node</p>
-          <p className="center-align"> click on node or edge and press backspace/delete to delete</p>
-          <p className="center-align"> shift-click on a node to change its title</p>
-          <p className="center-align">shift-click on a node and then drag to another node to connect them with a directed edge</p>
-        </div>
-        <div id="graph" className="blue lighten-2 col s9 offset-s3">
-
+            <p className="center-align"> drag/scroll to move/zoom the graph</p>
+            <p className="center-align"> shift-click on graph to create a circle</p>
+            <p className="center-align">shift-click on a circle and then drag to another circle to connect them with a directed arrow</p>
+            <p className="center-align"> shift-click on a circle to change its title</p>
+            <p className="center-align"> click on circle or arrow and press backspace/delete to delete</p>
+          </div>
           <div className="toolbox">
 
-            <a id="download-input" className="waves-effect waves-light btn-large light-green accent-2 ">
+          <a id="download-input" className="waves-effect waves-light btn-large light-green accent-2 ">
             <i  className="small mdi-file-cloud-done"></i>
-            </a>
-          </div>
+          </a>
         </div>
+          </div>
+
+          <div id="graph" className="blue lighten-2 col s9 offset-s3">
+          </div>
+
+        </section>
+
 
       </div>
     );
@@ -743,7 +763,6 @@ var Brainswarm = React.createClass({
   componentDidMount: function(){
     socket.emit('join brainswarm', this.state.brainswarmId);
     createMap(this.state.brainswarmId, this.state.currentBrainswarm);
-
 
   },
 
