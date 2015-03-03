@@ -17,8 +17,20 @@ var paths = {
   scripts: ['client/app/**/*.js'],
   html: ['client/app/**/*.html', 'client/index.html'],
   styles: ['client/styles/style.css'],
-  test: ['specs/**/*.js']
+  test: ['specs/server/*.js']
 };
+
+gulp.task('test-server', shell.task([
+  'mocha ' + paths.test
+]));
+
+gulp.task('test-client', shell.task([
+  'jest'
+]));
+
+gulp.task('test', shell.task([
+  'npm test'
+]));
 
 gulp.task('start', ['serve'], function() {
   bs({
