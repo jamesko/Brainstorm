@@ -5,9 +5,14 @@
   "main": "index.js",
   "scripts": {
     "start": "watchify -d client/app/starter.js -o client/app/bundle.js -v",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "mocha specs/server/serverspec.js && jest",
     "build": "NODE_ENV=production browserify client/app/starter.js | uglifyjs -cm > client/app/bundle.min.js"
   },
+  "jest": {    
+   "testDirectoryName": "jest_tests",
+   "testPathDirs": ["specs"],
+   "unmockedModulePathPatterns": ["react"]
+ },
   "browserify": {
     "transform": [
       [
@@ -37,6 +42,7 @@
     "chai": "^1.10.0",
     "expect.js": "^0.3.1",
     "jasmine-core": "^2.1.2",
+    "jest-cli": "^0.4.0",
     "karma": "^0.12.28",
     "karma-chrome-launcher": "^0.1.5",
     "karma-cli": "0.0.4",
