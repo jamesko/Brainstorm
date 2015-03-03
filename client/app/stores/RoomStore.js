@@ -6,6 +6,11 @@ var RoomActions = require("../actions/RoomActions");
 var RoomStore = Reflux.createStore({
 
   listenables: RoomActions,
+
+  init: function() {
+    this.socketListener();
+  },
+
   _rooms: [],
 
   getAll: function() {
@@ -31,7 +36,6 @@ var RoomStore = Reflux.createStore({
     .fail(function(error) {
       console.log(error);
     });
-    this.socketListener();
   },
 
   create: function(name, callback) {
@@ -62,7 +66,6 @@ var RoomStore = Reflux.createStore({
     .done(function(roomEdit) {
       // look through the rooms until finding a match
       // for id and then update the name property
-      this.socketListener();
       this._rooms.forEach(function(room) {
         if(room._id === roomEdit._id) {
           room.name = roomEdit.name;
@@ -94,7 +97,6 @@ var RoomStore = Reflux.createStore({
           socket.emit('room-change', this._rooms);
           // return this.emitChange();
         }
-        this.socketListener();
       }.bind(this));
       this.trigger();
     }.bind(this))

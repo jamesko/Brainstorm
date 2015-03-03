@@ -7,6 +7,10 @@ var CommentStore = Reflux.createStore({
 
   listenables: CommentActions,
 
+  init: function() {
+    this.socketListener();
+  },
+
   _comments: [],
 
   _room: "",
@@ -45,7 +49,6 @@ var CommentStore = Reflux.createStore({
     .fail(function(error) {
       console.error(error);
     });
-    this.socketListener();
   },
 
   //all: function () {

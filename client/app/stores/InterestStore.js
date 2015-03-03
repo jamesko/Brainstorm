@@ -7,6 +7,10 @@ var InterestStore = Reflux.createStore({
 
   listenables: InterestActions,
 
+  init: function() {
+    this.socketListener();
+  },
+
   _interests: [],
 
   _room: "",
@@ -16,7 +20,6 @@ var InterestStore = Reflux.createStore({
   },
 
   getAll: function (idea_id) {
-    this.socketListener();
     if (!idea_id) return this._interests;
     return _(this._interests).filter(function (interest) {
       return interest.idea === idea_id;
@@ -43,7 +46,6 @@ var InterestStore = Reflux.createStore({
     .fail(function(error) {
       console.error(error);
     });
-    this.socketListener();
   },
 
   create: function(idea_id) {

@@ -7,6 +7,10 @@ var BrainswarmStore = Reflux.createStore({
 
   listenables: BrainswarmActions,
 
+  init: function() {
+    this.socketListener();
+  },
+
 
   getAll: function() {
     return this._brainswarms;
@@ -23,7 +27,6 @@ var BrainswarmStore = Reflux.createStore({
 
   checkBrainswarm: function(idea_id, callback){
     var brainswarms = this._brainswarms;
-    this.socketListener();
     for (var i =0; i < brainswarms.length; i++){
       if (brainswarms[i].idea === idea_id){
         return callback(brainswarms[i]);
@@ -44,7 +47,6 @@ var BrainswarmStore = Reflux.createStore({
           var tempBrainswarm = brainswarmsData[i];
         }
       }
-      this.socketListener();
       socket.emit('brainswarm-change', this._brainswarms);
       this.trigger();
       if (tempBrainswarm) {
@@ -99,7 +101,6 @@ var BrainswarmStore = Reflux.createStore({
       // broadcast that _rooms has changed
       socket.emit('brainswarm-change', this._brainswarms);
       this.trigger();
-      this.socketListener();
       callback(brainswarm._id);
     }.bind(this))
     .fail(function(error) {
