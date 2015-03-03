@@ -5,14 +5,19 @@
   "main": "index.js",
   "scripts": {
     "start": "watchify -d client/app/starter.js -o client/app/bundle.js -v",
-    "test": "mocha specs/server/serverspec.js && jest",
+    "test": "mocha specs/server/ServerSpec.js && jest",
     "build": "NODE_ENV=production browserify client/app/starter.js | uglifyjs -cm > client/app/bundle.min.js"
   },
-  "jest": {    
-   "testDirectoryName": "jest_tests",
-   "testPathDirs": ["specs"],
-   "unmockedModulePathPatterns": ["react"]
- },
+  "jest": {
+    "scriptPreprocessor": "<rootDir>/preprocessor.js",
+    "testDirectoryName": "jest_tests",
+    "testPathDirs": [
+      "specs"
+    ],
+    "unmockedModulePathPatterns": [
+      "react"
+    ]
+  },
   "browserify": {
     "transform": [
       [
@@ -91,6 +96,7 @@
     "react": "^0.12.2",
     "react-draggable": "^0.4.0",
     "react-router": "^0.12.4",
+    "react-tools": "^0.12.2",
     "reactify": "^1.0.0",
     "reflux": "^0.2.5",
     "socket.io": "^1.2.1",
