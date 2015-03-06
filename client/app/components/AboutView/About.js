@@ -13,12 +13,12 @@ var brainstormScreenShot3 = '<img width="replace" className="image" src="styles/
 var brainstormScreenShot4 = '<img width="replace" className="image" src="styles/assets/brainstorm4.png"/>'.replace(/replace/, imageWidth);
 var brainstormScreenShot5 = '<img width="replace" className="image" src="styles/assets/brainstorm5.png"/>'.replace(/replace/, imageWidth);
 var brainstormScreenShot6 = '<img width="replace" className="image" src="styles/assets/brainstorm6.png"/>'.replace(/replace/, imageWidth);
-var brainstormGif1 = '<video src="http://share.gifyoutube.com/v1q4WP.webm" autoplay="" loop="" id="video" className="tc-videoHost" style={{width: 60%}}></video>';
-var brainstormGif2 = '<video src="http://share.gifyoutube.com/yg0ODA.webm" autoplay="" loop="" id="video" className="tc-videoHost" style={{width: 60%}}></video>';
-var brainstormGif3 = '<video src="http://share.gifyoutube.com/vnpGD9.webm" autoplay="" loop="" id="video" className="tc-videoHost" style={{width: 60%}}></video>';
-var brainstormGif4 = '<video src="http://share.gifyoutube.com/vq58z2.webm" autoplay="" loop="" id="video" className="tc-videoHost" style={{width: 60%}}></video>';
-var brainstormGif5 = '<video src="http://share.gifyoutube.com/y4YRxV.webm" autoplay="" loop="" id="video" className="tc-videoHost" style={{width: 60%}}></video>';
-var brainstormGif6 = '<video src="http://share.gifyoutube.com/KeD1k9.webm" autoplay="" loop="" id="video" className="tc-videoHost" style={{width: 60%}}></video>';
+var brainstormGif1 = '<video src="http://share.gifyoutube.com/v1q4WP.webm" autoplay="" loop="" id="video" className="tc-videoHost" style="width: 60%"></video>';
+var brainstormGif2 = '<video src="http://share.gifyoutube.com/yg0ODA.webm" autoplay="" loop="" id="video" className="tc-videoHost" style="width: 60%"></video>';
+var brainstormGif3 = '<video src="http://share.gifyoutube.com/vnpGD9.webm" autoplay="" loop="" id="video" className="tc-videoHost" style="width: 60%"></video>';
+var brainstormGif4 = '<video src="http://share.gifyoutube.com/vq58z2.webm" autoplay="" loop="" id="video" className="tc-videoHost" style="width: 60%"></video>';
+var brainstormGif5 = '<video src="http://share.gifyoutube.com/y4YRxV.webm" autoplay="" loop="" id="video" className="tc-videoHost" style="width: 60%"></video>';
+var brainstormGif6 = '<video src="http://share.gifyoutube.com/KeD1k9.webm" autoplay="" loop="" id="video" className="tc-videoHost" style="width: 60%"></video>';
 
 var About = React.createClass({
 
