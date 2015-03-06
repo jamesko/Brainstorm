@@ -639,10 +639,10 @@ function createMap(brainswarmId, brainswarm){
     var docEl = document.documentElement,
         bodyEl = document.getElementsByTagName('body')[0];
 
-    var width = window.innerWidth /*|| docEl.clientWidth*/ /*|| bodyEl.clientWidth*/,
-        height =  window.innerHeight|| docEl.clientHeight|| bodyEl.clientHeight;
-    width *= .60;
-    height *= .75;
+    var width = window.innerWidth;
+    var height =  window.innerHeight;
+    width = width*0.675;
+
     var xLoc = width/2 - 25,
         yLoc = 100;
 
@@ -670,27 +670,27 @@ function createMap(brainswarmId, brainswarm){
 
 var Brainswarm = React.createClass({
 
-  mixins: [ State, PureRenderMixin ],
+  mixins: [State, PureRenderMixin],
 
   getInitialState: function(){
     var brainswarmId = this.getParams().brainswarmId;
     var currentBrainswarm = BrainswarmStore.findBrainswarm(brainswarmId);
     // if user refreshes page create the brainswarm map
-    var currentBrainswarmBackup;
-    if (currentBrainswarm === undefined){
-      BrainswarmActions.getBrainswarmById(brainswarmId, function(backupBrainswarm){
-        currentBrainswarmBackup = backupBrainswarm;
-        createMap(brainswarmId, backupBrainswarm);
-      });
-    }
+    // var currentBrainswarmBackup;
+    // if (currentBrainswarm === undefined){
+    //   BrainswarmActions.getBrainswarmById(brainswarmId, function(backupBrainswarm){
+    //     currentBrainswarmBackup = backupBrainswarm;
+    //     createMap(brainswarmId, backupBrainswarm);
+    //   });
+    // }
     // create a set interval function so that if user happens to refresh the page
     // then the map is most likely saved
     var self = this;
-    window.setInterval(function(){
-      BrainswarmActions.edit(self.state.brainswarmId, mapData);
-    }, 5000)
+    // window.setInterval(function(){
+    //   BrainswarmActions.edit(self.state.brainswarmId, mapData);
+    // }, 3000)
     return {
-      currentBrainswarm: currentBrainswarm || currentBrainswarmBackup,
+      currentBrainswarm: currentBrainswarm,
       brainswarmId: brainswarmId
     }
   },
@@ -714,16 +714,16 @@ var Brainswarm = React.createClass({
           <div className="legend">
             <h5 className="center-align">Legend</h5>
 
-            <p className="center-align"> drag/scroll to move/zoom the graph</p>
-            <p className="center-align"> shift-click on graph to create a circle</p>
-            <p className="center-align">shift-click on a circle and then drag to another circle to connect them with a directed arrow</p>
-            <p className="center-align"> shift-click on a circle to change its title</p>
-            <p className="center-align"> click on circle or arrow and press backspace/delete to delete</p>
+            <p className="center-align legend-text"> drag/scroll to move/zoom the graph</p>
+            <p className="center-align legend-text"> shift-click on graph to create a circle</p>
+            <p className="center-align legend-text">shift-click on a circle and then drag to another circle to connect them with a directed arrow</p>
+            <p className="center-align legend-text"> shift-click on a circle to change its title</p>
+            <p className="center-align legend-text"> click on circle or arrow and press backspace/delete to delete</p>
           </div>
           <div className="toolbox">
 
           <a id="download-input" className="waves-effect waves-light btn-large cyan">
-            <i  className="small mdi-file-file-download"></i>
+            <i  className="mdi-file-file-download"></i>
           </a>
         </div>
           </div>

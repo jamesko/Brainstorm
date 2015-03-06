@@ -29,9 +29,9 @@ var PageNav = React.createClass({
   handleWelcome:function(){
     //dispatch a navigate to welcome on click
     if (this.state.currentUser){
-      this.transitionTo('/rooms')
+      this.transitionTo('/rooms');
     } else {
-      this.transitionTo('/')
+      this.transitionTo('/');
     }
   },
 
@@ -46,10 +46,10 @@ var PageNav = React.createClass({
               </ul>
               <ul id="nav-mobile" className="left hide-on-med-and-down">
                 <li>
-                  <div className="brainstormer" style={{paddingLeft:"10px", paddingRight:"10px"}} onClick={this.handleWelcome}>Brainstormer</div>
+                  <div className="brainstormer" style={{paddingLeft:"15px", paddingRight:"15px"}} onClick={this.handleWelcome}>Brainstormer</div>
                 </li>
                 <li>
-                  <Link to="about" style={{paddingLeft:"10px", paddingRight:"10px"}}>
+                  <Link to="about" style={{paddingLeft:"15px", paddingRight:"15px"}}>
                     Getting Started
                   </Link>
                 </li>
