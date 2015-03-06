@@ -13,7 +13,7 @@ function ideaWordCloud(selector, ideaWords){
     var fill = d3.scale.category20();
 
     var selector = selector.split(" ")[0];
-    if (selector = ".room" || ".idea" || ".comments" || ".rooms" || ".hero") {
+    if (selector === ".room" || selector === ".idea" || selector === ".comments" || selector === ".rooms" || selector === ".hero" || selector === ".legend") {
       selector = undefined;
     }
 
