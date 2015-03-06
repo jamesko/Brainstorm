@@ -670,27 +670,27 @@ function createMap(brainswarmId, brainswarm){
 
 var Brainswarm = React.createClass({
 
-  mixins: [ State, PureRenderMixin ],
+  mixins: [State, PureRenderMixin],
 
   getInitialState: function(){
     var brainswarmId = this.getParams().brainswarmId;
     var currentBrainswarm = BrainswarmStore.findBrainswarm(brainswarmId);
     // if user refreshes page create the brainswarm map
-    var currentBrainswarmBackup;
-    if (currentBrainswarm === undefined){
-      BrainswarmActions.getBrainswarmById(brainswarmId, function(backupBrainswarm){
-        currentBrainswarmBackup = backupBrainswarm;
-        createMap(brainswarmId, backupBrainswarm);
-      });
-    }
+    // var currentBrainswarmBackup;
+    // if (currentBrainswarm === undefined){
+    //   BrainswarmActions.getBrainswarmById(brainswarmId, function(backupBrainswarm){
+    //     currentBrainswarmBackup = backupBrainswarm;
+    //     createMap(brainswarmId, backupBrainswarm);
+    //   });
+    // }
     // create a set interval function so that if user happens to refresh the page
     // then the map is most likely saved
     var self = this;
-    window.setInterval(function(){
-      BrainswarmActions.edit(self.state.brainswarmId, mapData);
-    }, 5000)
+    // window.setInterval(function(){
+    //   BrainswarmActions.edit(self.state.brainswarmId, mapData);
+    // }, 3000)
     return {
-      currentBrainswarm: currentBrainswarm || currentBrainswarmBackup,
+      currentBrainswarm: currentBrainswarm,
       brainswarmId: brainswarmId
     }
   },
