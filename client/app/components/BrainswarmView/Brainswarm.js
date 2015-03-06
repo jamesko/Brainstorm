@@ -122,28 +122,6 @@ function createMap(brainswarmId, brainswarm){
       // listen for resize
       window.onresize = function(){thisGraph.updateWindow(svg);};
 
-     // console.log ("THIS IS LOC",window.location);
-     // window.onbeforeunload = function(){
-     //   console.log('got here')
-     //
-     //
-     //   var saveEdges = [];
-     //   thisGraph.edges.forEach(function(val, i){
-     //     saveEdges.push({source: val.source.id, target: val.target.id});
-     //   });
-     //
-     //   // Get rid of duplicate nodes
-     //   for (var i = 0; i< thisGraph.nodes.length; i++){
-     //     var temp = thisGraph.nodes.indexOf(thisGraph.nodes[i].id, i+1);
-     //     if( temp !== -1){
-     //       delete thisGraph.nodes[temp]
-     //     }
-     //   }
-     //   var data = window.JSON.stringify({"nodes": thisGraph.nodes, "edges": saveEdges});
-     //   BrainswarmActions.edit(brainswarmId, data);
-     //
-     //};
-
       // handle download data
       d3.select("#download-input").on("click", function(){
 
@@ -744,8 +722,8 @@ var Brainswarm = React.createClass({
           </div>
           <div className="toolbox">
 
-          <a id="download-input" className="waves-effect waves-light btn-large light-green accent-2 ">
-            <i  className="small mdi-file-cloud-done"></i>
+          <a id="download-input" className="waves-effect waves-light btn-large cyan">
+            <i  className="small mdi-file-file-download"></i>
           </a>
         </div>
           </div>

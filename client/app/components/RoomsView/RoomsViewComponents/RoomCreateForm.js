@@ -19,8 +19,7 @@ var RoomCreateForm = React.createClass({
       return;
     }
     if (this.props.editing) {
-      // console.log('wtf')
-      // debugger
+
       var room = {id: this.props._id};
       room.owner = this.props.owner;
       room.name = name.value.trim();

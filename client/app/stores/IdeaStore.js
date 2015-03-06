@@ -8,6 +8,10 @@ var IdeaStore = Reflux.createStore({
 
   listenables: IdeaActions,
 
+  init: function() {
+    this.socketListener();
+  },
+
   _ideas: [],
 
   _room: '',
@@ -40,7 +44,6 @@ var IdeaStore = Reflux.createStore({
     .fail(function(error) {
       console.error(error);
     });
-    this.socketListener();
   },
 
   all: function () {
@@ -56,7 +59,6 @@ var IdeaStore = Reflux.createStore({
     .fail(function(error) {
       console.error(error);
     });
-    this.socketListener();
   },
 
   create: function (room_id, name) {

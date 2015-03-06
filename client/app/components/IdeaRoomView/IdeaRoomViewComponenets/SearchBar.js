@@ -5,6 +5,11 @@ var SearchBar = React.createClass({
 
   mixins: PureRenderMixin,
 
+  propTypes: {
+    filterText: React.PropTypes.string,
+    filterNames: React.PropTypes.string,
+  },
+
     handleChange: function() {
         this.props.onUserInput(
             this.refs.filterTextInput.getDOMNode().value,

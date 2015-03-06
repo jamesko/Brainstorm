@@ -20,13 +20,14 @@ var Idea = React.createClass({
 
   mixins : [PureRenderMixin, Navigation],
 
-  propTypes : {
-    id : React.PropTypes.string,
-    idea : React.PropTypes.string,
-    name : React.PropTypes.string,
-    owner : React.PropTypes.string,
-    ownerName : React.PropTypes.string
-  } ,
+  propTypes: {
+    _id: React.PropTypes.string,
+    room: React.PropTypes.string,
+    name: React.PropTypes.string,
+    owner: React.PropTypes.string,
+    ownerName: React.PropTypes.string,
+    position: React.PropTypes.object
+  },
 
   getInitialState : function () {
     // set initial editing state to false
@@ -85,10 +86,11 @@ var Idea = React.createClass({
       this.setState ({displaying : !this.state.displaying});
     }
   },
+
   handleStart : function(event , ui) {
-    // console.log('Event: ', event);
-    //console.log('Position: ', ui.position);
+
   },
+
   handleDrag : function(event , ui) {
     var obj = {};
 
@@ -97,6 +99,7 @@ var Idea = React.createClass({
 
     socket.emit ('idea change' , obj);
   },
+
   handleStop : function(event , ui) {
 
     this.setState ({position : {top : event.clientY , left : event.clientX}});
@@ -159,7 +162,7 @@ var Idea = React.createClass({
                     <Interest idea_id={this.props._id} />
                   </div>
 
-                  <button className="brainswarm-btn no-margin btn waves-effect waves-light" style={{display:"inline", height: "25px", backgroundColor: "#64b5f6", marginTop: "10px"}} onClick={this.brainswarm}>Brainswarm</button>
+                  <button className="brainswarm-btn no-margin btn waves-effect waves-light" style={{display:"inline", height: "25px", backgroundColor: "rgba(198, 227, 250, 0.4)", color: "black", marginTop: "10px", padding: "0px 6px"}} onClick={this.brainswarm}>Brainswarm</button>
                   <div>
                 {editForm}
                 {editableOption}

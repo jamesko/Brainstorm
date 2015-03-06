@@ -6,6 +6,22 @@ var CommentForm = React.createClass({
 
   mixins: [PureRenderMixin],
 
+  getDefaultProps: function() {
+    return {
+      idea_id: "",
+      _id: "",
+      editing: false,
+      name: ""
+    };
+  },
+
+  propTypes: {
+   idea_id: React.PropTypes.string,
+   _id: React.PropTypes.string,
+   editing: React.PropTypes.bool,
+   name: React.PropTypes.string
+  },
+
   handleSubmit: function (e) {
     e.preventDefault();
 
@@ -31,7 +47,7 @@ var CommentForm = React.createClass({
       <form className="pure-form auth-check formComment" ref="body" onSubmit={this.handleSubmit}>
 
         <input className="pure-u-1-1 pure-u-sm-5-6 postfix comment-form" type="text" ref="input" placeholder="Add your comment..." />
-        <button className="no-margin btn waves-effect waves-light" type="submit" ref="submit">{this.props.editing ? 'Edit' : 'Create'}</button>
+        <button className="no-margin btn waves-effect waves-light comment-button" style={{backgroundColor: "rgba(189, 223, 250, 0.4)", padding: "0px 4px"}} type="submit" ref="submit">{this.props.editing ? 'Edit' : 'Create'}</button>
       </form>
     );
   }

@@ -8,6 +8,10 @@ var RoomTitle = React.createClass({
 
   mixins: [Reflux.ListenerMixin],
 
+  propTypes: {
+    room_id : React.PropTypes.string
+  },
+
   getInitialState: function() {
     return {
       room:

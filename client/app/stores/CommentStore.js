@@ -7,6 +7,10 @@ var CommentStore = Reflux.createStore({
 
   listenables: CommentActions,
 
+  init: function() {
+    this.socketListener();
+  },
+
   _comments: [],
 
   _room: "",
@@ -45,22 +49,7 @@ var CommentStore = Reflux.createStore({
     .fail(function(error) {
       console.error(error);
     });
-    this.socketListener();
   },
-
-  //all: function () {
-  //  $.ajax({
-  //    type: 'GET',
-  //    url: '/comments'
-  //  })
-  //  .done(function (comments) {
-  //    this._comments = comments;
-  //  }.bind(this))
-  //  .fail(function (error) {
-  //    console.log(error);
-  //  });
-  //  this.socketListener();
-  //},
 
   create: function (idea_id, name) {
     var urlBoolean = false;

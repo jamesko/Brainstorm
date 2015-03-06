@@ -7,9 +7,10 @@ var PureRenderMixin = require('react/addons').addons.PureRenderMixin;
 var Comment = React.createClass({
 
   propTypes: {
-    editing: React.PropTypes.bool,
+    _id: React.PropTypes.string,
     name: React.PropTypes.string,
-    _id: React.PropTypes.string
+    ownerName: React.PropTypes.string,
+    anchor: React.PropTypes.bool
   },
 
   mixins: [PureRenderMixin],

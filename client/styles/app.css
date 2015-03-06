@@ -178,6 +178,10 @@ h2 {
   font-size: 12px !important;
 }
 
+.comment-button {
+  color: black;
+}
+
 .formEditComment {
   font-size:85%;
 }
@@ -500,11 +504,41 @@ path.link.selected {
 }
 
 .brainswarm-btn {
-  margin-top: 10px
-
+  margin-top: 10px;
 }
 
 .brainswarm:hover {
 
 }
 
+.brainstormer {
+  font-size: 18px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.brainstormer:hover {
+  text-decoration: underline;
+}
+
+.login-icon {
+  font-size: 22px;
+  background-color: #1565C0;
+  transition: all 0.45s ease-out;
+}
+
+.login-icon:hover {
+  color: #1565C0;
+  background-color: white;
+  transition: all 0.45s ease-out;
+}
+
+.logout-user{
+  padding-right: 10px;
+  padding-left: 10px;
+  cursor: pointer;
+}
+
+.logout-user:hover{
+  text-decoration: underline;
+}

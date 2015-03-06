@@ -16,7 +16,7 @@ var PureRenderMixin = require('react/addons').addons.PureRenderMixin;
 
 var RoomView = React.createClass({
 
-  mixins: [ State, PureRenderMixin],
+  mixins: [State, PureRenderMixin],
 
   getInitialState: function() {
     return {
