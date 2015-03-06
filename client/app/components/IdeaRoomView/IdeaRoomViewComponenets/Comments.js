@@ -12,10 +12,7 @@ var Comments = React.createClass({
  mixins: [PureRenderMixin, Reflux.ListenerMixin],
 
  propTypes: {
-  _id: React.PropTypes.string,
-  idea_id: React.PropTypes.string,
-  name: React.PropTypes.string,
-  ownerName: React.PropTypes.string
+  idea_id: React.PropTypes.string
  },
 
   _url: false,
@@ -70,7 +67,7 @@ var Comments = React.createClass({
       //render a comment component for each comment
       this.state.comments.forEach(function (comment) {
         comments.push(
-          <Comment anchor={comment.urlBoolean} ownerName={comment.ownerName} name={comment.name} key={comment._id} _id={comment._id} idea_id={comment.idea_id} />
+          <Comment anchor={comment.urlBoolean} ownerName={comment.ownerName} name={comment.name} key={comment._id} _id={comment._id} />
         );
       });
     }

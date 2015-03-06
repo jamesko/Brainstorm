@@ -6,6 +6,22 @@ var CommentForm = React.createClass({
 
   mixins: [PureRenderMixin],
 
+  getDefaultProps: function() {
+    return {
+      idea_id: "",
+      _id: "",
+      editing: false,
+      name: ""
+    };
+  },
+
+  propTypes: {
+   idea_id: React.PropTypes.string,
+   _id: React.PropTypes.string,
+   editing: React.PropTypes.bool,
+   name: React.PropTypes.string
+  },
+
   handleSubmit: function (e) {
     e.preventDefault();
 

@@ -7,6 +7,10 @@ var IdeaForm = React.createClass({
 
   mixins: [PureRenderMixin],
 
+  propTypes: {
+    room_id : React.PropTypes.string
+  },
+
   handleSubmit: function(e) {
     e.preventDefault();
     // get the value out of the input with ref="name"

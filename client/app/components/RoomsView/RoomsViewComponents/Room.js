@@ -107,6 +107,13 @@ var Room = React.createClass({
 
   mixins: [Reflux.ListenerMixin],
 
+  propTypes: {
+    id : React.PropTypes.string,
+    name : React.PropTypes.string,
+    owner : React.PropTypes.string,
+    ownerName : React.PropTypes.string
+  },
+
   getInitialState: function() {
     // set initial editing state to false
     return {

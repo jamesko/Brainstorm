@@ -15,12 +15,9 @@ var Ideas = React.createClass({
   mixins: [Reflux.ListenerMixin],
 
   propTypes: {
-    _id: React.PropTypes.string,
-    idea: React.PropTypes.string,
-    name: React.PropTypes.string,
-    owner: React.PropTypes.string,
-    ownerName: React.PropTypes.string,
-    position: React.PropTypes.object
+    room_id: React.PropTypes.string,
+    filterText: React.PropTypes.string,
+    filterNames: React.PropTypes.string
   },
 
   getInitialState: function () {

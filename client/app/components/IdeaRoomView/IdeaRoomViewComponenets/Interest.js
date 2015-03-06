@@ -10,6 +10,10 @@ var Interest = React.createClass({
 
   mixins: [Reflux.ListenerMixin, PureRenderMixin],
 
+  propTypes: {
+    idea_id: React.PropTypes.string
+  },
+
   _liked: false,
 
   checkLiked: function (interests) {

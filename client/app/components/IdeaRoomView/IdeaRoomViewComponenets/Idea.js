@@ -20,13 +20,14 @@ var Idea = React.createClass({
 
   mixins : [PureRenderMixin, Navigation],
 
-  propTypes : {
-    id : React.PropTypes.string,
-    idea : React.PropTypes.string,
-    name : React.PropTypes.string,
-    owner : React.PropTypes.string,
-    ownerName : React.PropTypes.string
-  } ,
+  propTypes: {
+    _id: React.PropTypes.string,
+    room: React.PropTypes.string,
+    name: React.PropTypes.string,
+    owner: React.PropTypes.string,
+    ownerName: React.PropTypes.string,
+    position: React.PropTypes.object
+  },
 
   getInitialState : function () {
     // set initial editing state to false

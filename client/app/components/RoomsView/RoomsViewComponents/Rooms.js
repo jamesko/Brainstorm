@@ -11,14 +11,6 @@ var Rooms = React.createClass({
 
   mixins: [Navigation, Reflux.ListenerMixin],
 
-  propTypes: {
-    id : React.PropTypes.string,
-    name : React.PropTypes.string,
-    owner : React.PropTypes.object,
-    ownerName : React.PropTypes.string
-
-  },
-
   getInitialState: function() {
     return {
       rooms: RoomStore.getAll()
