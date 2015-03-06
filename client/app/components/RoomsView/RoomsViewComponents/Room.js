@@ -12,7 +12,10 @@ function ideaWordCloud(selector, ideaWords){
 
     var fill = d3.scale.category20();
 
-    var selector = selector.split(" ")[0]
+    var selector = selector.split(" ")[0];
+    if (selector = ".room" || ".idea" || ".comments" || ".rooms" || ".hero") {
+      selector = undefined;
+    }
 
     var svg = d3.select(selector).append("svg")
                 .attr("width", 150)
