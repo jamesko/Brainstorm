@@ -85,10 +85,11 @@ var Idea = React.createClass({
       this.setState ({displaying : !this.state.displaying});
     }
   },
+
   handleStart : function(event , ui) {
-    // console.log('Event: ', event);
-    //console.log('Position: ', ui.position);
+
   },
+
   handleDrag : function(event , ui) {
     var obj = {};
 
@@ -97,6 +98,7 @@ var Idea = React.createClass({
 
     socket.emit ('idea change' , obj);
   },
+
   handleStop : function(event , ui) {
 
     this.setState ({position : {top : event.clientY , left : event.clientX}});

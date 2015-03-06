@@ -42,7 +42,6 @@ var Comments = React.createClass({
   },
 
   onStoreChange: function(comments){
-    console.log("possible comment store change", comments);
     if (this.isMounted()) {
       this.setState({ comments: CommentStore.getAll(this.props.idea_id) });
     }

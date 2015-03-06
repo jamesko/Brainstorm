@@ -46,7 +46,6 @@ var Ideas = React.createClass({
 
   onStoreChange: function(data){
     var self = this;
-    console.log("POSSIBLE IDEA DATA", data)
     if(this.isMounted()) {
       if(!self.pauseUpdates){
         this.setState({ ideas: IdeaStore.getAll() });

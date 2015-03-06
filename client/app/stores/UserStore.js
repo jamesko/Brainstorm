@@ -30,7 +30,6 @@ var UserStore = Reflux.createStore({
       type: 'DELETE'
     })
     .done(function(user) {
-      console.log("logged out ", user);
       this._user = user;
       this.trigger();
       callback();

@@ -25,7 +25,6 @@ var About = React.createClass({
   mixins: PureRenderMixin,
 
   swap1: function(e){
-    console.log("swapped", e.target);
     $(e.target).parent().html(++i1 % 2 ? brainstormGif1 : brainstormScreenShot1);
   },
 

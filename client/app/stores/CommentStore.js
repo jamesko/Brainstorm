@@ -51,20 +51,6 @@ var CommentStore = Reflux.createStore({
     });
   },
 
-  //all: function () {
-  //  $.ajax({
-  //    type: 'GET',
-  //    url: '/comments'
-  //  })
-  //  .done(function (comments) {
-  //    this._comments = comments;
-  //  }.bind(this))
-  //  .fail(function (error) {
-  //    console.log(error);
-  //  });
-  //  this.socketListener();
-  //},
-
   create: function (idea_id, name) {
     var urlBoolean = false;
     if (name.toString().slice(0,7) === "http://" || name.toString().slice(0,8) === "https://"){

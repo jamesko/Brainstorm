@@ -11,7 +11,6 @@ var IdeaForm = React.createClass({
     e.preventDefault();
     // get the value out of the input with ref="name"
     var name = this.refs.name.getDOMNode();
-    console.log("idea Name", name, name.value.trim());
     if (name.value.trim() === ""){
       return;
     }

@@ -87,14 +87,12 @@ var BrainswarmStore = Reflux.createStore({
   },
 
   create: function(idea_id, name, callback) {
-  //  console.log('this is create name', name);
     $.ajax({
       type: 'POST',
       url: '/brainswarms/' + idea_id,
       data: {name: name}
     })
     .done(function(brainswarm) {
-      //console.log("made brainswarm",brainswarm)
        this._brainswarms.push(brainswarm);
        // _brainswarms[brainswarm._id] = brainswarm
 
