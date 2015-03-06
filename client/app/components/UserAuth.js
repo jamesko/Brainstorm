@@ -8,7 +8,7 @@ var PureRenderMixin = require('react/addons').addons.PureRenderMixin;
 
 var UserAuth = React.createClass({
 
-  mixins: [Navigation, Reflux.ListenerMixin, PureRenderMixin],
+  mixins: [Navigation, Reflux.ListenerMixin],
 
   getInitialState: function() {
     return { currentUser: UserStore.get() };
@@ -26,13 +26,32 @@ var UserAuth = React.createClass({
   },
 
   render: function(){
-    var text = this.state.currentUser ? 'Logout' : 'Login';
+    var navBarContent;
+    var currentUser = this.state.currentUser;
+    var text = currentUser ? 'Logout' : 'Login via:';
+    var username;
+    if (currentUser){
+      username = currentUser.socialData.name;
+    }
+    if (!currentUser) {
+      navBarContent = (
+          <div>
+            <li><div onClick={this.handleClick}>{text}</div></li>
+            <li><a className="ion-social-github login-icon" onClick={this.handleClick} href='/auth/github'></a></li>
+            <li><a className="ion-social-facebook login-icon" onClick={this.handleClick} href='/auth/facebook'></a></li>
+            <li><a className="ion-social-google login-icon" onClick={this.handleClick} href='/auth/google'></a></li>
+          </div>
+        );
+    } else {
+      navBarContent = (
+        <div>
+          <li><div className="logout-user" onClick={this.handleClick}>{text} {username}</div></li>
+        </div>
+      );
+    }
     return (
       <div>
-          <li><a onClick={this.handleClick} href='/auth/google'>{text}</a></li>
-          <li><a onClick={this.handleClick} href='/auth/github'>Github</a></li>
-          <li><a onClick={this.handleClick} href='/auth/facebook'>Facebook</a></li>
-          <li><a onClick={this.handleClick} href='/auth/google'>Google</a></li>
+        {navBarContent}
       </div>
     );
   },
