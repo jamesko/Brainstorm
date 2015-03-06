@@ -36,7 +36,7 @@ var UserAuth = React.createClass({
     if (!currentUser) {
       navBarContent = (
           <div>
-            <li><div onClick={this.handleClick}>{text}</div></li>
+            <li><div style={{padding: "0px 5px"}} onClick={this.handleClick}>{text}</div></li>
             <li><a className="ion-social-github login-icon" onClick={this.handleClick} href='/auth/github'></a></li>
             <li><a className="ion-social-facebook login-icon" onClick={this.handleClick} href='/auth/facebook'></a></li>
             <li><a className="ion-social-google login-icon" onClick={this.handleClick} href='/auth/google'></a></li>

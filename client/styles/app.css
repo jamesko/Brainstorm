@@ -178,6 +178,10 @@ h2 {
   font-size: 12px !important;
 }
 
+.comment-button {
+  color: black;
+}
+
 .formEditComment {
   font-size:85%;
 }
@@ -500,8 +504,7 @@ path.link.selected {
 }
 
 .brainswarm-btn {
-  margin-top: 10px
-
+  margin-top: 10px;
 }
 
 .brainswarm:hover {

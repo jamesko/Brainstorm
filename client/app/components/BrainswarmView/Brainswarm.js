@@ -722,8 +722,8 @@ var Brainswarm = React.createClass({
           </div>
           <div className="toolbox">
 
-          <a id="download-input" className="waves-effect waves-light btn-large light-green accent-2 ">
-            <i  className="small mdi-file-cloud-done"></i>
+          <a id="download-input" className="waves-effect waves-light btn-large cyan">
+            <i  className="small mdi-file-file-download"></i>
           </a>
         </div>
           </div>

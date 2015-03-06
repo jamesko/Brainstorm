@@ -161,7 +161,7 @@ var Idea = React.createClass({
                     <Interest idea_id={this.props._id} />
                   </div>
 
-                  <button className="brainswarm-btn no-margin btn waves-effect waves-light" style={{display:"inline", height: "25px", backgroundColor: "#64b5f6", marginTop: "10px"}} onClick={this.brainswarm}>Brainswarm</button>
+                  <button className="brainswarm-btn no-margin btn waves-effect waves-light" style={{display:"inline", height: "25px", backgroundColor: "rgba(198, 227, 250, 0.4)", color: "black", marginTop: "10px", padding: "0px 6px"}} onClick={this.brainswarm}>Brainswarm</button>
                   <div>
                 {editForm}
                 {editableOption}
