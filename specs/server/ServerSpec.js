@@ -3,9 +3,15 @@
 
 var expect = require('chai').expect;
 var request = require('request');
+var io = require('socket.io-client');
 
 var url = function(path) {
   return 'http://localhost:8000' + path;
+};
+
+var options ={
+  transports: ['websocket'],
+  'force new connection': true
 };
 
 describe("MongoDB", function() {
@@ -43,4 +49,38 @@ describe('GET /no-such-file.html', function() {
       done();
     });
   });
+});
+
+
+
+describe('Socket connection', function() {
+  it('can connect to a room', function(done){
+
+    var client1 = io.connect(url(''), options);
+    var client2 = io.connect(url(''), options);
+    var room = "test room";
+    var comment = "this is a test";
+
+    client1.on('comment-change', function(data){
+      expect(data).to.equal(comment);
+      client1.disconnect();
+      client2.disconnect();
+      done();
+    });
+
+    // client1.on('connect', function(){
+    //   client1.emit('join', 'mockRoom');
+    //   var client2 = io.connect(url(''), options);
+    //   client2.on('connect', function(){
+    //     client2.emit('join', 'mockRoom');
+    //     client2.emit('comment-change', 'some....comments', 'mockRoom');     
+    //   })
+    // })
+
+    client1.emit('join', room);
+    client2.emit('join', room);
+    client2.emit('comment-change', comment, room);
+
+  });
+
 });
