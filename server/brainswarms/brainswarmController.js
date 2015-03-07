@@ -35,26 +35,44 @@ module.exports = {
 
     updateBrainswarm: function(req, res, next) {
       //we convert the request objects into strings just to be safe(req.user._id was coming back as an object for some reason)
-      var user = String(req.user._id);
-      var ideaOwner = String(req.body.owner);
+     // console.log("GOT IN HERE")
 
       //We want all to be able to save changes to brainswarm
-
+      //console.log("request", req, res);
+      var query;
+      if (req.params) {
+        query = req.params.brainswarm_id;
+      } else {
+        query = req;
+      }
       // create promise for Idea.findById
       var findBrainswarmById = Q.nbind(Brainswarm.findById, Brainswarm);
-      console.log("HERE");
+     // console.log("correct query", query);
       // attempt to find the idea by the id passed in
-      findBrainswarmById(req.params.brainswarm_id)
+      findBrainswarmById(query)
         .then(function(foundBrain) {
           // if the brainswarm is found update the name and save
+
           if (foundBrain) {
-            foundBrain.map = req.body.map;
+           // console.log("this is brains",res)
+            if(req.body){
+              foundBrain.map =  req.body.map;
+            }
+            else{
+              foundBrain.map =  res;
+            }
+            //foundBrain.map =  req.body.map || brainstormId;
+            console.log("attached map", foundBrain.map);
             //add more to update dont know what
             foundBrain.save(function(err) {
               if (err) {
+                console.log("err")
                 res.send(err);
               }
-              res.json(foundBrain);
+              console.log("saved brainswarm", foundBrain);
+              if(req.body){
+                res.json(foundBrain);
+              }
             });
           }
         })
