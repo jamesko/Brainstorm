@@ -48,7 +48,8 @@ npm install
 bower install
 ```
 
-1. npm tasks
+&nbsp;
+2. npm tasks
 
 ```sh
 npm start
@@ -58,7 +59,8 @@ To browserify and start auto-compiling jsx while watching the jsx files and savi
 
 All the components will be bundled into a file called bundle.js that is then required within the index.html
 
-1. Gulp tasks
+&nbsp;
+3. Gulp tasks
 
 ```sh
 gulp
@@ -66,13 +68,15 @@ gulp
 
 To server assets and launch on localhost:3000
 
-1. Acquire correct github credentials by registering your app [here](https://github.com/settings/applications). Make sure to get your client_id and client_secret. For working in development set your homepage url as: `http://127.0.0.1:3000`. Set your authorization callback url as: `http://localhost:3000/auth/github/callback`
+&nbsp;
+4. Acquire correct github credentials by registering your app [here](https://github.com/settings/applications). Make sure to get your client_id and client_secret. For working in development set your homepage url as: `http://127.0.0.1:3000`. Set your authorization callback url as: `http://localhost:3000/auth/github/callback`
 
 Acquire correct facebook credentials by registering your app [here](https://developers.facebook.com/). Go to "My Apps" and add a new app.
 
 Acquire correct google credentials by registering your app [here](https://console.developers.google.com/project). Create a project, then go to "Credentials" under "APIs & auth" and create a new client Id.
 
-1. Create a config.js file in /server/config with the following contents:
+&nbsp;
+5. Create a config.js file in /server/config with the following contents:
 ```sh
 var config = {
  github: {
