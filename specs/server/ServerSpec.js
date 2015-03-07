@@ -51,36 +51,70 @@ describe('GET /no-such-file.html', function() {
   });
 });
 
-
-
 describe('Socket connection', function() {
-  it('can connect to a room', function(done){
+  var client1, client2, room, otherRoom, text, otherText;
 
-    var client1 = io.connect(url(''), options);
-    var client2 = io.connect(url(''), options);
-    var room = "test room";
-    var comment = "this is a test";
+  beforeEach(function(){
+    client1 = io.connect(url(''), options);
+    client2 = io.connect(url(''), options);
+    room = "test room";
+    otherRoom = "other room"
+    text = "this is a test";
+  });
 
-    client1.on('comment-change', function(data){
-      expect(data).to.equal(comment);
+  afterEach(function(){
       client1.disconnect();
       client2.disconnect();
+  });
+
+  it('can join a room', function(done){
+    client1.on('comment-change', function(data){
+      expect(data).to.equal(text);
       done();
     });
-
-    // client1.on('connect', function(){
-    //   client1.emit('join', 'mockRoom');
-    //   var client2 = io.connect(url(''), options);
-    //   client2.on('connect', function(){
-    //     client2.emit('join', 'mockRoom');
-    //     client2.emit('comment-change', 'some....comments', 'mockRoom');     
-    //   })
-    // })
-
     client1.emit('join', room);
     client2.emit('join', room);
-    client2.emit('comment-change', comment, room);
+    client2.emit('comment-change', text, room);
+  });
 
+  it('broadcasts comment changes to room', function(done){
+    client1.on('comment-change', function(data){
+      expect(data).to.equal(text);
+      done();
+    });
+    client1.emit('join', room);
+    client2.emit('join', room);
+    client2.emit('comment-change', text, room);
+  });
+
+  it('broadcasts idea changes to room', function(done){
+    client1.on('idea-change', function(data){
+      expect(data).to.equal(text);
+      done();
+    });
+    client1.emit('join', room);
+    client2.emit('join', room);
+    client2.emit('idea-change', text, room);
+  });
+
+  it('broadcasts interest changes to room', function(done){
+    client1.on('interest-change', function(data){
+      expect(data).to.equal(text);
+      done();
+    });
+    client1.emit('join', room);
+    client2.emit('join', room);
+    client2.emit('interest-change', text, room);
+  });
+
+  it('broadcasts rooms changes to all', function(done){
+    client1.on('room-change', function(data){
+      expect(data).to.equal(otherRoom);
+      done();
+    });
+    client1.emit('join', room);
+    client2.emit('join', otherRoom);
+    client2.emit('room-change', otherRoom);
   });
 
 });
