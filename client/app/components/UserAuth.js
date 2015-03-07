@@ -25,7 +25,7 @@ var UserAuth = React.createClass({
     }
   },
 
-  render: function(){
+  render: function() {
     var navBarContent;
     var currentUser = this.state.currentUser;
     var text = currentUser ? 'Logout' : 'Login Via:';
@@ -61,7 +61,7 @@ var UserAuth = React.createClass({
     UserActions.getCurrentUser();
   },
 
-  onStoreChange: function(){
+  onStoreChange: function() {
     if(this.isMounted()) {
       this.setState({ currentUser: UserStore.get() });
     }

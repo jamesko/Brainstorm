@@ -34,7 +34,7 @@ var IdeaForm = React.createClass({
   },
 
   //add pie timer
-  componentDidMount: function(){
+  componentDidMount: function() {
 
     $('#pieTimer1').pietimer({
       seconds: 300,
@@ -54,7 +54,7 @@ var IdeaForm = React.createClass({
     })
   },
 
-  render: function(){
+  render: function() {
     // if editing the defaultValue will be the idea name
     // if editing an "Edit" button will show otherwise a "Create"
     return (

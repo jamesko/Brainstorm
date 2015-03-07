@@ -17,7 +17,7 @@ var Comments = React.createClass({
 
   _url: false,
   //get all loaded comments
-  getInitialState: function () {
+  getInitialState: function() {
     var comments = CommentStore.getAll(this.props.idea_id);
     return {
       displaying: false,
@@ -34,7 +34,7 @@ var Comments = React.createClass({
   },
 
   //when we mount the view setup event listener for store changes
-  componentDidMount: function () {
+  componentDidMount: function() {
     this.listenTo(CommentStore, this.onStoreChange);
   },
 
@@ -54,7 +54,7 @@ var Comments = React.createClass({
   },
 
   //render a comment component for each comment
-  render: function () {
+  render: function() {
     var comments;
     var commentForm;
     var showCommentsButton;
