@@ -26,11 +26,14 @@ var RoomView = React.createClass({
   },
 
   componentDidMount: function() {
+    //get id from passed in params from router
     var roomId = this.getParams().roomId;
     socket.emit('join', roomId);
+    //setting room state for stores
     IdeaStore.setRoom(roomId);
     CommentStore.setRoom(roomId);
     InterestStore.setRoom(roomId);
+    //ajax call for all data needed
     IdeaActions.get(roomId);
     CommentActions.get(roomId);
     InterestActions.get(roomId);

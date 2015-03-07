@@ -14,7 +14,7 @@ var RoomCreateForm = React.createClass({
 
     var name = this.refs.name.getDOMNode();
 
-    // if editing send info to edit method in IdeaActions
+    // return if value is empty
     if (name.value.trim() === ""){
       return;
     }
@@ -24,7 +24,7 @@ var RoomCreateForm = React.createClass({
       room.owner = this.props.owner;
       room.name = name.value.trim();
       RoomActions.edit(room);
-    } else { // else an idea is being created
+    } else {// else an idea is being created
       var self = this;
       RoomActions.create(name.value.trim(), function(roomId){
           self.transitionTo("/rooms/"+ roomId);

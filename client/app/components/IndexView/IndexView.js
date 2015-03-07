@@ -19,8 +19,7 @@ var IndexView = React.createClass({
     this.listenTo(UserStore, this.onStoreChange);
   },
 
-  onStoreChange: function(user) {
-    var self = this;
+  onStoreChange: function() {
     if(this.isMounted()) {
       this.setState({ currentUser: UserStore.get() });
     }

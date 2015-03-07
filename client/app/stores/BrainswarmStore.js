@@ -12,11 +12,11 @@ var BrainswarmStore = Reflux.createStore({
       url: '/brainswarms/' + idea_id
     })
       .done(function (brainswarmsData) {
-
+      //reflux call to update
         this.trigger();
         if (brainswarmsData) {
           return callback(brainswarmsData[0]);
-        };
+        }
         callback();
       }.bind(this))
       .fail(function(error) {
@@ -32,7 +32,6 @@ var BrainswarmStore = Reflux.createStore({
       url: "/brainswarms/" + brainswarm_id
     })
       .done(function(brainswarmData){
-
         this.trigger();
         callback(brainswarmData[0]);
       }.bind(this))
@@ -48,7 +47,6 @@ var BrainswarmStore = Reflux.createStore({
       data: {name: name}
     })
       .done(function(brainswarm) {
-
         this.trigger();
         callback(brainswarm._id);
       }.bind(this))
@@ -64,8 +62,7 @@ var BrainswarmStore = Reflux.createStore({
       url: '/brainswarms/' + brainswarmId,
       data: {map: map}
     })
-      .done(function(brainswarmEdit) {
-
+      .done(function() {
         this.trigger();
       }.bind(this))
       .fail(function(error) {

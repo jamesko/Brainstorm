@@ -37,9 +37,7 @@ var Comment = React.createClass({
     }
     if (this.props.anchor){
       commentContent = (
-
           <h5>{this.props.ownerName}: <a href={this.props.name} target="_blank">{this.props.name}</a></h5>
-
       );
     } else {
       commentContent = (

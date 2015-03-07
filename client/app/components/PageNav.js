@@ -27,7 +27,7 @@ var PageNav = React.createClass({
   },
 
   handleWelcome: function() {
-    //dispatch a navigate to welcome on click
+    //if logged in, redirect to rooms
     if (this.state.currentUser){
       this.transitionTo('/rooms');
     } else {

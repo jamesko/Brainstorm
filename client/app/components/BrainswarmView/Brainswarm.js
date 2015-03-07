@@ -82,7 +82,6 @@ function createMap(brainswarmId, brainswarm){
           thisGraph.dragmove.call(thisGraph, args);
         })
         .on("dragend", function() {
-          // todo check if edge-mode is selected
         });
 
       // listen for key events
@@ -99,7 +98,6 @@ function createMap(brainswarmId, brainswarm){
       var dragSvg = d3.behavior.zoom()
         .on("zoom", function(){
           if (d3.event.sourceEvent.shiftKey){
-            // TODO  the internal d3 state is still changing
             return false;
           } else{
             thisGraph.zoomed.call(thisGraph);
@@ -126,18 +124,10 @@ function createMap(brainswarmId, brainswarm){
       d3.select("#download-input").on("click", function(){
 
         var saveEdges = [];
-
         thisGraph.edges.forEach(function(val, i){
           saveEdges.push({source: val.source.id, target: val.target.id});
         });
 
-        // Get rid of duplicate nodes
-        for (var i = 0; i< thisGraph.nodes.length; i++){
-          var temp = thisGraph.nodes.indexOf(thisGraph.nodes[i].id, i+1);
-          if( temp !== -1){
-            delete thisGraph.nodes[temp]
-          }
-        }
         var data = window.JSON.stringify({"nodes": thisGraph.nodes, "edges": saveEdges});
         BrainswarmActions.edit(brainswarmId, data);
 
@@ -156,7 +146,7 @@ function createMap(brainswarmId, brainswarm){
         thisGraph.edges = newEdges;
         thisGraph.updateGraph();
       }
-
+      //this is where syncing happens on other clients
       socket.on('edit map', function(map){
         mapData = map;
         thisGraph.deleteGraph(true);
@@ -203,13 +193,6 @@ function createMap(brainswarmId, brainswarm){
         saveEdges.push({source: val.source.id, target: val.target.id});
       });
 
-      // Get rid of duplicate nodes
-      for (var i = 0; i< thisGraph.nodes.length; i++){
-        var temp = thisGraph.nodes.indexOf(thisGraph.nodes[i].id, i+1);
-        if( temp !== -1){
-          delete thisGraph.nodes[temp]
-        }
-      }
       var data = window.JSON.stringify({"nodes": thisGraph.nodes, "edges": saveEdges});
       BrainswarmActions.edit(brainswarmId, data);
 
@@ -444,7 +427,7 @@ function createMap(brainswarmId, brainswarm){
         }
       }
 
-    }; // end of circles mouseup
+    };
 
     // mousedown on main svg
     GraphCreator.prototype.svgMouseDown = function(){
@@ -590,10 +573,8 @@ function createMap(brainswarmId, brainswarm){
       newGs.each(function(d){
         thisGraph.insertTitleLinebreaks(d3.select(this), d.title);
       });
-
       // remove old nodes
       thisGraph.circles.exit().remove();
-
     };
 
     GraphCreator.prototype.zoomed = function(){
@@ -609,7 +590,7 @@ function createMap(brainswarmId, brainswarm){
       var y = window.innerHeight|| docEl.clientHeight|| bodyEl.clientHeight;
       svg.attr("width", x).attr("height", y);
     };
-
+      //used to emit all important updates of graph
     GraphCreator.prototype.emit = function(noSave){
       var thisGraph = this;
       var saveEdges = [];
@@ -617,13 +598,6 @@ function createMap(brainswarmId, brainswarm){
         saveEdges.push({source: val.source.id, target: val.target.id});
       });
 
-      // Get rid of duplicate nodes
-      for (var i = 0; i< thisGraph.nodes.length; i++){
-        var temp = thisGraph.nodes.indexOf(thisGraph.nodes[i].id, i+1);
-        if( temp !== -1){
-          delete thisGraph.nodes[temp]
-        }
-      }
       var data = window.JSON.stringify({"nodes": thisGraph.nodes, "edges": saveEdges});
 
       mapData = data;
@@ -635,9 +609,6 @@ function createMap(brainswarmId, brainswarm){
       socket.emit('map change', end);
     };
     // MAIN
-
-    // warn the user when leaving
-
 
     var docEl = document.documentElement,
       bodyEl = document.getElementsByTagName('body')[0];
@@ -665,8 +636,6 @@ function createMap(brainswarmId, brainswarm){
       graph.updateGraph();
 
     }
-    //{title: "new concept", id: 1, x: xLoc, y: yLoc + 200}
-    // MAIN SVG
 
   })(window.d3, window.saveAs, window.Blob);
 }
@@ -676,7 +645,9 @@ var Brainswarm = React.createClass({
   mixins: [State, PureRenderMixin],
 
   getInitialState: function(){
+    //if page is refreshed, get id from url
     var urlId = window.location.href.substr(window.location.href.length - 24);
+    //use id passed from parents(router), or from url if page refreash
     var brainswarmId = this.getParams().brainswarmId || urlId;
     var currentBrainswarm;
     // if user refreshes page create the brainswarm map

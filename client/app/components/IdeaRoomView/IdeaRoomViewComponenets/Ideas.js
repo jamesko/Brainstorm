@@ -36,7 +36,7 @@ var Ideas = React.createClass({
   },
 
   componentWillUnmount: function(){
-    //set up room on server
+    //leave room on server
     socket.emit('leave ideaRoom',this.props.room_id);
   },
 

@@ -129,12 +129,9 @@ var Room = React.createClass({
 
 
   componentDidMount: function() {
-    // add a change listener on the IdeaStore
-    // this is needed when the edit comes back and emits a change
-    // that will force the component to re-render
-
     this.listenTo(IdeaStore, this._onChange);
     var self = this;
+    //instantiate word cloud after 5 seconds
     window.setTimeout(function() {
       var ideas = IdeaStore.getAll();
       var ideaNames = [];
@@ -191,7 +188,7 @@ var Room = React.createClass({
           </div>
         );
       }
-      //othersise if they arent a current user of were'nt the originator of an idea, dont let them edit/delete it. just like or comment it
+      //otherwise if they arent a current user of were'nt the originator of an idea, dont let them edit/delete it. just like or comment it
       else {
         roomContent = (
           <div className="room pure-u-1">

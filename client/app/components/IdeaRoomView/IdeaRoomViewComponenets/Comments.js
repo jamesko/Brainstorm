@@ -16,7 +16,7 @@ var Comments = React.createClass({
  },
 
   _url: false,
-  //get all loaded comments
+
   getInitialState: function() {
     var comments = CommentStore.getAll(this.props.idea_id);
     return {
@@ -53,13 +53,13 @@ var Comments = React.createClass({
     }
   },
 
-  //render a comment component for each comment
+
   render: function() {
     var comments;
     var commentForm;
     var showCommentsButton;
 
-    //display comments if we are displaying, otherwise show buttons
+    //display list of comments if clicked, otherwise show buttons
     if (this.state.displaying){
       var ideaId = this.props.idea_id;
       commentForm = <CommentForm idea_id={ideaId} />

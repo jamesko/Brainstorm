@@ -38,7 +38,7 @@ var IdeaStore = Reflux.createStore({
     })
     .done(function (ideas) {
       this._ideas = ideas;
-      // broadcast that _ideas has changed
+      // reflux call to update
       this.trigger();
     }.bind(this))
     .fail(function(error) {
@@ -115,10 +115,8 @@ var IdeaStore = Reflux.createStore({
       this._ideas.forEach(function(idea, index) {
         if(idea._id === oldId._id) {
           this._ideas.splice(index, 1);
-
           // broadcast that _ideas has changed
           socket.emit('idea-change', this._ideas, this._room);
-          // return this.emitChange();
         }
       }.bind(this));
       this.trigger();
