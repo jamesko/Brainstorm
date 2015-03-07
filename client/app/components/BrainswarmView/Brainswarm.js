@@ -19,6 +19,7 @@ function createMap(brainswarmId, brainswarm){
       var thisGraph = this;
           thisGraph.idct = 0;
 
+       //mapData = window.JSON.stringify({"nodes": thisGraph.nodes, "edges": saveEdges});
       thisGraph.nodes = nodes || [];
       thisGraph.edges = edges || [];
 
@@ -170,7 +171,7 @@ function createMap(brainswarmId, brainswarm){
         thisGraph.updateGraph();
 
       });
-
+      thisGraph.emit();
       // handle delete graph
       d3.select("#delete-graph").on("click", function(){
         thisGraph.deleteGraph(false);
@@ -223,7 +224,7 @@ function createMap(brainswarmId, brainswarm){
         d.x += d3.event.dx;
         d.y +=  d3.event.dy;
         thisGraph.updateGraph();
-        thisGraph.emit.call(thisGraph);
+        thisGraph.emit.call(thisGraph, true);
       }
     };
 
@@ -610,9 +611,10 @@ function createMap(brainswarmId, brainswarm){
       svg.attr("width", x).attr("height", y);
     };
 
-      GraphCreator.prototype.emit = function(){
+      GraphCreator.prototype.emit = function(noSave){
         var thisGraph = this;
         var saveEdges = [];
+        console.log("THIS IS BOOL",noSave);
         thisGraph.edges.forEach(function(val, i){
           saveEdges.push({source: val.source.id, target: val.target.id});
         });
@@ -627,9 +629,15 @@ function createMap(brainswarmId, brainswarm){
         var data = window.JSON.stringify({"nodes": thisGraph.nodes, "edges": saveEdges});
       //  console.log("CLIENTMAP",mapId)
         mapData = data;
+        var end = {};
+        end.mapData = mapData;
+        if(!noSave){
+          end.toSave = true;
+console.log("THIS IS FINAL",end)
+        }
        // var idz = mapId.toString();
        // console.log('NUMZ', typeof idz)
-        socket.emit('map change', data);
+        socket.emit('map change', end);
       };
     // MAIN
 
@@ -673,16 +681,17 @@ var Brainswarm = React.createClass({
   mixins: [State, PureRenderMixin],
 
   getInitialState: function(){
-    var brainswarmId = this.getParams().brainswarmId;
+    var urlId = window.location.href.substr(window.location.href.length - 24);
+    var brainswarmId = this.getParams().brainswarmId || urlId;
     var currentBrainswarm = BrainswarmStore.findBrainswarm(brainswarmId);
     // if user refreshes page create the brainswarm map
-    // var currentBrainswarmBackup;
-    // if (currentBrainswarm === undefined){
-    //   BrainswarmActions.getBrainswarmById(brainswarmId, function(backupBrainswarm){
-    //     currentBrainswarmBackup = backupBrainswarm;
-    //     createMap(brainswarmId, backupBrainswarm);
-    //   });
-    // }
+
+    if (currentBrainswarm === undefined){
+      BrainswarmActions.getBrainswarmById(brainswarmId, function(backupBrainswarm){
+        currentBrainswarm = backupBrainswarm;
+        createMap(brainswarmId, backupBrainswarm);
+      });
+    }
     // create a set interval function so that if user happens to refresh the page
     // then the map is most likely saved
     var self = this;
@@ -739,13 +748,19 @@ var Brainswarm = React.createClass({
   },
 
   componentDidMount: function(){
+    console.log("component Mounted");
     socket.emit('join brainswarm', this.state.brainswarmId);
     createMap(this.state.brainswarmId, this.state.currentBrainswarm);
-
+    //window.onbeforeunload = function(e) {
+    //  e.preventDefault();
+    //  BrainswarmActions.edit(this.state.brainswarmId, mapData);
+    //};
   },
 
   componentWillUnmount: function(){
     // similar to componentDidMount but also invoked on the server;
+    console.log("THIS IS DATA",this.state.brainswarmId)
+    console.log("MAPDAYA", mapData)
     BrainswarmActions.edit(this.state.brainswarmId, mapData);
     socket.emit('brainswarm leave', this.state.brainswarmId);
   },
