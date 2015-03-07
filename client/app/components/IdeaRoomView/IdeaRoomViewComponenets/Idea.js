@@ -132,8 +132,8 @@ var Idea = React.createClass({
       if (currentUser._id === ideaOwner) {
         editableOption = (
           <div className="auth-check" style={{display : "inline"}}>
-            <button className="fa fa-trash-o" style={{paddingRight : "30px"}}  onClick={this.delete}></button>
-            <button className="fa fa-pencil-square-o" style={{paddingRight : "30px"}} onClick={this.edit}> { this.state.editing ? 'Cancel' : ''} </button>
+            <button className="fa fa-trash-o" style={{paddingRight : "2rem", paddingLeft: ".5rem"}}  onClick={this.delete}></button>
+            <button className="fa fa-pencil-square-o" style={{paddingRight : "2rem", paddingLeft: ".5rem"}} onClick={this.edit}> { this.state.editing ? 'Cancel' : ''} </button>
           </div>
         )
       }
@@ -152,7 +152,7 @@ var Idea = React.createClass({
 
               <form>
                 <div>
-                   <div className="ideaDescription" style={{fontSize:"1.5rem"}} ref="body">{this.props.name}</div>
+                   <div className="ideaDescription" style={{fontSize:"1.75rem"}} ref="body">{this.props.name}</div>
                 </div>
 
                 <div className="ideaFooter">
@@ -162,7 +162,7 @@ var Idea = React.createClass({
                     <Interest idea_id={this.props._id} />
                   </div>
 
-                  <button className="brainswarm-btn no-margin btn waves-effect waves-light" style={{display:"inline", backgroundColor: "rgba(198, 227, 250, 0.4)", color: "black", marginTop: "15px", padding: "0px 8px"}} onClick={this.brainswarm}>Brainswarm</button>
+                  <button className="brainswarm-btn no-margin btn waves-effect waves-light" style={{display:"inline", backgroundColor: "rgba(198, 227, 250, 0.4)", color: "black", marginTop: "1rem", padding: "0px 1rem", marginLeft: ".2rem"}} onClick={this.brainswarm}>Brainswarm</button>
                   <div>
                 {editForm}
                 {editableOption}

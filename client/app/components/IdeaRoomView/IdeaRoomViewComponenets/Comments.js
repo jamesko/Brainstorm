@@ -65,14 +65,14 @@ var Comments = React.createClass({
       commentForm = <CommentForm idea_id={ideaId} />
       comments = [];
       //render a comment component for each comment
-      this.state.comments.forEach(function (comment) {
+      this.state.comments.forEach(function(comment) {
         comments.push(
           <Comment anchor={comment.urlBoolean} ownerName={comment.ownerName} name={comment.name} key={comment._id} _id={comment._id} />
         );
       });
     }
 
-    showCommentsButton = <button className="fa fa-comments-o" onClick={this.show}>{this.state.displaying? 'Hide' : ''}</button>
+    showCommentsButton = <button className="fa fa-comments-o" style={{paddingLeft: ".5rem"}} onClick={this.show}>{this.state.displaying? 'Hide' : ''}</button>
 
     return (
       <div ref="body" style={{display:"inline"}}>
