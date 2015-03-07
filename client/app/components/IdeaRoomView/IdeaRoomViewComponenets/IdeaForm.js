@@ -1,6 +1,5 @@
 var React = require("react");
 var IdeaActions = require("../../../actions/IdeaActions");
-// var $ = require("jquery");
 var PureRenderMixin = require('react/addons').addons.PureRenderMixin;
 
 var IdeaForm = React.createClass({
@@ -15,6 +14,7 @@ var IdeaForm = React.createClass({
     e.preventDefault();
     // get the value out of the input with ref="name"
     var name = this.refs.name.getDOMNode();
+    //prevent creation if title is empty
     if (name.value.trim() === ""){
       return;
     }

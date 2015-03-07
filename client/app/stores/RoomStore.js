@@ -71,7 +71,6 @@ var RoomStore = Reflux.createStore({
           room.name = roomEdit.name;
           // broadcast that _rooms has changed
           socket.emit('room-change', this._rooms);
-          // return this.emitChange();
         }
       }.bind(this));
     this.trigger();

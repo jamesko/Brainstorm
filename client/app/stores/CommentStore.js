@@ -33,9 +33,6 @@ var CommentStore = Reflux.createStore({
     }.bind(this));
   },
 
-  //ajax requests
-  //TODO: DRY out this code
-
   get: function(room_id) {
     $.ajax({
       type: 'GET',
@@ -43,7 +40,7 @@ var CommentStore = Reflux.createStore({
     })
     .done(function(comments) {
       this._comments = comments;
-      // broadcast that _ideas has changed
+      // reflux call to update
       this.trigger();
     }.bind(this))
     .fail(function(error) {

@@ -41,9 +41,9 @@ var Idea = React.createClass({
   } ,
 
   componentDidUpdate: function() {
-
     if (this.state.deleteIdea) {
-      var mod = $ ('#modal1').openModal();
+      //activate materialize modal
+       $('#modal1').openModal();
     }
   },
 
@@ -54,15 +54,7 @@ var Idea = React.createClass({
     var selectz = '#' + ideaId;
 
     var node = $(selectz);
-
-    //might need to look into offset to make correct location calculation
-    //var offset =  node.offset()
-    //  console.log("THS IS OFFSET",offset)
-
-    //tried using css to set location, or translate to it
-    // node.css({position: "relative", left: this.props.position.left+"px", top: this.props.position.top+"px"});
-    //node.css({"-webkit-transform":"translate("+ this.props.position.left+"px,"+ this.props.position.top+"px)"});
-
+    //this is syncing the movement on idea drag
     socket.on('edit location', function(data) {
       var ideaId = self.props._id;
 
@@ -88,12 +80,12 @@ var Idea = React.createClass({
   },
 
   handleStart: function(event , ui) {
-
+    //used for dragStart
   },
 
   handleDrag: function(event , ui) {
+    //prep and send  location data while dragging
     var obj = {};
-
     obj.ui = ui.position;
     obj.id = this.props._id;
 
@@ -101,9 +93,7 @@ var Idea = React.createClass({
   },
 
   handleStop: function(event , ui) {
-
     this.setState ({position : {top : event.clientY , left : event.clientX}});
-
   },
 
   render: function() {
@@ -203,6 +193,7 @@ var Idea = React.createClass({
 
     var self = this;
 
+    //make ajax request to get most recent graph --> having DB maintain state of room vs syncing multiple client state
     BrainswarmActions.getBrainswarm(self.props._id, function (brainswarmData) {
       if (brainswarmData) {
         self.transitionTo("/brainswarms/" + brainswarmData._id)
@@ -219,6 +210,4 @@ var Idea = React.createClass({
 
 module.exports = Idea;
 
-//COMMAND TO POST IDEA ON BEHALF OF FAKE USER (DEVEVELOPMENT PURPOSES ONLY)
-// curl -H "Content-Type: application/json" -d '{"name":"theyll never catch me in this fox hole!","ownerName":"Saddam Hussein","room_id":"548a38cebcf20d5101e0e13c"}' http://localhost:3000/ideas/548a38cebcf20d510
 

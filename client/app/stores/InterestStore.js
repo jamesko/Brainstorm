@@ -40,7 +40,7 @@ var InterestStore = Reflux.createStore({
     })
     .done(function(interests) {
       this._interests = interests;
-      // broadcast that _ideas has changed
+      // reflux call
       this.trigger();
     }.bind(this))
     .fail(function(error) {
@@ -55,9 +55,8 @@ var InterestStore = Reflux.createStore({
     })
     .done(function(interest) {
       this._interests.push(interest);
-
-      // broadcast that _interests has changed
       this.trigger();
+        // broadcast that _interests has changed
       socket.emit('interest-change', this._interests, this._room);
     }.bind(this))
     .fail(function(error) {

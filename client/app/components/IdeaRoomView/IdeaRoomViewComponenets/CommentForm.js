@@ -27,17 +27,17 @@ var CommentForm = React.createClass({
 
     var commentBody = this.refs.input.getDOMNode();
     var comment = commentBody.value.trim();
-    //if editing dispatch to edit
+    //revoke if comment is empty
     if (comment === ""){
         return;
     }
     if (this.props.editing) {
       CommentActions.edit(this.props._id, comment);
-    } else { //otherwise dispatch to create
+    } else {
       CommentActions.create(this.props.idea_id, comment);
     }
 
-    //dispatch an event with the comment text
+    //reset text to empty string
     commentBody.value = '';
     return;
   },

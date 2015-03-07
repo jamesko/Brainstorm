@@ -8,6 +8,7 @@ var ConfirmationBox = React.createClass({
 
   delete: function(e) {
     e.preventDefault();
+    //cancels call if id is empty or undefined
     if(this.props.id === '' || undefined){
       return
     }
